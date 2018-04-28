@@ -11,7 +11,8 @@ namespace Data.Entities
     {
         public Resume()
         {
-            ResumesExperience = new HashSet<ResumesExperience>();
+            Offers = new HashSet<Offer>();
+            ResumesExperiences = new HashSet<ResumesExperience>();
         }
 
         public int Id { get; set; }
@@ -43,6 +44,8 @@ namespace Data.Entities
         [StringLength(50)]
         public string Skype { get; set; }
 
+        public int RubricId { get; set; }
+
         [StringLength(255)]
         public string Portfolio { get; set; }
 
@@ -56,10 +59,10 @@ namespace Data.Entities
         public string Skills { get; set; }
 
         public int UserId { get; set; }
-
-        public virtual User Users { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResumesExperience> ResumesExperience { get; set; }
+        
+        public virtual ICollection<Offer> Offers { get; set; }
+        public virtual Rubric Rubric { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<ResumesExperience> ResumesExperiences { get; set; }
     }
 }

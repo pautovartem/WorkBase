@@ -1,14 +1,17 @@
 namespace Data.Entities
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Careers")]
     public partial class Career
     {
+        public Career()
+        {
+            Offers = new HashSet<Offer>();
+        }
+        
         public int Id { get; set; }
 
         [Required]
@@ -32,10 +35,16 @@ namespace Data.Entities
         [StringLength(255)]
         public string Site { get; set; }
 
+        public int RubricId { get; set; }
+
         [Required]
         [StringLength(2048)]
         public string Desctiption { get; set; }
 
         public int UserId { get; set; }
+
+        public virtual Rubric Rubric { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<Offer> Offers { get; set; }
     }
 }

@@ -17,18 +17,38 @@ namespace Data.EF
         public virtual DbSet<Offer> Offers { get; set; }
         public virtual DbSet<Resume> Resumes { get; set; }
         public virtual DbSet<ResumesExperience> ResumesExperiences { get; set; }
+        public virtual DbSet<Rubric> Rubrics { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Career>()
+                .HasMany(e => e.Offers)
+                .WithRequired(e => e.Career)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Resume>()
                 .Property(e => e.Payment)
                 .IsFixedLength();
 
             modelBuilder.Entity<Resume>()
-                .HasMany(e => e.ResumesExperience)
-                .WithRequired(e => e.Resumes)
-                .HasForeignKey(e => e.ResumeId)
+                .HasMany(e => e.Offers)
+                .WithRequired(e => e.Resume)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Resume>()
+                .HasMany(e => e.ResumesExperiences)
+                .WithRequired(e => e.Resume)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Rubric>()
+                .HasMany(e => e.Careers)
+                .WithRequired(e => e.Rubric)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Rubric>()
+                .HasMany(e => e.Resumes)
+                .WithRequired(e => e.Rubric)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
@@ -36,9 +56,13 @@ namespace Data.EF
                 .IsFixedLength();
 
             modelBuilder.Entity<User>()
+                .HasMany(e => e.Careers)
+                .WithRequired(e => e.User)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.Resumes)
-                .WithRequired(e => e.Users)
-                .HasForeignKey(e => e.UserId)
+                .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
         }
     }

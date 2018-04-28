@@ -11,10 +11,10 @@ namespace Data.Entities
     {
         public User()
         {
+            Careers = new HashSet<Career>();
             Resumes = new HashSet<Resume>();
         }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        
         public int Id { get; set; }
 
         [Required]
@@ -43,8 +43,8 @@ namespace Data.Entities
         public byte[] Password { get; set; }
 
         public int UserType { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
+        public virtual ICollection<Career> Careers { get; set; }
         public virtual ICollection<Resume> Resumes { get; set; }
     }
 }

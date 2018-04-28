@@ -26,6 +26,6 @@ namespace Data.Entities
         [Column(TypeName = "date")]
         public DateTime? FinishDate { get; set; }
 
-        public virtual Resume Resumes { get; set; }
+        public virtual Resume Resume { get; set; }
     }
 }
