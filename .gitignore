@@ -6,6 +6,8 @@ packages
 TestResult
 WorkBase/bin
 WorkBase/obj
+LogicLayer/bin
+LogicLayer/obj
 WorkBase.Tests/bin
 WorkBase.Tests/obj
 *.dll
