@@ -1,0 +1,11 @@
+.vs
+Data/bin
+Data/obj
+packages
+TestResult
+WorkBase/bin
+WorkBase/obj
+WorkBase.Tests/bin
+WorkBase.Tests/obj
+*.dll
+*.pdb
