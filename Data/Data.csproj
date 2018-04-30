@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Entities\Career.cs" />
     <Compile Include="Entities\Offer.cs" />
+    <Compile Include="Entities\Rubric.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
