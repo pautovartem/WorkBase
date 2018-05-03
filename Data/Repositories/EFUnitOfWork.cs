@@ -12,6 +12,7 @@ namespace Data.Repositories
         private GenericRepository<Offer> offerRepository;
         private GenericRepository<Resume> resumeRepository;
         private GenericRepository<ResumesExperience> resumesExperienceRepository;
+        private GenericRepository<Rubric> rubricsRepository;
         private GenericRepository<User> userRepository;
 
         public EFUnitOfWork(string connectionString)
@@ -56,6 +57,16 @@ namespace Data.Repositories
                 if (resumesExperienceRepository == null)
                     resumesExperienceRepository = new GenericRepository<ResumesExperience>(database);
                 return resumesExperienceRepository;
+            }
+        }
+
+        public IRepository<Rubric> Rubrics
+        {
+            get
+            {
+                if (rubricsRepository == null)
+                    rubricsRepository = new GenericRepository<Rubric>(database);
+                return rubricsRepository;
             }
         }
 
