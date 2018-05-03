@@ -1,29 +1,43 @@
 ﻿using System;
 using LogicLayer.DTO;
 using LogicLayer.Interfaces;
+using Data.Interfaces;
+using AutoMapper;
+using Data.Entities;
 
 namespace LogicLayer.Services
 {
     public class CareerService : ICareerService
     {
+        IUnitOfWork Database { get; set; }
+
+        public CareerService(IUnitOfWork unitOfWork)
+        {
+            Database = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        }
+
         public void CreateCareer(CareerDTO careerDTO)
         {
-            throw new NotImplementedException();
+            Database.Careers.Create(Mapper.Map<CareerDTO, Career>(careerDTO));
+            Database.Save();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Database.Dispose();
         }
 
         public void EditCareer(CareerDTO careerDTO)
         {
-            throw new NotImplementedException();
+            Database.Careers.Update(Mapper.Map<CareerDTO, Career>(careerDTO));
+            Database.Save();
         }
 
         public void RemoveCareer(CareerDTO careerDTO)
         {
-            throw new NotImplementedException();
+            Career career = Mapper.Map<CareerDTO, Career>(careerDTO);
+            Database.Careers.Delete(career.Id);
+            Database.Save();
         }
     }
 }

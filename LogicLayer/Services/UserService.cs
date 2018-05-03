@@ -1,29 +1,43 @@
 ﻿using System;
 using LogicLayer.DTO;
 using LogicLayer.Interfaces;
+using Data.Interfaces;
+using AutoMapper;
+using Data.Entities;
 
 namespace LogicLayer.Services
 {
     public class UserService : IUserService
     {
+        IUnitOfWork Database { get; set; }
+
+        public UserService(IUnitOfWork unitOfWork)
+        {
+            Database = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        }
+
         public void CreateUser(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            Database.Users.Create(Mapper.Map<UserDTO, User>(userDTO));
+            Database.Save();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Database.Dispose();
         }
 
         public void EditUser(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            Database.Users.Update(Mapper.Map<UserDTO, User>(userDTO));
+            Database.Save();
         }
 
         public void RemoveUser(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            User user = Mapper.Map<UserDTO, User>(userDTO);
+            Database.Users.Delete(user.Id);
+            Database.Save();
         }
     }
 }

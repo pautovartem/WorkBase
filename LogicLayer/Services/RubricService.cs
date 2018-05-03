@@ -1,29 +1,43 @@
 ﻿using System;
 using LogicLayer.DTO;
 using LogicLayer.Interfaces;
+using Data.Interfaces;
+using AutoMapper;
+using Data.Entities;
 
 namespace LogicLayer.Services
 {
     public class RubricService : IRubricService
     {
+        IUnitOfWork Database { get; set; }
+
+        public RubricService(IUnitOfWork unitOfWork)
+        {
+            Database = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        }
+
         public void CreateRubric(RubricDTO rubricDTO)
         {
-            throw new NotImplementedException();
+            Database.Rubrics.Create(Mapper.Map<RubricDTO, Rubric>(rubricDTO));
+            Database.Save();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Database.Dispose();
         }
 
         public void EditRubric(RubricDTO rubricDTO)
         {
-            throw new NotImplementedException();
+            Database.Rubrics.Update(Mapper.Map<RubricDTO, Rubric>(rubricDTO));
+            Database.Save();
         }
 
         public void RemoveRubric(RubricDTO rubricDTO)
         {
-            throw new NotImplementedException();
+            Rubric rubric = Mapper.Map<RubricDTO, Rubric>(rubricDTO);
+            Database.Rubrics.Delete(rubric.Id);
+            Database.Save();
         }
     }
 }
