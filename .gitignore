@@ -2,7 +2,6 @@
 .vs
 Data/bin
 Data/obj
-packages
 TestResult
 WorkBase/bin
 WorkBase/obj
