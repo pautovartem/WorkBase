@@ -1,5 +1,6 @@
 namespace Data.Entities
 {
+    using Data.Identity.Entities;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -12,8 +13,10 @@ namespace Data.Entities
             Careers = new HashSet<Career>();
             Resumes = new HashSet<Resume>();
         }
-        
-        public int Id { get; set; }
+
+        [Key]
+        [ForeignKey("ApplicationUser")]
+        public string Id { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -23,26 +26,9 @@ namespace Data.Entities
         [StringLength(50)]
         public string Name { get; set; }
 
-        [StringLength(25)]
-        public string Phone { get; set; }
-
-        [StringLength(100)]
-        public string Email { get; set; }
-
-        [StringLength(50)]
-        public string Skype { get; set; }
-
-        [Required]
-        [StringLength(25)]
-        public string Nickname { get; set; }
-
-        [Required]
-        [MaxLength(1024)]
-        public byte[] Password { get; set; }
-
-        public int UserType { get; set; }
-        
         public virtual ICollection<Career> Careers { get; set; }
         public virtual ICollection<Resume> Resumes { get; set; }
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

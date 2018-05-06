@@ -1,6 +1,8 @@
 ﻿using Ninject.Modules;
 using Data.Interfaces;
 using Data.Repositories;
+using Data.Identity.Interfaces;
+using Data.Identity.Repositories;
 
 namespace LogicLayer.Infrastructure
 {
@@ -16,6 +18,7 @@ namespace LogicLayer.Infrastructure
         public override void Load()
         {
             Bind<IUnitOfWork>().To<EFUnitOfWork>().WithConstructorArgument(connectionString);
+            Bind<IUnitOfWorkIdentity>().To<IdentityUnitOfWork>().WithConstructorArgument(connectionString);
         }
     }
 }
