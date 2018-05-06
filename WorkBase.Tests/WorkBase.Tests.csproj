@@ -98,9 +98,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Controllers\ValuesControllerTest.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -109,6 +111,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LogicLayer\LogicLayer.csproj">
+      <Project>{EFEDD154-B95E-4F2A-B949-A346ACC6F392}</Project>
+      <Name>LogicLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WorkBase\WorkBase.csproj">
       <Project>{C2A5338B-A60E-4B0B-B8A4-C13CEC1BC917}</Project>
       <Name>WorkBase</Name>
