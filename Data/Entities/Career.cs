@@ -5,13 +5,14 @@ namespace Data.Entities
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Careers")]
-    public partial class Career
+    public class Career
     {
         public Career()
         {
             Offers = new HashSet<Offer>();
         }
-        
+
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -41,7 +42,7 @@ namespace Data.Entities
         [StringLength(2048)]
         public string Desctiption { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public virtual Rubric Rubric { get; set; }
         public virtual User User { get; set; }

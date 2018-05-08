@@ -2,10 +2,12 @@ namespace Data.EF
 {
     using System.Data.Entity;
     using Data.Entities;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Data.Identity.Entities;
 
-    public partial class WorkBaseContext : DbContext
+    public partial class WorkBaseContext : IdentityDbContext<ApplicationUser>
     {
-        public WorkBaseContext()
+        public WorkBaseContext(string connectionString)
             : base("name=WorkBaseConnectionString")
         {
         }
@@ -15,7 +17,7 @@ namespace Data.EF
         public virtual DbSet<Resume> Resumes { get; set; }
         public virtual DbSet<ResumesExperience> ResumesExperiences { get; set; }
         public virtual DbSet<Rubric> Rubrics { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<User> UsersProfiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -49,10 +51,6 @@ namespace Data.EF
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
-                .Property(e => e.Password)
-                .IsFixedLength();
-
-            modelBuilder.Entity<User>()
                 .HasMany(e => e.Careers)
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
@@ -61,6 +59,7 @@ namespace Data.EF
                 .HasMany(e => e.Resumes)
                 .WithRequired(e => e.User)
                 .WillCascadeOnDelete(false);
+
         }
     }
 }

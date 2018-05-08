@@ -17,7 +17,7 @@ namespace Data.Repositories
 
         public EFUnitOfWork(string connectionString)
         {
-            database = new WorkBaseContext();
+            database = new WorkBaseContext(connectionString);
         }
 
         public IRepository<Career> Careers

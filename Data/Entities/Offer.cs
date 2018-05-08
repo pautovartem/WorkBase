@@ -1,11 +1,13 @@
 namespace Data.Entities
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Offers")]
-    public partial class Offer
+    public class Offer
     {
+        [Key]
         public int Id { get; set; }
         public int CareerId { get; set; }
         public int ResumeId { get; set; }

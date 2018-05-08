@@ -1,11 +1,11 @@
+using Data.Identity.Entities;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Data.Entities
 {
-    using Data.Identity.Entities;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("Users")]
+    [Table("UsersProfiles")]
     public partial class User
     {
         public User()

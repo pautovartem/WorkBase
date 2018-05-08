@@ -14,7 +14,7 @@ namespace Data.Identity.Repositories
 
         public void Create(User item)
         {
-            Database.Users.Add(item);
+            Database.UsersProfiles.Add(item);
             Database.SaveChanges();
         }
 

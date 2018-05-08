@@ -4,22 +4,25 @@ using LogicLayer.Interfaces;
 using Data.Interfaces;
 using AutoMapper;
 using Data.Entities;
+using LogicLayer.Infrastructure;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Data.Identity.Entities;
+using Data.Identity.Interfaces;
+using System.Linq;
+using Microsoft.AspNet.Identity;
 
 namespace LogicLayer.Services
 {
     public class UserService : IUserService
     {
         IUnitOfWork Database { get; set; }
+        IUnitOfWorkIdentity DatabaseUsers { get; set; }
 
-        public UserService(IUnitOfWork unitOfWork)
+        public UserService(IUnitOfWorkIdentity uowi, IUnitOfWork uow)
         {
-            Database = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-        }
-
-        public void CreateUser(UserDTO userDTO)
-        {
-            Database.Users.Create(Mapper.Map<UserDTO, User>(userDTO));
-            Database.Save();
+            DatabaseUsers = uowi;
+            Database = uow;
         }
 
         public void Dispose()
@@ -27,17 +30,37 @@ namespace LogicLayer.Services
             Database.Dispose();
         }
 
-        public void EditUser(UserDTO userDTO)
+        public async Task<OperationDetails> Registation(UserDTO userDTO)
         {
-            Database.Users.Update(Mapper.Map<UserDTO, User>(userDTO));
-            Database.Save();
+            var user = await DatabaseUsers.UserManager.FindByEmailAsync(userDTO.Email);
+            if (user == null)
+            {
+                user = new ApplicationUser { Email = userDTO.Email, UserName = userDTO.Email };
+                var result = await DatabaseUsers.UserManager.CreateAsync(user, userDTO.Password);
+
+                if (result.Errors.Count() > 0)
+                    return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
+
+                await DatabaseUsers.UserManager.AddToRoleAsync(user.Id, userDTO.Role);
+                User clientProfile = new User { Id = user.Id, Name = userDTO.Name };
+                DatabaseUsers.ClientManager.Create(clientProfile);
+                await DatabaseUsers.SaveAsync();
+                return new OperationDetails(true, "Регистрация успешно пройдена", "");
+            }
+            else
+            {
+                return new OperationDetails(false, "Пользователь с таким логином уже существует", "Email");
+            }
         }
 
-        public void RemoveUser(UserDTO userDTO)
+        public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
-            User user = Mapper.Map<UserDTO, User>(userDTO);
-            Database.Users.Delete(user.Id);
-            Database.Save();
+            ClaimsIdentity claim = null;
+            ApplicationUser user = await DatabaseUsers.UserManager.FindAsync(userDto.Email, userDto.Password);
+
+            if (user != null)
+                claim = await DatabaseUsers.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            return claim;
         }
     }
 }

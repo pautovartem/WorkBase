@@ -5,7 +5,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Rubrics")]
-    public partial class Rubric
+    public class Rubric
     {
         public Rubric()
         {
@@ -13,6 +13,7 @@
             Resumes = new HashSet<Resume>();
         }
 
+        [Key]
         public int Id { get; set; }
 
         [Required]

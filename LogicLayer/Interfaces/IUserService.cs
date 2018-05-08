@@ -9,9 +9,5 @@ namespace LogicLayer.Interfaces
     {
         Task<OperationDetails> Registation(UserDTO userDTO);
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
-
-        void EditUser(UserDTO userDTO);
-        void RemoveUser(UserDTO userDTO);
-        void Dispose();
     }
 }

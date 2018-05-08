@@ -17,7 +17,7 @@ namespace Data.Identity.Repositories
 
         public IdentityUnitOfWork(string connectionString)
         {
-            db = new WorkBaseContext();
+            db = new WorkBaseContext(connectionString);
             userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
             roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));
             clientManager = new ClientManager(db);

@@ -6,7 +6,7 @@ namespace Data.Entities
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Resumes")]
-    public partial class Resume
+    public class Resume
     {
         public Resume()
         {
@@ -14,6 +14,7 @@ namespace Data.Entities
             ResumesExperiences = new HashSet<ResumesExperience>();
         }
 
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -61,7 +62,7 @@ namespace Data.Entities
         [StringLength(255)]
         public string Skills { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         
         public virtual ICollection<Offer> Offers { get; set; }
         public virtual Rubric Rubric { get; set; }

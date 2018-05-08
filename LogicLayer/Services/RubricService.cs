@@ -4,6 +4,8 @@ using LogicLayer.Interfaces;
 using Data.Interfaces;
 using AutoMapper;
 using Data.Entities;
+using System.Collections.Generic;
+using LogicLayer.Infrastructure;
 
 namespace LogicLayer.Services
 {
@@ -38,6 +40,11 @@ namespace LogicLayer.Services
             Rubric rubric = Mapper.Map<RubricDTO, Rubric>(rubricDTO);
             Database.Rubrics.Delete(rubric.Id);
             Database.Save();
+        }
+
+        public IEnumerable<RubricDTO> GetAllRubrics()
+        {
+            return Mapper.Map<IEnumerable<Rubric>, List<RubricDTO>>(Database.Rubrics.GetAll());
         }
     }
 }

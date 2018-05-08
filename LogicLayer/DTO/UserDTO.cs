@@ -11,14 +11,12 @@ namespace LogicLayer.DTO
         }
 
         public string Id { get; set; }
-        public string Surname { get; set; }
         public string Name { get; set; }
-        public string Phone { get; set; }
+
         public string Email { get; set; }
-        public string Skype { get; set; }
-        public string Nickname { get; set; }
-        public byte[] Password { get; set; }
-        public int UserType { get; set; }
+        public string Password { get; set; }
+        public string UserName { get; set; }
+        public string Role { get; set; }
 
         public virtual ICollection<CareerDTO> Careers { get; set; }
         public virtual ICollection<ResumeDTO> Resumes { get; set; }

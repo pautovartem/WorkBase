@@ -14,15 +14,5 @@ namespace WorkBase.Controllers
 
             return View();
         }
-
-        public ActionResult Career()
-        {
-            return View();
-        }
-
-        public ActionResult Resume()
-        {
-            return View();
-        }
     }
 }

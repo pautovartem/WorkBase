@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogicLayer.DTO;
+using LogicLayer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,10 +11,18 @@ namespace WorkBase.Controllers
 {
     public class ValuesController : ApiController
     {
+        readonly IRubricService rubricService;
+
+        public ValuesController(IRubricService rubricService)
+        {
+            this.rubricService = rubricService;
+        }
+
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            rubricService.CreateRubric(new RubricDTO { Name = "Test1" });
+            return new string[] { "value" };
         }
 
         // GET api/values/5

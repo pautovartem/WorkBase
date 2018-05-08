@@ -114,7 +114,7 @@
       <Name>LogicLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\WorkBase\WorkBase.csproj">
-      <Project>{C2A5338B-A60E-4B0B-B8A4-C13CEC1BC917}</Project>
+      <Project>{57115E02-A994-40AD-BF15-F5C5E509D8A7}</Project>
       <Name>WorkBase</Name>
     </ProjectReference>
   </ItemGroup>

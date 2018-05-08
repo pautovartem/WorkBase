@@ -8,6 +8,7 @@ namespace Data.Identity.Repositories
     {
         public ApplicationRoleManager(RoleStore<ApplicationRole> store)
                     : base(store)
-        { }
+        {
+        }
     }
 }

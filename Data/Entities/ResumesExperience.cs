@@ -5,8 +5,9 @@ namespace Data.Entities
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("ResumesExperiences")]
-    public partial class ResumesExperience
+    public class ResumesExperience
     {
+        [Key]
         public int Id { get; set; }
 
         public int ResumeId { get; set; }
