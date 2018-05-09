@@ -39,10 +39,5 @@ namespace Data.Identity.Repositories
             }
             return manager;
         }
-
-        public Task<ClaimsIdentity> CreateIdentityAsync(ApplicationUser appUser, object authenticationType)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

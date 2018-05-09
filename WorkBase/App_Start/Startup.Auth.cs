@@ -27,7 +27,7 @@ namespace WorkBase
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
-                TokenEndpointPath = new PathString("/Token"),
+                TokenEndpointPath = new PathString("/api/Account/Authenticate"),
                 Provider = new ApplicationOAuthProvider(PublicClientId, userManager),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
