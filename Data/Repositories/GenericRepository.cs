@@ -20,6 +20,7 @@ namespace Data.Repositories
 
         public virtual IEnumerable<TEntity> GetAll()
         {
+            dbSet.Load();
             IQueryable<TEntity> query = dbSet;
             return query.ToList();
         }

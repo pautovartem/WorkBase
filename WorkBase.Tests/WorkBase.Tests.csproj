@@ -113,10 +113,6 @@
       <Project>{EFEDD154-B95E-4F2A-B949-A346ACC6F392}</Project>
       <Name>LogicLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WorkBase\WorkBase.csproj">
-      <Project>{57115E02-A994-40AD-BF15-F5C5E509D8A7}</Project>
-      <Name>WorkBase</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

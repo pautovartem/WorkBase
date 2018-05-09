@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Entities
 {
-    [Table("UsersProfiles")]
+    [Table("Users")]
     public partial class User
     {
         public User()

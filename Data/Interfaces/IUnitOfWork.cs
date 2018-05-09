@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using DAL.Interfaces;
+using Data.Entities;
 using System;
 
 namespace Data.Interfaces
@@ -10,7 +11,7 @@ namespace Data.Interfaces
         IRepository<Resume> Resumes { get; }
         IRepository<ResumesExperience> ResumesExperiences { get; }
         IRepository<Rubric> Rubrics { get; }
-        IRepository<User> Users { get; }
+        IUserRepository Users { get; }
         void Save();
     }
 }

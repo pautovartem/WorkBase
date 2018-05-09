@@ -1,6 +1,4 @@
-﻿using LogicLayer.DTO;
-using LogicLayer.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,20 +7,13 @@ using System.Web.Http;
 
 namespace WorkBase.Controllers
 {
+    [Authorize]
     public class ValuesController : ApiController
     {
-        readonly IRubricService rubricService;
-
-        public ValuesController(IRubricService rubricService)
-        {
-            this.rubricService = rubricService;
-        }
-
         // GET api/values
         public IEnumerable<string> Get()
         {
-            rubricService.CreateRubric(new RubricDTO { Name = "Test1" });
-            return new string[] { "value" };
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5

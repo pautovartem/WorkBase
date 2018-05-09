@@ -11,6 +11,9 @@ using Data.Identity.Entities;
 using Data.Identity.Interfaces;
 using System.Linq;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using System.Collections.Generic;
 
 namespace LogicLayer.Services
 {
@@ -25,24 +28,19 @@ namespace LogicLayer.Services
             Database = uow;
         }
 
-        public void Dispose()
+        public async Task<OperationDetails> Create(UserDTO userDto)
         {
-            Database.Dispose();
-        }
-
-        public async Task<OperationDetails> Registation(UserDTO userDTO)
-        {
-            var user = await DatabaseUsers.UserManager.FindByEmailAsync(userDTO.Email);
+            var user = await DatabaseUsers.UserManager.FindByEmailAsync(userDto.Email);
             if (user == null)
             {
-                user = new ApplicationUser { Email = userDTO.Email, UserName = userDTO.Email };
-                var result = await DatabaseUsers.UserManager.CreateAsync(user, userDTO.Password);
+                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
+                var result = await DatabaseUsers.UserManager.CreateAsync(user, userDto.Password);
 
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
 
-                await DatabaseUsers.UserManager.AddToRoleAsync(user.Id, userDTO.Role);
-                User clientProfile = new User { Id = user.Id, Name = userDTO.Name };
+                await DatabaseUsers.UserManager.AddToRoleAsync(user.Id, userDto.Role);
+                User clientProfile = new User { Id = user.Id, Name = userDto.Name };
                 DatabaseUsers.ClientManager.Create(clientProfile);
                 await DatabaseUsers.SaveAsync();
                 return new OperationDetails(true, "Регистрация успешно пройдена", "");
@@ -61,6 +59,41 @@ namespace LogicLayer.Services
             if (user != null)
                 claim = await DatabaseUsers.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             return claim;
+        }
+
+        public UserDTO GetUserById(string id)
+        {
+            var user = Database.Users.Get(id);
+            return Mapper.Map<User, UserDTO>(user);
+        }
+
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            return Mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(Database.Users.GetAll());
+        }
+
+        public void Dispose()
+        {
+            Database.Dispose();
+        }
+
+        public async Task<Tuple<ClaimsIdentity, ClaimsIdentity>> FindAsync(string username, string password)
+        {
+            var appUser = await DatabaseUsers.UserManager.FindAsync(username, password);
+
+            //if (appUser == null)
+            //throw new AuthException("invalid_grant", "The user name or password is incorrect.");
+
+            ClaimsIdentity oAuthIdentity = await DatabaseUsers.UserManager.CreateIdentityAsync(appUser, OAuthDefaults.AuthenticationType);
+            ClaimsIdentity cookiesIdentity = await DatabaseUsers.UserManager.CreateIdentityAsync(appUser, CookieAuthenticationDefaults.AuthenticationType);
+
+            return new Tuple<ClaimsIdentity, ClaimsIdentity>(oAuthIdentity, cookiesIdentity);
+        }
+
+        public async Task<UserDTO> FindByIdAsync(string id)
+        {
+            var appUser = await DatabaseUsers.UserManager.FindByIdAsync(id);
+            return Mapper.Map<ApplicationUser, UserDTO>(appUser);
         }
     }
 }

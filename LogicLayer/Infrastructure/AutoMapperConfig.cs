@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data.Entities;
+using Data.Identity.Entities;
 using LogicLayer.DTO;
 
 namespace LogicLayer.Infrastructure
@@ -16,6 +17,7 @@ namespace LogicLayer.Infrastructure
                 cfg.CreateMap<ResumesExperience, ResumesExperienceDTO>();
                 cfg.CreateMap<Rubric, RubricDTO>();
                 cfg.CreateMap<User, UserDTO>();
+                cfg.CreateMap<ApplicationUser, UserDTO>();
             });
         }
     }

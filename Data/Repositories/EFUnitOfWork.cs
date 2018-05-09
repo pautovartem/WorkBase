@@ -2,6 +2,8 @@
 using System;
 using Data.Entities;
 using Data.EF;
+using DAL.Repositories;
+using DAL.Interfaces;
 
 namespace Data.Repositories
 {
@@ -13,7 +15,7 @@ namespace Data.Repositories
         private GenericRepository<Resume> resumeRepository;
         private GenericRepository<ResumesExperience> resumesExperienceRepository;
         private GenericRepository<Rubric> rubricsRepository;
-        private GenericRepository<User> userRepository;
+        private UserRepository userRepository;
 
         public EFUnitOfWork(string connectionString)
         {
@@ -70,12 +72,12 @@ namespace Data.Repositories
             }
         }
 
-        public IRepository<User> Users
+        public IUserRepository Users
         {
             get
             {
                 if (userRepository == null)
-                    userRepository = new GenericRepository<User>(database);
+                    userRepository = new UserRepository(database);
                 return userRepository;
             }
         }
