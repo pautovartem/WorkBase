@@ -4,6 +4,7 @@ using LogicLayer.Interfaces;
 using Data.Interfaces;
 using AutoMapper;
 using Data.Entities;
+using System.Collections.Generic;
 
 namespace LogicLayer.Services
 {
@@ -38,6 +39,16 @@ namespace LogicLayer.Services
             Offer offer = Mapper.Map<OfferDTO, Offer>(offerDTO);
             Database.Offers.Delete(offer.Id);
             Database.Save();
+        }
+
+        public OfferDTO GetOfferById(int id)
+        {
+            return Mapper.Map<Offer, OfferDTO>(Database.Offers.Get(id));
+        }
+
+        public IEnumerable<OfferDTO> GetAllOffers()
+        {
+            return Mapper.Map<IEnumerable<Offer>, List<OfferDTO>>(Database.Offers.GetAll());
         }
     }
 }

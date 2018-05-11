@@ -9,7 +9,9 @@ namespace LogicLayer.Interfaces
         void EditRubric(RubricDTO rubricDTO);
         void RemoveRubric(RubricDTO rubricDTO);
 
+        RubricDTO GetRubricById(int id);
         IEnumerable<RubricDTO> GetAllRubrics();
+
         void Dispose();
     }
 }

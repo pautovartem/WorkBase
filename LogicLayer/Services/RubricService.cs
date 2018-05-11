@@ -46,5 +46,10 @@ namespace LogicLayer.Services
         {
             return Mapper.Map<IEnumerable<Rubric>, List<RubricDTO>>(Database.Rubrics.GetAll());
         }
+
+        public RubricDTO GetRubricById(int id)
+        {
+            return Mapper.Map<Rubric, RubricDTO>(Database.Rubrics.Get(id));
+        }
     }
 }

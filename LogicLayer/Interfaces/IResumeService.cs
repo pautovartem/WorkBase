@@ -1,4 +1,5 @@
 ﻿using LogicLayer.DTO;
+using System.Collections.Generic;
 
 namespace LogicLayer.Interfaces
 {
@@ -7,6 +8,10 @@ namespace LogicLayer.Interfaces
         void CreateResume(ResumeDTO resumeDTO);
         void EditResume(ResumeDTO resumeDTO);
         void RemoveResume(ResumeDTO resumeDTO);
+
+        ResumeDTO GetResumeById(int id);
+        IEnumerable<ResumeDTO> GetAllResumes();
+
         void Dispose();
     }
 }

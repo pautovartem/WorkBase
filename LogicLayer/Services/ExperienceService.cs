@@ -4,6 +4,7 @@ using LogicLayer.Interfaces;
 using Data.Interfaces;
 using AutoMapper;
 using Data.Entities;
+using System.Collections.Generic;
 
 namespace LogicLayer.Services
 {
@@ -38,6 +39,16 @@ namespace LogicLayer.Services
             ResumesExperience resumesExperience = Mapper.Map<ResumesExperienceDTO, ResumesExperience>(experienceDTO);
             Database.ResumesExperiences.Delete(resumesExperience.Id);
             Database.Save();
+        }
+
+        public ResumesExperienceDTO GetExperienceById(int id)
+        {
+            return Mapper.Map<ResumesExperience, ResumesExperienceDTO>(Database.ResumesExperiences.Get(id));
+        }
+
+        public IEnumerable<ResumesExperienceDTO> GetAllExperiences()
+        {
+            return Mapper.Map<IEnumerable<ResumesExperience>, List<ResumesExperienceDTO>>(Database.ResumesExperiences.GetAll());
         }
     }
 }
