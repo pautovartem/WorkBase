@@ -1,5 +1,6 @@
 
 .vs
+packages
 Data/bin
 Data/obj
 TestResult
