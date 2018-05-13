@@ -98,9 +98,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllersTest\ResumesControllerTest.cs" />
+    <Compile Include="ControllersTest\AccountControllerTest.cs" />
+    <Compile Include="ControllersTest\RubricsControllerTest.cs" />
+    <Compile Include="LogicTest\RubricServiceTest.cs" />
+    <Compile Include="LogicTest\ResumeServiceTest.cs" />
+    <Compile Include="LogicTest\OfferServiceTest.cs" />
+    <Compile Include="LogicTest\ExperianceServiceTest.cs" />
+    <Compile Include="LogicTest\CareerServiceTest.cs" />
+    <Compile Include="LogicTest\UserServiceTest.cs" />
+    <Compile Include="Mocks\MockRepositoryResume.cs" />
+    <Compile Include="Mocks\MockRepositoryRubric.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Controllers\ValuesControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -109,11 +118,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{5ea73074-c45a-44eb-a16f-0c646260f007}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogicLayer\LogicLayer.csproj">
       <Project>{EFEDD154-B95E-4F2A-B949-A346ACC6F392}</Project>
       <Name>LogicLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WorkBase\WorkBase.csproj">
+      <Project>{5e78e4b1-cb5d-444e-80af-5a55249c6495}</Project>
+      <Name>WorkBase</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
