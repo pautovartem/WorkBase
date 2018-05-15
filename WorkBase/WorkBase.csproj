@@ -290,12 +290,64 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="WebSite\css\bootstrap-grid.css" />
+    <Content Include="WebSite\css\bootstrap-grid.min.css" />
+    <Content Include="WebSite\css\bootstrap-reboot.css" />
+    <Content Include="WebSite\css\bootstrap-reboot.min.css" />
+    <Content Include="WebSite\css\bootstrap-theme.css" />
+    <Content Include="WebSite\css\bootstrap-theme.min.css" />
+    <Content Include="WebSite\css\bootstrap.css" />
+    <Content Include="WebSite\css\bootstrap.min.css" />
+    <Content Include="WebSite\css\fontawesome.css" />
+    <Content Include="WebSite\css\fontawesome.min.css" />
+    <Content Include="WebSite\css\main.css" />
+    <Content Include="WebSite\css\signin.css" />
+    <Content Include="WebSite\fonts\fa-brands-400.svg" />
+    <Content Include="WebSite\fonts\fa-regular-400.svg" />
+    <Content Include="WebSite\fonts\fa-solid-900.svg" />
+    <Content Include="WebSite\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="WebSite\index.html" />
+    <Content Include="WebSite\js\bootstrap.bundle.js" />
+    <Content Include="WebSite\js\bootstrap.bundle.min.js" />
+    <Content Include="WebSite\js\bootstrap.js" />
+    <Content Include="WebSite\js\bootstrap.min.js" />
+    <Content Include="WebSite\js\jquery-3.3.1.js" />
+    <Content Include="WebSite\js\npm.js" />
+    <Content Include="WebSite\sing_in.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="WebSite\css\bootstrap-grid.css.map" />
+    <Content Include="WebSite\css\bootstrap-grid.min.css.map" />
+    <Content Include="WebSite\css\bootstrap-reboot.css.map" />
+    <Content Include="WebSite\css\bootstrap-reboot.min.css.map" />
+    <Content Include="WebSite\css\bootstrap-theme.css.map" />
+    <Content Include="WebSite\css\bootstrap-theme.min.css.map" />
+    <Content Include="WebSite\css\bootstrap.css.map" />
+    <Content Include="WebSite\css\bootstrap.min.css.map" />
+    <Content Include="WebSite\fonts\fa-brands-400.eot" />
+    <Content Include="WebSite\fonts\fa-brands-400.ttf" />
+    <Content Include="WebSite\fonts\fa-brands-400.woff" />
+    <Content Include="WebSite\fonts\fa-brands-400.woff2" />
+    <Content Include="WebSite\fonts\fa-regular-400.eot" />
+    <Content Include="WebSite\fonts\fa-regular-400.ttf" />
+    <Content Include="WebSite\fonts\fa-regular-400.woff" />
+    <Content Include="WebSite\fonts\fa-regular-400.woff2" />
+    <Content Include="WebSite\fonts\fa-solid-900.eot" />
+    <Content Include="WebSite\fonts\fa-solid-900.ttf" />
+    <Content Include="WebSite\fonts\fa-solid-900.woff" />
+    <Content Include="WebSite\fonts\fa-solid-900.woff2" />
+    <Content Include="WebSite\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="WebSite\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="WebSite\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="WebSite\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="WebSite\js\bootstrap.bundle.js.map" />
+    <Content Include="WebSite\js\bootstrap.bundle.min.js.map" />
+    <Content Include="WebSite\js\bootstrap.js.map" />
+    <Content Include="WebSite\js\bootstrap.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LogicLayer\LogicLayer.csproj">
