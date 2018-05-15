@@ -10,3 +10,4 @@ LogicLayer/bin
 LogicLayer/obj
 WorkBase.Tests/bin
 WorkBase.Tests/obj
+*.user
