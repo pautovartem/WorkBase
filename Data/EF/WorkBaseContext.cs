@@ -128,24 +128,24 @@ namespace Data.EF
 
             #region Rubrics
 
-            var rubric1 = new Rubric { Name = "IT" };
-            var rubric2 = new Rubric { Name = "HR специалисты - Бизнес-тренеры" };
-            var rubric3 = new Rubric { Name = "Автобизнес - Сервисное обслуживание" };
-            var rubric4 = new Rubric { Name = "Административный персонал - Водители - Курьеры" };
-            var rubric5 = new Rubric { Name = "Банки - Инвестиции - Лизинг" };
+            var rubric1 = new Rubric { Id = 1, Name = "IT" };
+            var rubric2 = new Rubric { Id = 2, Name = "HR специалисты - Бизнес-тренеры" };
+            var rubric3 = new Rubric { Id = 3, Name = "Автобизнес - Сервисное обслуживание" };
+            var rubric4 = new Rubric { Id = 4, Name = "Административный персонал - Водители - Курьеры" };
+            var rubric5 = new Rubric { Id = 5, Name = "Банки - Инвестиции - Лизинг" };
 
             context.Rubrics.Add(rubric1);
             context.Rubrics.Add(rubric2);
             context.Rubrics.Add(rubric3);
             context.Rubrics.Add(rubric4);
             context.Rubrics.Add(rubric5);
-            context.SaveChanges();
             #endregion
 
             #region Resumes
 
             var resume1 = new Resume
             {
+                Id = 1,
                 Title = "Junior QA Engineer",
                 Surname = "ДА подавись ты своим полем",
                 Name = "Алексей",
@@ -165,6 +165,7 @@ namespace Data.EF
             };
             var resume2 = new Resume
             {
+                Id = 2,
                 Title = "Junior Software Engineer, Support Engineer",
                 Surname = "RuslanS",
                 Name = "Ruslan",
@@ -184,6 +185,7 @@ namespace Data.EF
             };
             var resume3 = new Resume
             {
+                Id = 3,
                 Title = "Программист С++, JS, PHP, Delphi, SQL",
                 Surname = "Фамилия чела",
                 Name = "Вячеслав",
@@ -205,13 +207,13 @@ namespace Data.EF
             context.Resumes.Add(resume1);
             context.Resumes.Add(resume2);
             context.Resumes.Add(resume3);
-            context.SaveChanges();
             #endregion
 
             #region ResumesExperience
 
             var experience1 = new ResumesExperience
             {
+                Id = 1,
                 Company = "Playtech",
                 Position = "Java/javascript developer",
                 StartDate = new DateTime(2013, 10, 1),
@@ -219,6 +221,7 @@ namespace Data.EF
             };
             var experience2 = new ResumesExperience
             {
+                Id = 2,
                 Company = "IT company",
                 Position = "C# developer ",
                 StartDate = new DateTime(2011, 03, 1),
@@ -227,6 +230,7 @@ namespace Data.EF
             };
             var experience3 = new ResumesExperience
             {
+                Id = 3,
                 Company = "Private enterprise",
                 Position = "PHP programmer",
                 StartDate = new DateTime(2007, 04, 1),
@@ -237,13 +241,13 @@ namespace Data.EF
             context.ResumesExperiences.Add(experience1);
             context.ResumesExperiences.Add(experience2);
             context.ResumesExperiences.Add(experience3);
-            context.SaveChanges();
             #endregion
 
             #region Careers
 
             var career1 = new Career
             {
+                Id = 1,
                 Title = "QA Engineer",
                 Company = "Codeminders",
                 City = "Киев",
@@ -256,13 +260,13 @@ namespace Data.EF
             };
 
             context.Careers.Add(career1);
-            context.SaveChanges();
             #endregion
 
             #region Offers
 
             var offer1 = new Offer
             {
+                Id = 1,
                 ResumeId = resume1.Id,
                 CareerId = career1.Id,
                 DateSend = new DateTime(2018, 5, 15),
@@ -270,6 +274,7 @@ namespace Data.EF
             };
             var offer2 = new Offer
             {
+                Id = 2,
                 ResumeId = resume3.Id,
                 CareerId = career1.Id,
                 DateSend = new DateTime(2018, 5, 10),
