@@ -22,6 +22,11 @@ namespace Data.Repositories
             database = new WorkBaseContext(connectionString);
         }
 
+        public EFUnitOfWork(WorkBaseContext context)
+        {
+            database = context;
+        }
+
         public IRepository<Career> Careers
         {
             get
