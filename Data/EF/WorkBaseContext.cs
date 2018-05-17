@@ -113,6 +113,8 @@ namespace Data.EF
             userManager.AddToRole(userAdmin.Id, "admin");
             userManager.AddToRole(userEmployer.Id, "employer");
             userManager.AddToRole(userWorker.Id, "worker");
+            userManager.AddToRole(userWorker2.Id, "worker");
+            userManager.AddToRole(userWorker3.Id, "worker");
 
             var profileAdmin = new User { Id = userAdmin.Id, Surname = "AdminSurname", Name = "AdminName" };
             var profileEmployer = new User { Id = userEmployer.Id, Surname = "EmployerSurname", Name = "EmployerName" };
@@ -123,7 +125,8 @@ namespace Data.EF
             context.UsersProfiles.Add(profileAdmin);
             context.UsersProfiles.Add(profileEmployer);
             context.UsersProfiles.Add(profileWorker);
-
+            context.UsersProfiles.Add(profileWorker2);
+            context.UsersProfiles.Add(profileWorker3);
             #endregion
 
             #region Rubrics
@@ -228,19 +231,19 @@ namespace Data.EF
                 FinishDate = new DateTime(2013, 10, 1),
                 ResumeId = resume1.Id,
             };
-            var experience3 = new ResumesExperience
-            {
-                Id = 3,
-                Company = "Private enterprise",
-                Position = "PHP programmer",
-                StartDate = new DateTime(2007, 04, 1),
-                FinishDate = new DateTime(2010, 06, 1),
-                ResumeId = resume2.Id,
-            };
+            //var experience3 = new ResumesExperience
+            //{
+            //    Id = 3,
+            //    Company = "Private enterprise",
+            //    Position = "PHP programmer",
+            //    StartDate = new DateTime(2007, 04, 1),
+            //    FinishDate = new DateTime(2010, 06, 1),
+            //    ResumeId = resume2.Id,
+            //};
 
             context.ResumesExperiences.Add(experience1);
             context.ResumesExperiences.Add(experience2);
-            context.ResumesExperiences.Add(experience3);
+            //context.ResumesExperiences.Add(experience3);
             #endregion
 
             #region Careers
@@ -272,17 +275,17 @@ namespace Data.EF
                 DateSend = new DateTime(2018, 5, 15),
                 Viewed = false
             };
-            var offer2 = new Offer
-            {
-                Id = 2,
-                ResumeId = resume3.Id,
-                CareerId = career1.Id,
-                DateSend = new DateTime(2018, 5, 10),
-                Viewed = false
-            };
+            //var offer2 = new Offer
+            //{
+            //    Id = 2,
+            //    ResumeId = resume3.Id,
+            //    CareerId = career1.Id,
+            //    DateSend = new DateTime(2018, 5, 10),
+            //    Viewed = false
+            //};
 
             context.Offers.Add(offer1);
-            context.Offers.Add(offer2);
+            //context.Offers.Add(offer2);
             #endregion
 
             context.SaveChanges();
