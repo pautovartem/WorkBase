@@ -1,5 +1,6 @@
 ﻿using LogicLayer.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LogicLayer.Interfaces
 {

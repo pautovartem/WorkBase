@@ -6,6 +6,7 @@ using AutoMapper;
 using Data.Entities;
 using System.Collections.Generic;
 using LogicLayer.Infrastructure;
+using System.Threading.Tasks;
 
 namespace LogicLayer.Services
 {
