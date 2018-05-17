@@ -1,0 +1,49 @@
+.form-group{
+ margin-bottom: 10px;
+}
+label{
+ margin-bottom: 10px;
+}
+input,
+input::-webkit-input-placeholder {
+	font-size: 11px;
+ 	padding-top: 3px;
+}
+
+#container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -275px;
+  margin-left: -170px;
+  margin-right: 20px;
+  background: #fff;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+ max-width: 400px;
+ padding: 10px 40px;
+
+}
+span.input-group-addon i {
+ color: #009edf;
+ font-size: 17px;
+}
+.login-button{
+ margin-top: 5px;
+}
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+h2
+{
+  font-family: "Roboto+Slab";
+  text-align: center;
+}
+
