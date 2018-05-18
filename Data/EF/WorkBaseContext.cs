@@ -231,19 +231,19 @@ namespace Data.EF
                 FinishDate = new DateTime(2013, 10, 1),
                 ResumeId = resume1.Id,
             };
-            //var experience3 = new ResumesExperience
-            //{
-            //    Id = 3,
-            //    Company = "Private enterprise",
-            //    Position = "PHP programmer",
-            //    StartDate = new DateTime(2007, 04, 1),
-            //    FinishDate = new DateTime(2010, 06, 1),
-            //    ResumeId = resume2.Id,
-            //};
+            var experience3 = new ResumesExperience
+            {
+                Id = 3,
+                Company = "Private enterprise",
+                Position = "PHP programmer",
+                StartDate = new DateTime(2007, 04, 1),
+                FinishDate = new DateTime(2010, 06, 1),
+                ResumeId = resume2.Id,
+            };
 
             context.ResumesExperiences.Add(experience1);
             context.ResumesExperiences.Add(experience2);
-            //context.ResumesExperiences.Add(experience3);
+            context.ResumesExperiences.Add(experience3);
             #endregion
 
             #region Careers
