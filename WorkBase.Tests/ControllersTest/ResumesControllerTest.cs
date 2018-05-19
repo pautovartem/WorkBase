@@ -16,7 +16,7 @@ namespace WorkBase.Tests.ControllersTest
             ResumeDTO d = null;
             try
             {
-                d = resumesController.Get(2);//человек проверь
+                d = resumesController.Get(2);
             }
             catch (Exception ex) {
                 Assert.Fail(ex.Message);

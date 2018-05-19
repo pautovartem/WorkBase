@@ -16,7 +16,7 @@ namespace WorkBase.Tests.ControllersTest
             RubricDTO d = null;
             try
             {
-                d = rubricsController.Get(0);//человек проверь
+                d = rubricsController.Get(0);
             }
             catch (Exception ex)
             {

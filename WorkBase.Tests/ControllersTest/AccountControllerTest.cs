@@ -13,8 +13,8 @@ namespace WorkBase.Tests.ControllersTest
         {
             RegisterBindingModel registerBindingModel = new RegisterBindingModel()
             {
-                ConfirmPassword = "1234",
-                Password = "1234",
+                ConfirmPassword = "12345",
+                Password = "12345",
                 Email = "1@gmail.com"
             };
             AccountController accountController = new AccountController();
