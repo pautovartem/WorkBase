@@ -10,12 +10,12 @@ namespace Data.Repositories
     public class EFUnitOfWork : IUnitOfWork
     {
         private WorkBaseContext database;
-        private GenericRepository<Career> careerRepository;
-        private GenericRepository<Offer> offerRepository;
-        private GenericRepository<Resume> resumeRepository;
-        private GenericRepository<ResumesExperience> resumesExperienceRepository;
-        private GenericRepository<Rubric> rubricsRepository;
-        private UserRepository userRepository;
+        private IRepository<Career> careerRepository;
+        private IRepository<Offer> offerRepository;
+        private IRepository<Resume> resumeRepository;
+        private IRepository<ResumesExperience> resumesExperienceRepository;
+        private IRepository<Rubric> rubricsRepository;
+        private IUserRepository userRepository;
 
         public EFUnitOfWork(string connectionString)
         {

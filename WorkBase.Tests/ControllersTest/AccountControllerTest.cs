@@ -7,7 +7,7 @@ namespace WorkBase.Tests.ControllersTest
 {
     [TestClass]
     public class AccountControllerTest
-    {
+    {/*
         [TestMethod]
         public void AccountControllerRegistrationTest()
         {
@@ -20,13 +20,13 @@ namespace WorkBase.Tests.ControllersTest
             AccountController accountController = new AccountController();
             try
             {
-                accountController.Register(registerBindingModel);
+                 accountController.Register(registerBindingModel);
             }
             catch (Exception ex){
                 Assert.Fail(ex.Message);
             }
             
 
-        }
+        }*/
     }
 }
