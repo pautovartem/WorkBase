@@ -10,7 +10,7 @@ namespace LogicLayer.Interfaces
         void RemoveResume(ResumeDTO resumeDTO);
 
         ResumeDTO GetResumeById(int id);
-        IEnumerable<ResumeDTO> GetAllResumes();
+        IEnumerable<ResumeDTO> GetAllResumes(int options = 0);
 
         void Dispose();
     }
