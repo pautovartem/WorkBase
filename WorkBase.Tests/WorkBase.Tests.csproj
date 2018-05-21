@@ -106,10 +106,10 @@
   <ItemGroup>
     <Compile Include="ControllersTest\ResumesControllerTest.cs" />
     <Compile Include="ControllersTest\RubricsControllerTest.cs" />
-    <Compile Include="LogicTest\RubricServiceTest.cs" />
     <Compile Include="LogicTest\ResumeServiceTest.cs" />
+    <Compile Include="LogicTest\RubricServiceTest.cs" />
     <Compile Include="LogicTest\OfferServiceTest.cs" />
-    <Compile Include="LogicTest\ExperianceServiceTest.cs" />
+    <Compile Include="LogicTest\ExperienceServiceTest.cs" />
     <Compile Include="LogicTest\CareerServiceTest.cs" />
     <Compile Include="LogicTest\UserServiceTest.cs" />
     <Compile Include="Mocks\MockRepositoryResume.cs" />
