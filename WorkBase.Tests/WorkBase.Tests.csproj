@@ -104,6 +104,7 @@
     <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllersTest\AccountControllerTest.cs" />
     <Compile Include="ControllersTest\ResumesControllerTest.cs" />
     <Compile Include="ControllersTest\RubricsControllerTest.cs" />
     <Compile Include="LogicTest\ResumeServiceTest.cs" />
