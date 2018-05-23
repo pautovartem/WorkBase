@@ -9,7 +9,7 @@ using LogicLayer.DTO;
 
 namespace WorkBase.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ResumesController : ApiController
     {
         IResumeService resumeService;
@@ -20,9 +20,33 @@ namespace WorkBase.Controllers
         }
 
         // GET api/<controller>
-        public IEnumerable<ResumeDTO> Get()
+        public string Get()
         {
-            return resumeService.GetAllResumes();
+            return "Get";
+        }
+
+        [Route("api/resumes/geta")]
+        public string GetA()
+        {
+            return "A";
+        }
+
+        [Route("getb")]
+        public string GetB()
+        {
+            return "B";
+        }
+
+        [Route("getc")]
+        public string GetC()
+        {
+            return "C";
+        }
+
+        [Route("getd")]
+        public string GetD()
+        {
+            return "D";
         }
 
         // GET api/<controller>/5

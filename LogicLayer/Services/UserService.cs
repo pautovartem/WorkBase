@@ -40,7 +40,7 @@ namespace LogicLayer.Services
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
 
                 await DatabaseUsers.UserManager.AddToRoleAsync(user.Id, userDto.Role);
-                User clientProfile = new User { Id = user.Id, Name = userDto.Name };
+                User clientProfile = new User { Id = user.Id, Surname = userDto.Surname, Name = userDto.Name };
                 DatabaseUsers.ClientManager.Create(clientProfile);
                 await DatabaseUsers.SaveAsync();
                 return new OperationDetails(true, "Регистрация успешно пройдена", "");

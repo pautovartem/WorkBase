@@ -16,7 +16,6 @@ namespace Data.EF
         public WorkBaseContext(string connectionString)
             : base(connectionString)
         {
-            //Database.SetInitializer((new DbInitializaer()));
         }
 
         static WorkBaseContext()
