@@ -5,6 +5,7 @@ using LogicLayer.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WorkBase.Tests.Mocks;
 
+
 namespace WorkBase.Tests.LogicTest
 {
     [TestClass]
@@ -13,6 +14,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void RubricTestGetAll()
         {
+            
             MockUoW mockUoW = new MockUoW();
             RubricService r = new RubricService(mockUoW);
 
@@ -25,6 +27,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void RubricTestCreate()
         {
+            
             MockUoW mockUoW = new MockUoW();
             RubricService r = new RubricService(mockUoW);
 
@@ -37,6 +40,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void RubricTestRemove()
         {
+            
             MockUoW mockUoW = new MockUoW();
             RubricService r = new RubricService(mockUoW);
 
@@ -49,6 +53,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void RubricTestEdit()
         {
+           
             MockUoW mockUoW = new MockUoW();
             RubricService r = new RubricService(mockUoW);
 

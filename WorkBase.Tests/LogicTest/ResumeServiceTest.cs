@@ -13,6 +13,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void ResumeTestGetAll()
         {
+            MockAutoMapper.MockInitialize();
             MockUoW mockUoW = new MockUoW();
             ResumeService r = new ResumeService(mockUoW);
 
@@ -37,6 +38,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void ResumeTestRemove()
         {
+
             MockUoW mockUoW = new MockUoW();
             ResumeService r = new ResumeService(mockUoW);
 

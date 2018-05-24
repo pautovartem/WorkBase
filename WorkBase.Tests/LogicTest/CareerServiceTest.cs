@@ -14,6 +14,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void CareerTestGetAll()
         {
+            
             MockUoW mockUoW = new MockUoW();
             CareerService career = new CareerService(mockUoW);
 
@@ -26,6 +27,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void CareerTestCreate()
         {
+           
             MockUoW mockUoW = new MockUoW();
             CareerService career = new CareerService(mockUoW);
 
@@ -38,6 +40,7 @@ namespace WorkBase.Tests.LogicTest
         [TestMethod]
         public void CareerTestRemove()
         {
+           
             MockUoW mockUoW = new MockUoW();
             CareerService career = new CareerService(mockUoW);
 
