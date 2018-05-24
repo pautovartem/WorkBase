@@ -11,6 +11,7 @@ namespace WorkBase.Tests.LogicTest
     [TestClass]
     public class RubricServiceTest
     {
+       
         [TestMethod]
         public void RubricTestGetAll()
         {

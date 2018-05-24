@@ -10,10 +10,14 @@ namespace WorkBase.Tests.LogicTest
     [TestClass]
     public class ResumeServiceTest
     {
+        static ResumeServiceTest()
+        {
+            LogicLayer.Infrastructure.AutoMapperConfig.Initialize();
+        }
         [TestMethod]
         public void ResumeTestGetAll()
         {
-            MockAutoMapper.MockInitialize();
+          //  MockAutoMapper.MockInitialize();
             MockUoW mockUoW = new MockUoW();
             ResumeService r = new ResumeService(mockUoW);
 

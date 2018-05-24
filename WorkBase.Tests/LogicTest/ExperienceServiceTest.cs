@@ -10,6 +10,7 @@ namespace WorkBase.Tests.LogicTest
     [TestClass]
     public class ExperienceServiceTest
     {
+       
         [TestMethod]
         public void ExperienceTestGetAll()
         {

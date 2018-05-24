@@ -117,7 +117,6 @@
     <Compile Include="LogicTest\ExperienceServiceTest.cs" />
     <Compile Include="LogicTest\CareerServiceTest.cs" />
     <Compile Include="LogicTest\UserServiceTest.cs" />
-    <Compile Include="Mocks\MockAutoMapper.cs" />
     <Compile Include="Mocks\MockRepositoryResume.cs" />
     <Compile Include="Mocks\MockRepositoryRubric.cs" />
     <Compile Include="Mocks\MockUoW.cs" />

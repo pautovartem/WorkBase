@@ -10,6 +10,7 @@ namespace WorkBase.Tests.LogicTest
     [TestClass]
     public class OfferServiceTest
     {
+     
         [TestMethod]
         public void OfferTestGetAll()
         {
