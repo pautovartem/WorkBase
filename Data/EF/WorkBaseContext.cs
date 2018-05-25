@@ -76,7 +76,7 @@ namespace Data.EF
         }
     }
 
-    public class DbInitializaer : DropCreateDatabaseAlways<WorkBaseContext>
+    public class DbInitializaer : DropCreateDatabaseIfModelChanges<WorkBaseContext>
     {
         protected override void Seed(WorkBaseContext context)
         {
