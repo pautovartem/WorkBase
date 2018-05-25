@@ -7,18 +7,15 @@ namespace LogicLayer.Infrastructure
 {
     public class AutoMapperConfig
     {
-        public static void Initialize()
+        public static void Configure(IMapperConfigurationExpression cfg)
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Career, CareerDTO>();
-                cfg.CreateMap<Offer, OfferDTO>();
-                cfg.CreateMap<Resume, ResumeDTO>();
-                cfg.CreateMap<ResumesExperience, ResumesExperienceDTO>();
-                cfg.CreateMap<Rubric, RubricDTO>();
-                cfg.CreateMap<User, UserDTO>();
-                cfg.CreateMap<ApplicationUser, UserDTO>();
-            });
+            cfg.CreateMap<Career, CareerDTO>();
+            cfg.CreateMap<Offer, OfferDTO>();
+            cfg.CreateMap<Resume, ResumeDTO>();
+            cfg.CreateMap<ResumesExperience, ResumesExperienceDTO>();
+            cfg.CreateMap<Rubric, RubricDTO>();
+            cfg.CreateMap<User, UserDTO>();
+            cfg.CreateMap<ApplicationUser, UserDTO>();
         }
     }
 }
