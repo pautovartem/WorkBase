@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using LogicLayer.Interfaces;
 using LogicLayer.DTO;
+using WorkBase.Models;
+using AutoMapper;
 
 namespace WorkBase.Controllers
 {
@@ -13,62 +15,87 @@ namespace WorkBase.Controllers
     public class ResumesController : ApiController
     {
         IResumeService resumeService;
+        IUserService userService;
 
-        public ResumesController(IResumeService resumeService)
+        public ResumesController(IResumeService resumeService, IUserService userService)
         {
             this.resumeService = resumeService;
+            this.userService = userService;
         }
 
-        // GET api/<controller>
-        public string Get()
+        [HttpGet]
+        [Authorize]
+        [Route("api/resumes/")]
+        public IHttpActionResult GetResumes()
         {
-            return "Get";
+            return Ok(Mapper.Map<IEnumerable<ResumeDTO>, List<ResumeViewModel>>(resumeService.GetAllResumes()));
         }
 
-        [Route("api/resumes/geta")]
-        public string GetA()
+        [HttpGet]
+        [Authorize]
+        [Route("api/resumes/minimum")]
+        public IHttpActionResult GetResumesMinimum()
         {
-            return "A";
+            return Ok(Mapper.Map<IEnumerable<ResumeDTO>, List<ResumeMinimumViewModel>>(resumeService.GetAllResumes()));
         }
 
-        [Route("getb")]
-        public string GetB()
+        [HttpGet]
+        [Authorize]
+        [Route("api/resumes/{id:int}")]
+        public IHttpActionResult GetResume(int id)
         {
-            return "B";
+            ResumeViewModel resumeView = Mapper.Map<ResumeDTO, ResumeViewModel>(resumeService.GetResumeById(id));
+
+            if (resumeView == null)
+                return NotFound();
+
+            return Ok(resumeView);
         }
 
-        [Route("getc")]
-        public string GetC()
+        [HttpGet]
+        [Authorize]
+        [Route("api/resumes/{id:int}/minimum")]
+        public IHttpActionResult GetResumeMinimum(int id)
         {
-            return "C";
+            ResumeMinimumViewModel resumeView = Mapper.Map<ResumeDTO, ResumeMinimumViewModel>(resumeService.GetResumeById(id));
+
+            if (resumeView == null)
+                return NotFound();
+
+            return Ok(resumeView);
         }
 
-        [Route("getd")]
-        public string GetD()
+        [HttpPost]
+        [Authorize]
+        [Route("api/rubrics/add")]
+        public IHttpActionResult Add(ResumeViewModel resumeView)
         {
-            return "D";
+            ResumeDTO resumeDTO = Mapper.Map<ResumeViewModel, ResumeDTO>(resumeView);
+            resumeDTO.User = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
+
+            resumeService.CreateResume(resumeDTO);
+
+            return Ok();
         }
 
-        // GET api/<controller>/5
-        public ResumeDTO Get(int id)
+        [HttpPost]
+        [Authorize]
+        [Route("api/rubrics/edit")]
+        public IHttpActionResult Edit(ResumeViewModel resumeView)
         {
-            return resumeService.GetResumeById(id);
+            resumeService.EditResume(Mapper.Map<ResumeViewModel, ResumeDTO>(resumeView));
+
+            return Ok();
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Authorize]
+        [Route("api/resumes/delete/{id:int}")]
+        public IHttpActionResult Delete(int id)
         {
-        }
+            resumeService.RemoveResume(id);
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return Ok();
         }
     }
 }

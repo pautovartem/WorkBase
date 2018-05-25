@@ -15,6 +15,12 @@ namespace WorkBase.App_Start
             cfg.CreateMap<RubricViewModel, RubricDTO>()
                 .ForMember(x => x.Careers, opt => opt.Ignore())
                 .ForMember(x => x.Resumes, opt => opt.Ignore());
+
+            cfg.CreateMap<ResumeViewModel, ResumeDTO>()
+                .ForMember(x => x.Offers, opt => opt.Ignore())
+                .ForMember(x => x.ResumesExperiences, opt => opt.Ignore())
+                .ForMember(x => x.User, opt => opt.Ignore())
+                .ForMember(x => x.Rubric, opt => opt.Ignore());
         }
     }
 }
