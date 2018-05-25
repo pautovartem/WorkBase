@@ -16,7 +16,11 @@ namespace LogicLayer.Services
 
         public RubricService(IUnitOfWork unitOfWork)
         {
-            Database = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            if (unitOfWork == null)
+                throw new ArgumentNullException(nameof(unitOfWork));
+
+
+            Database = unitOfWork;
         }
 
         public void CreateRubric(RubricDTO rubricDTO)
@@ -32,14 +36,17 @@ namespace LogicLayer.Services
 
         public void EditRubric(RubricDTO rubricDTO)
         {
-            Database.Rubrics.Update(Mapper.Map<RubricDTO, Rubric>(rubricDTO));
+            Rubric rubric = Database.Rubrics.Get(rubricDTO.Id);
+
+            rubric.Name = rubricDTO.Name;
+
+            Database.Rubrics.Update(rubric);
             Database.Save();
         }
 
         public void RemoveRubric(RubricDTO rubricDTO)
         {
-            Rubric rubric = Mapper.Map<RubricDTO, Rubric>(rubricDTO);
-            Database.Rubrics.Delete(rubric.Id);
+            Database.Rubrics.Delete(rubricDTO.Id);
             Database.Save();
         }
 
@@ -51,6 +58,12 @@ namespace LogicLayer.Services
         public RubricDTO GetRubricById(int id)
         {
             return Mapper.Map<Rubric, RubricDTO>(Database.Rubrics.Get(id));
+        }
+
+        public void RemoveRubric(int id)
+        {
+            Database.Rubrics.Delete(id);
+            Database.Save();
         }
     }
 }

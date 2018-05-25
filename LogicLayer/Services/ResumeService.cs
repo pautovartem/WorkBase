@@ -13,17 +13,12 @@ namespace LogicLayer.Services
     {
         IUnitOfWork Database { get; set; }
 
-        public enum IncludeOptions : byte
-        {
-            Rubric = 1,
-            User,
-            Offers,
-            Experiences
-        };
-
         public ResumeService(IUnitOfWork unitOfWork)
         {
-            Database = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            if (unitOfWork == null)
+                throw new ArgumentNullException(nameof(unitOfWork));
+
+            Database = unitOfWork;
         }
 
         public void CreateResume(ResumeDTO resumeDTO)
@@ -39,14 +34,31 @@ namespace LogicLayer.Services
 
         public void EditResume(ResumeDTO resumeDTO)
         {
-            Database.Resumes.Update(Mapper.Map<ResumeDTO, Resume>(resumeDTO));
+            Resume resume = Database.Resumes.Get(resumeDTO.Id);
+            resume.Title = resumeDTO.Title;
+            resume.Surname = resumeDTO.Surname;
+            resume.Name = resumeDTO.Name;
+            resume.MiddleName = resumeDTO.MiddleName;
+            resume.Birthday = resumeDTO.Birthday;
+            resume.Gender = resumeDTO.Gender;
+            resume.City = resumeDTO.City;
+            resume.Phone = resumeDTO.Phone;
+            resume.Email = resumeDTO.Email;
+            resume.Skype = resumeDTO.Skype;
+            resume.RubricId = resumeDTO.RubricId;
+            resume.Portfolio = resumeDTO.Portfolio;
+            resume.DesiredPosition = resumeDTO.DesiredPosition;
+            resume.Payment = resumeDTO.Payment;
+            resume.Skills = resumeDTO.Skills;
+            resume.UserId = resumeDTO.UserId;
+
+            Database.Resumes.Update(resume);
             Database.Save();
         }
 
         public void RemoveResume(ResumeDTO resumeDTO)
         {
-            Resume resume = Mapper.Map<ResumeDTO, Resume>(resumeDTO);
-            Database.Resumes.Delete(resume.Id);
+            Database.Resumes.Delete(resumeDTO.Id);
             Database.Save();
         }
 
@@ -55,62 +67,79 @@ namespace LogicLayer.Services
             return Mapper.Map<Resume, ResumeDTO>(Database.Resumes.Get(id));
         }
 
-        public IEnumerable<ResumeDTO> GetAllResumes(int options)
+        public IEnumerable<ResumeDTO> GetAllResumes()
         {
-            IEnumerable<ResumeDTO> resumes = Database.Resumes.GetAll().Select(resume => new ResumeDTO()
-            {
-                Id = resume.Id,
-                Title = resume.Title,
-                Surname = resume.Surname,
-                Name = resume.Name,
-                MiddleName = resume.MiddleName,
-                Birthday = resume.Birthday,
-                Gender = resume.Gender,
-                City = resume.City,
-                Phone = resume.Phone,
-                Email = resume.Email,
-                Skype = resume.Skype,
-                RubricId = resume.RubricId.Value,
-                Portfolio = resume.Portfolio,
-                DesiredPosition = resume.DesiredPosition,
-                Payment = resume.Payment,
-                Skills = resume.Skills,
-                UserId = resume.UserId,
+            return Mapper.Map<IEnumerable<Resume>, List<ResumeDTO>>(Database.Resumes.GetAll());
+        }
 
-                Rubric = ((options & (int) IncludeOptions.Rubric) != 0) ? new RubricDTO()
-                {
-                    Id = resume.Rubric.Id,
-                    Name = resume.Rubric.Name,
-                } : null,
+        public void RemoveResume(int id)
+        {
+            Database.Resumes.Delete(id);
+            Database.Save();
+        }
 
-                User = ((options & (int)IncludeOptions.Rubric) != 0) ? new UserDTO()
-                {
-                    Id = resume.User.Id,
-                    Surname = resume.User.Surname,
-                    Name = resume.User.Name
-                } : null,
+        public void AddExperience(ResumesExperienceDTO experienceDTO)
+        {
+            if (experienceDTO == null)
+                throw new ArgumentNullException(nameof(experienceDTO));
 
-                Offers = ((options & (int)IncludeOptions.Rubric) != 0) ? resume.Offers.Select(offer => new OfferDTO()
-                {
-                    Id = offer.Id,
-                    CareerId = offer.CareerId,
-                    ResumeId = offer.ResumeId,
-                    DateSend = offer.DateSend,
-                    Viewed = offer.Viewed
-                }).ToArray() : null,
+            Resume resume = Database.Resumes.Get(experienceDTO.ResumeId);
 
-                ResumesExperiences = ((options & (int)IncludeOptions.Rubric) != 0) ? resume.ResumesExperiences.Select(experience => new ResumesExperienceDTO()
-                {
-                    Id = experience.Id,
-                    ResumeId = experience.ResumeId,
-                    Company = experience.Company,
-                    Position = experience.Position,
-                    StartDate = experience.StartDate,
-                    FinishDate = experience.FinishDate,
-                }).ToArray() : null
-            });
+            if (resume == null)
+                throw new Exception("Not find resume");
 
-            return resumes;
+            experienceDTO.Resume = null;
+
+            resume.ResumesExperiences.Add(Mapper.Map<ResumesExperienceDTO, ResumesExperience>(experienceDTO));
+            Database.Save();
+        }
+
+        public void RemoveExperience(int resumeId, int experienceId)
+        {
+            if(resumeId == 0)
+                throw new ArgumentNullException(nameof(resumeId));
+
+            if (experienceId == 0)
+                throw new ArgumentNullException(nameof(experienceId));
+
+            Resume resume = Database.Resumes.Get(resumeId);
+
+            if (resume == null)
+                throw new Exception("Not find resume");
+
+            ResumesExperience experience = resume.ResumesExperiences.Where(x => x.Id == experienceId).First();
+
+            if (experience == null)
+                throw new Exception("Not find experience");
+
+            resume.ResumesExperiences.Remove(experience);
+            Database.Save();
+        }
+
+        public IEnumerable<ResumesExperienceDTO> GetExperiences(int resumeId)
+        {
+            if (resumeId == 0)
+                throw new ArgumentNullException(nameof(resumeId));
+
+            Resume resume = Database.Resumes.Get(resumeId);
+
+            if (resume == null)
+                throw new Exception("Not find resume");
+
+            return Mapper.Map<IEnumerable<ResumesExperience>, List<ResumesExperienceDTO>>(Database.Resumes.Get(resumeId).ResumesExperiences);
+        }
+
+        public IEnumerable<OfferDTO> GetOffers(int resumeId)
+        {
+            if (resumeId == 0)
+                throw new ArgumentNullException(nameof(resumeId));
+
+            Resume resume = Database.Resumes.Get(resumeId);
+
+            if (resume == null)
+                throw new Exception("Not find resume");
+
+            return Mapper.Map<IEnumerable<Offer>, List<OfferDTO>>(Database.Resumes.Get(resumeId).Offers);
         }
     }
 }

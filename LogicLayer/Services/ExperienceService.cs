@@ -14,7 +14,10 @@ namespace LogicLayer.Services
 
         public ExperienceService(IUnitOfWork unitOfWork)
         {
-            Database = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            if (unitOfWork == null)
+                throw new ArgumentNullException(nameof(unitOfWork));
+
+            Database = unitOfWork;
         }
 
         public void CreateExperience(ResumesExperienceDTO experienceDTO)
@@ -30,14 +33,21 @@ namespace LogicLayer.Services
 
         public void EditExperience(ResumesExperienceDTO experienceDTO)
         {
-            Database.ResumesExperiences.Update(Mapper.Map<ResumesExperienceDTO, ResumesExperience>(experienceDTO));
+            ResumesExperience experience = Database.ResumesExperiences.Get(experienceDTO.Id);
+            experience.ResumeId = experienceDTO.ResumeId;
+            experience.Company = experienceDTO.Company;
+            experience.Position = experienceDTO.Position;
+            experience.StartDate = experienceDTO.StartDate;
+            experience.FinishDate = experienceDTO.FinishDate;
+            experience.Resume = Database.Resumes.Get(experience.ResumeId);
+
+            Database.ResumesExperiences.Update(experience);
             Database.Save();
         }
 
         public void RemoveExperience(ResumesExperienceDTO experienceDTO)
         {
-            ResumesExperience resumesExperience = Mapper.Map<ResumesExperienceDTO, ResumesExperience>(experienceDTO);
-            Database.ResumesExperiences.Delete(resumesExperience.Id);
+            Database.ResumesExperiences.Delete(experienceDTO.Id);
             Database.Save();
         }
 
@@ -49,6 +59,12 @@ namespace LogicLayer.Services
         public IEnumerable<ResumesExperienceDTO> GetAllExperiences()
         {
             return Mapper.Map<IEnumerable<ResumesExperience>, List<ResumesExperienceDTO>>(Database.ResumesExperiences.GetAll());
+        }
+
+        public void RemoveExperience(int id)
+        {
+            Database.ResumesExperiences.Delete(id);
+            Database.Save();
         }
     }
 }

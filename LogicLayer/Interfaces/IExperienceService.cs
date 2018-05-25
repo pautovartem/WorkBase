@@ -8,6 +8,7 @@ namespace LogicLayer.Interfaces
         void CreateExperience(ResumesExperienceDTO experienceDTO);
         void EditExperience(ResumesExperienceDTO experienceDTO);
         void RemoveExperience(ResumesExperienceDTO experienceDTO);
+        void RemoveExperience(int id);
 
         ResumesExperienceDTO GetExperienceById(int id);
         IEnumerable<ResumesExperienceDTO> GetAllExperiences();
