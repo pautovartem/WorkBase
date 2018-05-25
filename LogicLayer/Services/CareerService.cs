@@ -14,7 +14,10 @@ namespace LogicLayer.Services
 
         public CareerService(IUnitOfWork unitOfWork)
         {
-            Database = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            if (unitOfWork == null)
+                throw new ArgumentNullException(nameof(unitOfWork));
+
+            Database = unitOfWork;
         }
 
         public void CreateCareer(CareerDTO careerDTO)
@@ -30,14 +33,24 @@ namespace LogicLayer.Services
 
         public void EditCareer(CareerDTO careerDTO)
         {
-            Database.Careers.Update(Mapper.Map<CareerDTO, Career>(careerDTO));
+            Career career = Database.Careers.Get(careerDTO.Id);
+            career.Title = careerDTO.Title;
+            career.Company = careerDTO.Company;
+            career.City = careerDTO.City;
+            career.ContactName = careerDTO.ContactName;
+            career.ContactPhone = careerDTO.ContactPhone;
+            career.Site = careerDTO.Site;
+            career.RubricId = careerDTO.RubricId;
+            career.Desctiption = careerDTO.Desctiption;
+            career.UserId = careerDTO.UserId;
+
+            Database.Careers.Update(career);
             Database.Save();
         }
 
         public void RemoveCareer(CareerDTO careerDTO)
         {
-            Career career = Mapper.Map<CareerDTO, Career>(careerDTO);
-            Database.Careers.Delete(career.Id);
+            Database.Careers.Delete(careerDTO.Id);
             Database.Save();
         }
 
@@ -49,6 +62,25 @@ namespace LogicLayer.Services
         public IEnumerable<CareerDTO> GetAllCareers()
         {
             return Mapper.Map<IEnumerable<Career>, List<CareerDTO>>(Database.Careers.GetAll());
+        }
+
+        public void RemoveCareer(int id)
+        {
+            Database.Careers.Delete(id);
+            Database.Save();
+        }
+
+        public IEnumerable<OfferDTO> GetOffers(int careerId)
+        {
+            if (careerId == 0)
+                throw new ArgumentNullException(nameof(careerId));
+
+            Career career = Database.Careers.Get(careerId);
+
+            if (career == null)
+                throw new Exception("Not find career");
+
+            return Mapper.Map<IEnumerable<Offer>, List<OfferDTO>>(Database.Careers.Get(careerId).Offers);
         }
     }
 }

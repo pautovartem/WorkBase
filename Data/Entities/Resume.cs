@@ -37,7 +37,8 @@ namespace Data.Entities
 
         public int Gender { get; set; }
 
-        public int? City { get; set; }
+        [StringLength(50)]
+        public string City { get; set; }
 
         [StringLength(25)]
         public string Phone { get; set; }
@@ -48,7 +49,7 @@ namespace Data.Entities
         [StringLength(50)]
         public string Skype { get; set; }
 
-        public int RubricId { get; set; }
+        public int? RubricId { get; set; }
 
         [StringLength(255)]
         public string Portfolio { get; set; }
@@ -59,7 +60,7 @@ namespace Data.Entities
         [StringLength(10)]
         public string Payment { get; set; }
 
-        [StringLength(255)]
+        [StringLength(8192)]
         public string Skills { get; set; }
 
         public string UserId { get; set; }

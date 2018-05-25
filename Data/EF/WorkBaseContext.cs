@@ -4,6 +4,12 @@ namespace Data.EF
     using Data.Entities;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Data.Identity.Entities;
+    using Data.Identity.Repositories;
+    using Data.Identity.Interfaces;
+    using System;
+    using Data.Interfaces;
+    using Data.Repositories;
+    using Microsoft.AspNet.Identity;
 
     public partial class WorkBaseContext : IdentityDbContext<ApplicationUser>
     {
@@ -70,24 +76,216 @@ namespace Data.EF
         }
     }
 
-    public class DbInitializaer : DropCreateDatabaseIfModelChanges<WorkBaseContext>
+    public class DbInitializaer : DropCreateDatabaseAlways<WorkBaseContext>
     {
         protected override void Seed(WorkBaseContext context)
         {
-            string[] commands =
+            base.Seed(context);
+
+            #region Roles
+
+            ApplicationRole rolAdmin = new ApplicationRole { Name = "admin" };
+            ApplicationRole role1 = new ApplicationRole { Name = "employer" };
+            ApplicationRole role2 = new ApplicationRole { Name = "worker" };
+
+            ApplicationRoleManager roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context));
+            roleManager.Create(rolAdmin);
+            roleManager.Create(role1);
+            roleManager.Create(role2);
+            #endregion
+
+            #region Users
+
+            var userAdmin = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com" };
+            var userEmployer = new ApplicationUser { Email = "employer@gmail.com", UserName = "employer@gmail.com" };
+            var userWorker = new ApplicationUser { Email = "worker@gmail.com", UserName = "worker@gmal.com" };
+            var userWorker2 = new ApplicationUser { Email = "worker2@gmail.com", UserName = "worker2@gmal.com" };
+            var userWorker3 = new ApplicationUser { Email = "worker3@gmail.com", UserName = "worker3@gmal.com" };
+
+            ApplicationUserManager userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+            userManager.Create(userAdmin, "adminpassword");
+            userManager.Create(userEmployer, "employerpassword");
+            userManager.Create(userWorker, "workerpassword");
+            userManager.Create(userWorker2, "workerpassword");
+            userManager.Create(userWorker3, "workerpassword");
+
+            userManager.AddToRole(userAdmin.Id, "admin");
+            userManager.AddToRole(userEmployer.Id, "employer");
+            userManager.AddToRole(userWorker.Id, "worker");
+            userManager.AddToRole(userWorker2.Id, "worker");
+            userManager.AddToRole(userWorker3.Id, "worker");
+
+            var profileAdmin = new User { Id = userAdmin.Id, Surname = "AdminSurname", Name = "AdminName" };
+            var profileEmployer = new User { Id = userEmployer.Id, Surname = "EmployerSurname", Name = "EmployerName" };
+            var profileWorker = new User { Id = userWorker.Id, Surname = "WorkerSurname", Name = "WorkerName" };
+            var profileWorker2 = new User { Id = userWorker2.Id, Surname = "Worker2Surname", Name = "Worker2Name" };
+            var profileWorker3 = new User { Id = userWorker3.Id, Surname = "Worker3Surname", Name = "Worker3Name" };
+
+            context.UsersProfiles.Add(profileAdmin);
+            context.UsersProfiles.Add(profileEmployer);
+            context.UsersProfiles.Add(profileWorker);
+            context.UsersProfiles.Add(profileWorker2);
+            context.UsersProfiles.Add(profileWorker3);
+            #endregion
+
+            #region Rubrics
+
+            var rubric1 = new Rubric { Id = 1, Name = "IT" };
+            var rubric2 = new Rubric { Id = 2, Name = "HR специалисты - Бизнес-тренеры" };
+            var rubric3 = new Rubric { Id = 3, Name = "Автобизнес - Сервисное обслуживание" };
+            var rubric4 = new Rubric { Id = 4, Name = "Административный персонал - Водители - Курьеры" };
+            var rubric5 = new Rubric { Id = 5, Name = "Банки - Инвестиции - Лизинг" };
+
+            context.Rubrics.Add(rubric1);
+            context.Rubrics.Add(rubric2);
+            context.Rubrics.Add(rubric3);
+            context.Rubrics.Add(rubric4);
+            context.Rubrics.Add(rubric5);
+            #endregion
+
+            #region Resumes
+
+            var resume1 = new Resume
             {
-                @"INSERT INTO [dbo].[AspNetRoles] ([Id] ,[Name] ,[Discriminator]) VALUES ('9c39f82e-c87b-4bfb-b786-eec87ac45744','admin','ApplicationRole')",
-                @"INSERT INTO [dbo].[AspNetRoles] ([Id] ,[Name] ,[Discriminator]) VALUES ('3b25e968-41c8-48cd-bd65-7f235b5c209e','user','ApplicationRole')",
-                @"INSERT INTO [dbo].[AspNetRoles] ([Id] ,[Name] ,[Discriminator]) VALUES ('cb25e968-4dc8-48cd-ac65-7f230a5c209e','moderator','ApplicationRole')",
-                @"INSERT INTO [dbo].[AspNetUsers] ([Id] ,[Email] ,[EmailConfirmed] ,[PasswordHash] ,[SecurityStamp] ,[PhoneNumber] ,[PhoneNumberConfirmed] ,[TwoFactorEnabled],[LockoutEndDateUtc] ,[LockoutEnabled] ,[AccessFailedCount] ,[UserName]) 
-                    VALUES ('f0e55c71-2e6c-41df-bea1-1ff5dc102f59' ,'admin@gmail.com' ,0 ,'AGWw56+JXBJWPXED3BLTjDmPM5/166S/TuwnjGG842sBb1a967GidG+05UWJRukNXw==' ,'1c52b5dd-622b-47a6-b426-46e4751c548b',NULL ,0 ,0 ,NULL ,0 ,0 ,'admin@gmail.com')", //password = "adminpassword"
-                @"INSERT INTO [dbo].[Users] ([Id], [Name]) VALUES ('f0e55c71-2e6c-41df-bea1-1ff5dc102f59', 'Admin')",
-                @"INSERT INTO [dbo].[AspNetUserRoles] ([UserId] ,[RoleId]) VALUES ('f0e55c71-2e6c-41df-bea1-1ff5dc102f59', '9c39f82e-c87b-4bfb-b786-eec87ac45744')",
-                @"INSERT INTO [dbo].[Categories] ([Name]) VALUES ('Other')"
+                Id = 1,
+                Title = "Junior QA Engineer",
+                Surname = "ДА подавись ты своим полем",
+                Name = "Алексей",
+                MiddleName = "И этим тоже",
+                Birthday = new DateTime(1990, 1, 10),
+                Gender = 0,
+                City = "Kiev",
+                Phone = "256-587-1546",
+                Email = "KarenMDeberry@armyspy.com",
+                Skype = "KarenMDeberry",
+                Portfolio = "https://github.com/xiaoshi316",
+                DesiredPosition = "Junior QA Engineer",
+                Payment = "400$",
+                Skills = "Programming languages: Java, C++, Visual Basic.\nDevelopment environment: IntelliJ IDEA, UIPath, AutomationAnywhere\n\nFrameWork: Selenium\n\nVCS : Git",
+                UserId = profileWorker.Id,
+                RubricId = rubric1.Id,
+            };
+            var resume2 = new Resume
+            {
+                Id = 2,
+                Title = "Junior Software Engineer, Support Engineer",
+                Surname = "RuslanS",
+                Name = "Ruslan",
+                MiddleName = "RuslanMN",
+                Birthday = new DateTime(1995, 5, 10),
+                Gender = 0,
+                City = "Kiev",
+                Phone = "205-324-5857",
+                Email = "NikitaVagin@armyspy.com",
+                Skype = "NikitaVagin",
+                Portfolio = "https://github.com/javlonsodikov",
+                DesiredPosition = "Junior",
+                Payment = "800$",
+                Skills = "За время работы на ЗМК \"Запорожсталь\" приобрел солидный опыт написания и оптимизации SQL-запросов СУБД Oracle, также есть много разработок клиент-серверного ПО на Delphi под СУБД Interbase (Fierbird/Yaffi - полная разработка БД с нуля с написанием хранимых процедур, функций, триггеров и т.п.), большой опыт использования c модифицированным мною кодом FastReport, есть опыт создания своих Delphi-компонент для IDE Delphi, также большой опыт в написании VB-скриптов в MS-Excel и MS-Word  с использованием ADO/ODBC (СУБД Oracle/IB). Опыт работы с приложением Toad. Также был админом SQL-серверов Yaffil/Firebird, других специализированных серверов предприятия.",
+                UserId = profileWorker.Id,
+                RubricId = rubric2.Id,
+            };
+            var resume3 = new Resume
+            {
+                Id = 3,
+                Title = "Программист С++, JS, PHP, Delphi, SQL",
+                Surname = "Фамилия чела",
+                Name = "Вячеслав",
+                MiddleName = "Анатольевич",
+                Birthday = new DateTime(1990, 1, 10),
+                Gender = 0,
+                City = "Kiev",
+                Phone = "256-587-1546",
+                Email = "KarenMDeberry@armyspy.com",
+                Skype = "KarenMDeberry",
+                Portfolio = "https://github.com/xiaoshi316",
+                DesiredPosition = "Junior QA Engineer",
+                Payment = "400$",
+                Skills = "Programming languages: Java, C++, Visual Basic.\nDevelopment environment: IntelliJ IDEA, UIPath, AutomationAnywhere\n\nFrameWork: Selenium\n\nVCS : Git",
+                UserId = profileWorker2.Id,
+                RubricId = rubric3.Id,
             };
 
-            foreach (var el in commands)
-                context.Database.ExecuteSqlCommand(el);
+            context.Resumes.Add(resume1);
+            context.Resumes.Add(resume2);
+            context.Resumes.Add(resume3);
+            #endregion
+
+            #region ResumesExperience
+
+            var experience1 = new ResumesExperience
+            {
+                Id = 1,
+                Company = "Playtech",
+                Position = "Java/javascript developer",
+                StartDate = new DateTime(2013, 10, 1),
+                ResumeId = resume1.Id,
+            };
+            var experience2 = new ResumesExperience
+            {
+                Id = 2,
+                Company = "IT company",
+                Position = "C# developer ",
+                StartDate = new DateTime(2011, 03, 1),
+                FinishDate = new DateTime(2013, 10, 1),
+                ResumeId = resume1.Id,
+            };
+            var experience3 = new ResumesExperience
+            {
+                Id = 3,
+                Company = "Private enterprise",
+                Position = "PHP programmer",
+                StartDate = new DateTime(2007, 04, 1),
+                FinishDate = new DateTime(2010, 06, 1),
+                ResumeId = resume2.Id,
+            };
+
+            context.ResumesExperiences.Add(experience1);
+            context.ResumesExperiences.Add(experience2);
+            context.ResumesExperiences.Add(experience3);
+            #endregion
+
+            #region Careers
+
+            var career1 = new Career
+            {
+                Id = 1,
+                Title = "QA Engineer",
+                Company = "Codeminders",
+                City = "Киев",
+                ContactName = "Codeminders",
+                ContactPhone = "207-698-2959",
+                Site = "http://www.codeminders.com/",
+                Desctiption = "Based in the US since 2004,Codeminders develops software products for high-tech companies located predominantly in the Silicon Valley of California. While we specialize in a broad range of applications, our primary focus is on modern technologies such as social networks, mobile applications, video conference systems, cloud computing, etc. We have a constantly growing team of top-level specialists with proven ability to professionally design and deliver a diverse spectrum of projects. Codemindersis not a typical outsourcing company. Our clients select us primarily because we master the most challenging and diverse projects delivering them successfully and on schedule.",
+                RubricId = rubric1.Id,
+                UserId = profileEmployer.Id,
+            };
+
+            context.Careers.Add(career1);
+            #endregion
+
+            #region Offers
+
+            var offer1 = new Offer
+            {
+                Id = 1,
+                ResumeId = resume1.Id,
+                CareerId = career1.Id,
+                DateSend = new DateTime(2018, 5, 15),
+                Viewed = false
+            };
+            //var offer2 = new Offer
+            //{
+            //    Id = 2,
+            //    ResumeId = resume3.Id,
+            //    CareerId = career1.Id,
+            //    DateSend = new DateTime(2018, 5, 10),
+            //    Viewed = false
+            //};
+
+            context.Offers.Add(offer1);
+            //context.Offers.Add(offer2);
+            #endregion
 
             context.SaveChanges();
         }

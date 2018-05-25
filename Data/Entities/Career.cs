@@ -39,7 +39,7 @@ namespace Data.Entities
         public int RubricId { get; set; }
 
         [Required]
-        [StringLength(2048)]
+        [StringLength(8192)]
         public string Desctiption { get; set; }
 
         public string UserId { get; set; }

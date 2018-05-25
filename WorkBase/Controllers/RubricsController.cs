@@ -9,7 +9,7 @@ using LogicLayer.DTO;
 
 namespace WorkBase.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class RubricsController : ApiController
     {
         readonly IRubricService rubricService;

@@ -18,7 +18,7 @@ namespace LogicLayer.DTO
         public string Site { get; set; }
         public int RubricId { get; set; }
         public string Desctiption { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public virtual RubricDTO Rubric { get; set; }
         public virtual UserDTO User { get; set; }

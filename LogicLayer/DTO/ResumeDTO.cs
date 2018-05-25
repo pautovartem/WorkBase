@@ -18,7 +18,7 @@ namespace LogicLayer.DTO
         public string MiddleName { get; set; }
         public DateTime? Birthday { get; set; }
         public int Gender { get; set; }
-        public int? City { get; set; }
+        public string City { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Skype { get; set; }
@@ -27,7 +27,7 @@ namespace LogicLayer.DTO
         public string DesiredPosition { get; set; }
         public string Payment { get; set; }
         public string Skills { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         public virtual ICollection<OfferDTO> Offers { get; set; }
         public virtual RubricDTO Rubric { get; set; }
