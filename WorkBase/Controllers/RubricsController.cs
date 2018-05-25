@@ -6,6 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using LogicLayer.Interfaces;
 using LogicLayer.DTO;
+using WorkBase.Models;
+using AutoMapper;
 
 namespace WorkBase.Controllers
 {
@@ -19,31 +21,54 @@ namespace WorkBase.Controllers
             this.rubricService = rubricService;
         }
 
-        // GET api/<controller>
-        public IEnumerable<RubricDTO> Get()
+        [HttpGet]
+        [Route("api/rubrics/")]
+        public IHttpActionResult GetRubrics()
         {
-            return rubricService.GetAllRubrics();
+            return Ok(Mapper.Map<IEnumerable<RubricDTO>, List<RubricViewModel>>(rubricService.GetAllRubrics()));
+        }
+        
+        [HttpGet]
+        [Route("api/rubrics/{id:int}")]
+        public IHttpActionResult GetRubric(int id)
+        {
+            RubricViewModel rubricView = Mapper.Map<RubricDTO, RubricViewModel>(rubricService.GetRubricById(id));
+
+            if (rubricView == null)
+                return NotFound();
+
+            return Ok(rubricView);
+        }
+        
+        [HttpPost]
+        [Authorize]
+        [Route("api/rubrics/add")]
+        public IHttpActionResult AddRubric(RubricViewModel rubricView)
+        {
+            //var user = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
+            rubricService.CreateRubric(Mapper.Map<RubricViewModel, RubricDTO>(rubricView));
+
+            return Ok();
         }
 
-        // GET api/<controller>/5
-        public RubricDTO Get(int id)
+        [HttpPost]
+        [Authorize]
+        [Route("api/rubrics/edit")]
+        public IHttpActionResult EditRubric(RubricViewModel rubricView)
         {
-            return rubricService.GetRubricById(id);
+            rubricService.EditRubric(Mapper.Map<RubricViewModel, RubricDTO>(rubricView));
+
+            return Ok();
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Authorize]
+        [Route("api/rubrics/delete/{id:int}")]
+        public IHttpActionResult DeleteRubric(int id)
         {
-        }
+            rubricService.RemoveRubric(id);
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return Ok();
         }
     }
 }
