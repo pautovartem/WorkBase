@@ -31,11 +31,12 @@ namespace WorkBase.Tests.Mocks
                     var stub = new Mock<IRepository<Career>>();
                     stub.Setup(Ld => Ld.GetAll()).Returns(careers);
                     _career = stub.Object;
+                   
                 }
                 return _career;
             }
         }
-        public IRepository<ResumesExperience> RExper
+        public IRepository<ResumesExperience> ResumesExperiences
         {
             get
             {
@@ -44,10 +45,12 @@ namespace WorkBase.Tests.Mocks
                     var stub = new Mock<IRepository<ResumesExperience>>();
                     stub.Setup(Ld => Ld.GetAll()).Returns(exp);
                     _exp = stub.Object;
+
                 }
                 return _exp;
             }
         }
+
 
         public IRepository<Rubric> Rubrics
         {
@@ -102,26 +105,26 @@ namespace WorkBase.Tests.Mocks
             }
         }
 
-        public IRepository<ResumesExperience> ResumesExperiences {
-            get
-            {
-                if (_exp == null)
-                {
-                    var stub = new Mock<IRepository<ResumesExperience>>();
-                   _exp = stub.Object;
-                }
-                return _exp;
-            }
-        }
-
+      
         public MockUoW()
         {
-            careers.Add(new Career() {Id=1, UserId="1111",RubricId=1111 });
-            exp.Add(new ResumesExperience() {Id=0000,ResumeId=0000 });
-            offer.Add(new Offer() {Id=2222,CareerId=2222,ResumeId=2222 });
-            resume.Add(new Resume() {Id=3333,Name="Vasya" });
-            rubric.Add(new Rubric() {Id=4444,Name="Work" });
-            users.Add(new User() {Id="5555",Surname="Ooo" });
+            careers.Add(new Career() {Id=1, UserId="1111",RubricId=2 });
+            careers.Add(new Career() { Id = 2, UserId = "2222", RubricId = 2 }); 
+
+            exp.Add(new ResumesExperience() {Id=0,ResumeId=0 });
+            exp.Add(new ResumesExperience() { Id = 3, ResumeId = 3});
+
+            offer.Add(new Offer() {Id=4,CareerId=4,ResumeId=4 });
+            offer.Add(new Offer() { Id = 5, CareerId = 5, ResumeId = 5 });
+
+            resume.Add(new Resume() {Id=6,Name="Vas" });
+            resume.Add(new Resume() { Id = 7, Name = "Vasya" });
+
+            rubric.Add(new Rubric() {Id=8,Name="Work" });
+            rubric.Add(new Rubric() { Id = 9, Name = "Wor" });
+
+            users.Add(new User() {Id="10",Surname="Ooo" });
+            users.Add(new User() { Id = "11", Surname = "Gi" });
         }
 
         public void Save()

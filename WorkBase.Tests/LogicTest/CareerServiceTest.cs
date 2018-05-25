@@ -1,67 +1,88 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LogicLayer;
-using WorkBase.Tests.Mocks;
-using LogicLayer.Services;
-using System.Collections.Generic;
+using Ninject;
+using Ninject.Modules;
+using System.Configuration;
+using Data.Repositories;
 using LogicLayer.DTO;
+using Data.Entities;
+using LogicLayer.Services;
+using Moq;
+using NSubstitute;
+using NUnit.Framework;
+using System.Data.Entity;
+using LogicLayer.Interfaces;
+using Data.Interfaces;
+using System.Collections.Generic;
+using LogicLayer.Infrastructure;
+using AutoMapper;
 
-namespace WorkBase.Tests.LogicTest
+namespace UnitTestWorkBase
 {
-    [TestClass]
-    public class CareerServiceTest
+    [TestFixture]
+    public class careerServiceTest
     {
-      
-        [TestMethod]
-        public void CareerTestGetAll()
+        private ICareerService careerService;
+        private Mock<IUnitOfWork> uow;
+        private Mock<IRepository<Career>> careerRepository;
+
+        static careerServiceTest()
         {
-            
-            MockUoW mockUoW = new MockUoW();
-            CareerService career = new CareerService(mockUoW);
-
-            IEnumerable<CareerDTO> careers = career.GetAllCareers();
-
-            Assert.IsNotNull(careers);
-
+            Mapper.Initialize(cfg =>
+            LogicLayer.Infrastructure.AutoMapperConfig.Initialize()
+            );
         }
 
-        [TestMethod]
-        public void CareerTestCreate()
+        [SetUp]
+        public void Load()
         {
-           
-            MockUoW mockUoW = new MockUoW();
-            CareerService career = new CareerService(mockUoW);
+            uow = new Mock<IUnitOfWork>();
+            careerRepository = new Mock<IRepository<Career>>();
 
-            career.CreateCareer(new CareerDTO() { Id = 1});
+            uow.Setup(x => x.Careers).Returns(careerRepository.Object);
+            uow.Setup(x => x.Resumes.Get(It.IsAny<int>())).Returns(It.IsAny<Resume>());
 
-            CareerDTO ca= career.GetCareerById(1);
-            Assert.IsNotNull(ca);
-
+            careerService = new CareerService(uow.Object);
         }
-        [TestMethod]
-        public void CareerTestRemove()
+
+        [Test]
+        public void CreateCareer_TryToCreateNullValue_ShouldThrow()
         {
-           
-            MockUoW mockUoW = new MockUoW();
-            CareerService career = new CareerService(mockUoW);
-
-            career.RemoveCareer(new CareerDTO() { Id = 1 });
-
-            CareerDTO ca = career.GetCareerById(1);
-            Assert.IsNull(ca);
-
+            // act & assert
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => careerService.CreateCareer(null));
         }
-        [TestMethod]
-        public void CareerTestEdit()
+
+
+        [Test]
+        public void CreateCareer_TryToCreateCareer_ShouldRepositoryCreateOnce()
         {
-            MockUoW mockUoW = new MockUoW();
-            CareerService career = new CareerService(mockUoW);
+            var Career = new CareerDTO { Id = It.IsAny<int>(), Company= It.IsAny<string>(), City = It.IsAny<string>() };
 
-            career.EditCareer(new CareerDTO() { Id = 1 });
+            // act
+            careerService.CreateCareer(Career);
 
-            CareerDTO ca = career.GetCareerById(1);
-            Assert.IsNotNull(ca);
-
+            //assert
+            careerRepository.Verify(x => x.Create(It.IsAny<Career>()), Times.Once);
         }
+
+
+        [Test]
+        public void GetCareer_TryToGetNullValue_ShouldThrow()
+        {
+            // act & assert
+            NUnit.Framework.Assert.IsNull(careerService.GetCareerById(It.IsAny<int>()));
+        }
+
+        [Test]
+        public void GetCareer_TryToGetValue_ShouldReturnSomeValue()
+        {
+            var Career = new Career { Id = It.IsAny<int>(), Company = It.IsAny<string>(), City= It.IsAny<string>() };
+
+            uow.Setup(x => x.Careers.Get(It.IsAny<int>())).Returns(Career);
+
+            NUnit.Framework.Assert.IsNotNull(careerService.GetCareerById(It.IsAny<int>()));
+        }
+
+
     }
 }
