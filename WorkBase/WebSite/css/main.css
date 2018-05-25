@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
 @import url('https://fonts.googleapis.com/css?family=Acme');
 body
@@ -47,6 +48,7 @@ hr
 	margin: 1em 0;
 	padding: 0;
 }
+
 .navbar
 {
 	font-weight: 800;
@@ -66,23 +68,33 @@ hr
     font-weight: bold;
     font-size: 36px;  	
 }
+.navbar-inverse .btn-link:hover{
+    color: #808080;
+}
 #headerwrap
 {
-	background:linear-gradient(#5a5a5a, #D3D3D3);
+	background: url(../img/work1.png) no-repeat center top;
 	margin-top: -10px;
 	padding-top: 20px;
 	text-align: center;
 	background-attachment: relative;
-	min-height: 300px;
+	background-position: center center;
+	min-height: 500px;
 	width: 100%
+
+	-webkit-background-size: cover;
+
+	background-size: 100%;
+	background-size: cover;
 }
+
 #headerwrap h1
 {
 
 	margin-top: 50px;
-	color: white;
+	color: #2d2d2d;
 	font-weight: 300;
-	font-size: 40px;
+	font-size: 60px;
 	letter-spacing: 3px;
 }
 select 
@@ -96,8 +108,224 @@ select
     height: 30px;
     line-height: 30px;
 }
-.form-control
+       
+
+#custom-search-input{
+    padding: 3px;
+    border: solid 1px black;
+    border-radius: 6px;
+    background-color: #fff;
+    margin-right: 120px;
+    margin-left: 120px;
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 23px;
+}
+#kurs{
+
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#kurs h4 {
+	font-size: 25px;
+	font-family: "Raleway";
+}
+#kurs p {
+	font-family: "Raleway";
+}
+#f{
+	background: #2d2d2d;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#f i{
+	color: #bdbdbd;
+	font-size: 30px;
+	padding: 20px;
+}
+#f i:hover
 {
-	width: 200px;
+color: white;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    top: 10%;
+  	left: 26%;
+    width: 50%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 18px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="tex"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+#res{
+	
+ 	background: #fff;
+	margin-top: -10px;
+	padding-top: 20px;
+	text-align: center;
+}
+#res p{
+	font-family: "Raleway";
+	font-size: 20px;
+}
+#res a{
+	font-family: "Raleway";
+	font-size: 20px;
+}
+#res h4{
+	font-family: "Raleway";
+	font-weight: bold;
+	font-size: 30px;
+}
+#CompanySite {
+	font-family: "Raleway";
+	font-weight: bold;
+	font-size: 30px;
+}
+#resultS
+{	
+	margin-top: -10px;
+	padding-top: 20px;
+	text-align: center;
+	min-height: 500px;
+	width: 100%
+
+}
+.nav-tabs
+{
+ 	
+    margin-right: 120px;
+    margin-left: 120px;
+
+}
+.nav-tabs i{
+
+ margin: 10px;	
+ font-size: 20px;
+
+
+}
+.nav-tabs a, .nav-tabs a:hover, .nav-tabs a:visited {
+    color: #222;
+    opacity: 1;
+    font-size: 20px;
+}
+.nav-tabs a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+#heading-tab, #profession-tab, #cities-tab{
+	width: 300px;
+
+}
+#myTabContent h3{
+	font-size: 25px;
+	font-family: "Raleway"
+}
+#resSerch
+{
+	background: #fff;
+	margin-top: -10px;
+	padding-top: 20px;
+	
+}
+.w{
+	padding-top: 35px;
+}
+.w a{
+	font-family: "Raleway";
+	font-weight: 300;
+	color: #333;
+	font-size: 25px;
+	font-weight: bold;
+}
+.w a:hover, a:focus
+{
+	color: #7b7b7b;
+	text-decoration: none;
+	outline: 0;
+}
+#REbtn{
+	margin: 15px;
+	position: relative;
+    
 }
 
