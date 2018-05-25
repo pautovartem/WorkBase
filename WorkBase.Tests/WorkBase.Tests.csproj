@@ -140,6 +140,7 @@
     <Compile Include="ControllersTest\AccountControllerTest.cs" />
     <Compile Include="ControllersTest\ResumesControllerTest.cs" />
     <Compile Include="ControllersTest\RubricsControllerTest.cs" />
+    <Compile Include="LogicTest\UnitTest1.cs" />
     <Compile Include="Mocks\MockRepositoryResume.cs" />
     <Compile Include="Mocks\MockRepositoryRubric.cs" />
     <Compile Include="Mocks\MockUoW.cs" />
