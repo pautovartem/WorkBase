@@ -67,7 +67,7 @@ namespace WorkBase.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("api/rubrics/add")]
+        [Route("api/resumes/add")]
         public IHttpActionResult Add(ResumeViewModel resumeView)
         {
             ResumeDTO resumeDTO = Mapper.Map<ResumeViewModel, ResumeDTO>(resumeView);
@@ -80,7 +80,7 @@ namespace WorkBase.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("api/rubrics/edit")]
+        [Route("api/resumes/edit")]
         public IHttpActionResult Edit(ResumeViewModel resumeView)
         {
             resumeService.EditResume(Mapper.Map<ResumeViewModel, ResumeDTO>(resumeView));
