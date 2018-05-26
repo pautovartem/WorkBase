@@ -145,6 +145,9 @@
     <Compile Include="LogicTest\TestCareerService.cs" />
     <Compile Include="LogicTest\TestExpirienceService.cs" />
     <Compile Include="LogicTest\TestOfferService.cs" />
+    <Compile Include="LogicTest\TestResumeService.cs" />
+    <Compile Include="LogicTest\TestRubricService.cs" />
+    <Compile Include="LogicTest\TestUserService.cs" />
     <Compile Include="Mocks\MockUoW.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -21,7 +21,9 @@ namespace WorkBase.Tests.LogicTest
 
         static TestCareerService()
         {
-            AutoMapperConfig.Initialize();
+            Mapper.Initialize(cfg =>
+           LogicLayer.Infrastructure.AutoMapperConfig.Configure(cfg)
+           );
         }
 
         [SetUp]
@@ -35,10 +37,6 @@ namespace WorkBase.Tests.LogicTest
 
             carService = new CareerService(uow.Object);
         }
-
-    
-
-
         [Test]
         public void CreateCareer_TryToCreateCareer_ShouldRepositoryCreateOnce()
         {
@@ -61,17 +59,6 @@ namespace WorkBase.Tests.LogicTest
             // act & assert
             NUnit.Framework.Assert.IsNotNull(carService.GetCareerById(It.IsAny<int>()));
         }
-       /* [Test] //нужно реализовать
-        public void EditCareer_TryToEditNullElement_ShouldThrow()
-        {
-            var Career = new CareerDTO { Id = It.IsAny<int>()};
-            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
-
-            //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => carService.EditCareer(Career));
-        }
-        
-      */
         [Test]
         public void EditCareer_EditCareer_ShoudRepositoryEditOnce()
         {
