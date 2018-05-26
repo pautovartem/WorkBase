@@ -26,7 +26,6 @@ namespace WorkBase.Tests.LogicTest
             rubricRepository = new Mock<IRepository<Rubric>>();
 
             uow.Setup(x => x.Rubrics).Returns(rubricRepository.Object);
-            // uow.Setup(x => x.Categories.Get(It.IsAny<int>())).Returns(new Category { Name = It.IsAny<string>() });
 
             rubricService = new RubricService(uow.Object);
         }
@@ -84,7 +83,45 @@ namespace WorkBase.Tests.LogicTest
             //assert
             rubricRepository.Verify(x => x.Delete(It.IsAny<int>()));
         }
+        [Test]
+        public void GetRubricById_GetNullValue_ShouldThrowException()
+        {
+            //arrange
+            rubricRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Rubric>(null);
+
+            // act & assert
+            NUnit.Framework.Assert.IsNotNull(rubricService.GetRubricById(It.IsAny<int>()));
+        }
+
+
+        [Test]
+        public void EditRubric_PutInEditNullElement_ShouldThrowException()
+        {
+            // act & assert
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => rubricService.EditRubric(null));
+        }
+        [Test]
+        public void EditRubric_NullElement_ShouldThrowException()
+        {
+            //arrange
+            var Rubric = new RubricDTO { Id = It.IsAny<int>() };
+
+            //act & assert
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => rubricService.EditRubric(Rubric));
+        }
+
+
+        [Test]
+        public void DeleteRubric_DeleteNullValue()
+        {
+            //arrange
+            rubricRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Rubric>(null);
+
+            //act & assert
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => rubricService.RemoveRubric(It.IsAny<int>()));
+
+
+        }
     }
 }
 
-    

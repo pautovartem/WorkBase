@@ -27,7 +27,6 @@ namespace WorkBase.Tests.LogicTest
             resumeRepository = new Mock<IRepository<Resume>>();
 
             uow.Setup(x => x.Resumes).Returns(resumeRepository.Object);
-            // uow.Setup(x => x.Categories.Get(It.IsAny<int>())).Returns(new Category { Name = It.IsAny<string>() });
 
             resumeService = new ResumeService(uow.Object);
         }
@@ -86,8 +85,58 @@ namespace WorkBase.Tests.LogicTest
             //assert
             resumeRepository.Verify(x => x.Delete(It.IsAny<int>()));
         }
+        [Test]
+        public void GetResumeById_GetNullValue_ShouldThrowException()
+        {
+            //arrange
+            resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Resume>(null);
+
+            // act & assert
+            NUnit.Framework.Assert.IsNotNull(resumeService.GetResumeById(It.IsAny<int>()));
+        }
+
+
+        [Test]
+        public void EditResume_PutInEditNullElement_ShouldThrowException()
+        {
+            // act & assert
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.EditResume(null));
+        }
+        [Test]
+        public void EditResume_NullElement_ShouldThrowException()
+        {
+            //arrange
+            var Resume = new ResumeDTO { Id = It.IsAny<int>() };
+
+            //act & assert
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.EditResume(Resume));
+        }
+
+
+        [Test]
+        public void DeleteResume_DeleteNullValue()
+        {
+            //arrange
+            resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Resume>(null);
+
+            //act & assert
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.RemoveResume(It.IsAny<int>()));
+
+
+        }
     }
 }
+
+ 
+    
+
+
+
+
+
+
+
+
 
 
 
