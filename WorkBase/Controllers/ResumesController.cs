@@ -65,6 +65,22 @@ namespace WorkBase.Controllers
             return Ok(resumeView);
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("api/resumes/{id:int}/experience")]
+        public IHttpActionResult GetResumeExperience(int id)
+        {
+            return Ok(Mapper.Map<IEnumerable<ResumesExperienceDTO>, List<ExperienceViewModel>>(resumeService.GetExperiences(id)));
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("api/resumes/{id:int}/offers")]
+        public IHttpActionResult GetOffers(int id)
+        {
+            return Ok(Mapper.Map<IEnumerable<OfferDTO>, List<OfferViewModel>>(resumeService.GetOffers(id)));
+        }
+
         [HttpPost]
         [Authorize]
         [Route("api/resumes/add")]
