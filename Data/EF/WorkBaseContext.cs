@@ -76,7 +76,7 @@ namespace Data.EF
         }
     }
 
-    public class DbInitializaer : DropCreateDatabaseAlways<WorkBaseContext>
+    public class DbInitializaer : DropCreateDatabaseIfModelChanges<WorkBaseContext>
     {
         protected override void Seed(WorkBaseContext context)
         {
@@ -260,8 +260,22 @@ namespace Data.EF
                 RubricId = rubric1.Id,
                 UserId = profileEmployer.Id,
             };
+            var career2 = new Career
+            {
+                Id = 2,
+                Title = "C++ Developper",
+                Company = "CompanyName",
+                City = "Черкассы",
+                ContactName = "ContactName",
+                ContactPhone = "207-698-2959",
+                Site = "http://www.companysite.com/",
+                Desctiption = "Based in the US since 2004,Codeminders develops software products for high-tech companies located predominantly in the Silicon Valley of California. While we specialize in a broad range of applications, our primary focus is on modern technologies such as social networks, mobile applications, video conference systems, cloud computing, etc. We have a constantly growing team of top-level specialists with proven ability to professionally design and deliver a diverse spectrum of projects. Codemindersis not a typical outsourcing company. Our clients select us primarily because we master the most challenging and diverse projects delivering them successfully and on schedule.",
+                RubricId = rubric1.Id,
+                UserId = profileEmployer.Id,
+            };
 
             context.Careers.Add(career1);
+            context.Careers.Add(career2);
             #endregion
 
             #region Offers
@@ -274,17 +288,17 @@ namespace Data.EF
                 DateSend = new DateTime(2018, 5, 15),
                 Viewed = false
             };
-            //var offer2 = new Offer
-            //{
-            //    Id = 2,
-            //    ResumeId = resume3.Id,
-            //    CareerId = career1.Id,
-            //    DateSend = new DateTime(2018, 5, 10),
-            //    Viewed = false
-            //};
+            var offer2 = new Offer
+            {
+                Id = 2,
+                ResumeId = resume1.Id,
+                CareerId = career2.Id,
+                DateSend = new DateTime(2018, 5, 10),
+                Viewed = false
+            };
 
             context.Offers.Add(offer1);
-            //context.Offers.Add(offer2);
+            context.Offers.Add(offer2);
             #endregion
 
             context.SaveChanges();

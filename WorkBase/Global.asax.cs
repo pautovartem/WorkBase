@@ -6,7 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using LogicLayer.Infrastructure;
+using AutoMapper;
+using WorkBase.App_Start;
 
 namespace WorkBase
 {
@@ -19,7 +20,12 @@ namespace WorkBase
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AutoMapperConfig.Initialize();
+
+            Mapper.Initialize(cfg =>
+            {
+                LogicLayer.Infrastructure.AutoMapperConfig.Configure(cfg);
+                AutoMapperConfig.Configure(cfg);
+            });
         }
     }
 }
