@@ -13,7 +13,6 @@ namespace WorkBase.Models
         public string City { get; set; }
         public string Desctiption { get; set; }
     }
-}
 
     public class CareerViewModel
     {
