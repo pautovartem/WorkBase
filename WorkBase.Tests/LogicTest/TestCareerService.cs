@@ -73,7 +73,7 @@ namespace WorkBase.Tests.LogicTest
             NUnit.Framework.Assert.IsNotNull(carService.GetCareerById(It.IsAny<int>()));
         }
         [Test]
-        public void EditCareer_ShoudRepositoryEditOnce()
+        public void EditCareer_ShoudRepository_EditOnce()
         {
             var Career = new CareerDTO { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() };
             careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() });
@@ -103,12 +103,24 @@ namespace WorkBase.Tests.LogicTest
         }
 
         [Test]
-        public void RemoveCareer_RemoveRepository_ShouldCallsOnce()
+        public void RemoveCareerById_RemoveRepositoryById_ShouldCallsOnce()
         {
             careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() });
 
             //act
             carService.RemoveCareer(It.IsAny<int>());
+
+            //assert
+            careerRepository.Verify(x => x.Delete(It.IsAny<int>()));
+        }
+        [Test]
+        public void RemoveCareer_RemoveRepository_ShouldCallsOnce()
+        {
+            var Career = new CareerDTO { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() };
+            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() });
+
+            //act
+            carService.RemoveCareer(Career);
 
             //assert
             careerRepository.Verify(x => x.Delete(It.IsAny<int>()));
@@ -121,8 +133,6 @@ namespace WorkBase.Tests.LogicTest
 
             //act & assert
             Assert.Throws<ArgumentNullException>(() => carService.RemoveCareer(It.IsAny<int>()));
-
-
         }
         [Test]
         public void GetAllCareers_GetSomeList_ShouldRepositoryCallOnce_ShouldReturnNotNullList()

@@ -31,22 +31,22 @@ namespace WorkBase.Tests.LogicTest
             expService = new ExperienceService(uow.Object);
         }
         [Test]
-        public void CreateResumesExperience_TryToCreateResumesExperience_ShouldRepositoryCreateOnce()
+        public void CreateExperiencesExperience_TryToCreateExperiencesExperience_ShouldRepositoryCreateOnce()
         {
-            var resumesExperience = new ResumesExperienceDTO { Id = It.IsAny<int>(), ResumeId= It.IsAny<int>() };
+            var ResumesExperience = new ResumesExperienceDTO { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>() };
 
             // act
-            expService.CreateExperience(resumesExperience);
+            expService.CreateExperience(ResumesExperience);
 
             //assert
             expRepository.Verify(x => x.Create(It.IsAny<ResumesExperience>()));
         }
         [Test]
-        public void GetResumesExperienceById_TryToGetValue_ShouldReturnSomeValue()
+        public void GetExperiencesExperienceById_TryToGetValue_ShouldReturnSomeValue()
         {
-            var resumesExperience = new ResumesExperience { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>() };
+            var ResumesExperience = new ResumesExperience { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>() };
 
-            uow.Setup(x => x.ResumesExperiences.Get(It.IsAny<int>())).Returns(resumesExperience);
+            uow.Setup(x => x.ResumesExperiences.Get(It.IsAny<int>())).Returns(ResumesExperience);
 
             // act & assert
             NUnit.Framework.Assert.IsNotNull(expService.GetExperienceById(It.IsAny<int>()));
@@ -72,13 +72,13 @@ namespace WorkBase.Tests.LogicTest
 
 
         [Test]
-        public void EditResume_PutInEditNullElement_ShouldThrowException()
+        public void EditExperience_PutInEditNullElement_ShouldThrowException()
         {
             // act & assert
             NUnit.Framework.Assert.Throws<ArgumentNullException>(() => expService.EditExperience(null));
         }
         [Test]
-        public void EditResume_NullElement_ShouldThrowException()
+        public void EditExperience_NullElement_ShouldThrowException()
         {
             //arrange
             var experience = new ResumesExperienceDTO { Id = It.IsAny<int>() };
@@ -89,7 +89,7 @@ namespace WorkBase.Tests.LogicTest
 
 
         [Test]
-        public void DeleteResume_DeleteNullValue()
+        public void DeleteExperience_DeleteNullValue()
         {
             //arrange
             expRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Resume>(null);
@@ -111,7 +111,19 @@ namespace WorkBase.Tests.LogicTest
             //assert
             expRepository.Verify(x => x.Delete(It.IsAny<int>()));
         }
+        [Test]
+        public void RemoveExperience_Delete()
+        {
+            var Experience = new ResumesExperienceDTO { Id = It.IsAny<int>(), Company = It.IsAny<string>() };
+            expRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new ResumesExperience { Id = It.IsAny<int>(), Company = It.IsAny<string>() });
 
+            //act
+            expService.RemoveExperience(Experience);
+
+            //assert
+            expRepository.Verify(x => x.Delete(It.IsAny<int>()));
+
+        }
     }
 }
 

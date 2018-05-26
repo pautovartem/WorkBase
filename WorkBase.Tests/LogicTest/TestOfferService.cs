@@ -105,7 +105,7 @@ namespace WorkBase.Tests.LogicTest
 
         }
         [Test]
-        public void DeleteOffer_DeleteRepositoryShouldCallsOnce()
+        public void DeleteOffer_DeleteRepository_ShouldCallsOnce()
         {
             offerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Offer { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>() });
 
@@ -115,7 +115,19 @@ namespace WorkBase.Tests.LogicTest
             //assert
             offerRepository.Verify(x => x.Delete(It.IsAny<int>()));
         }
+        [Test]
+        public void RemoveOffer_Delete()
+        {
+            var Offer = new OfferDTO { Id = It.IsAny<int>(), Viewed = It.IsAny<bool>() };
+            offerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Offer { Id = It.IsAny<int>(), Viewed = It.IsAny<bool>() });
 
+            //act
+            offerService.RemoveOffer(Offer);
+
+            //assert
+            offerRepository.Verify(x => x.Delete(It.IsAny<int>()));
+
+        }
     }
 }
 

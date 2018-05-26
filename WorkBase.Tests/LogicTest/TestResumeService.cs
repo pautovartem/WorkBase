@@ -124,6 +124,19 @@ namespace WorkBase.Tests.LogicTest
 
 
         }
+        [Test]
+        public void RemoveResume_DeleteNullValue()
+        {
+            var resume = new ResumeDTO { Id = It.IsAny<int>(), Name = It.IsAny<string>() };
+            resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Resume { Id = It.IsAny<int>(), Name = It.IsAny<string>() });
+
+            //act
+            resumeService.RemoveResume(resume);
+
+            //assert
+            resumeRepository.Verify(x => x.Delete(It.IsAny<int>()));
+
+        }
     }
 }
 
