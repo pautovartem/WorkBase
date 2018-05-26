@@ -60,19 +60,7 @@ namespace WorkBase.Tests.LogicTest
             NUnit.Framework.Assert.IsNotNull(offerService.GetAllOffers());
             offerRepository.Verify(x => x.GetAll());
         }
-        [Test]
-        public void EditOffer_EditOffer_ShoudRepositoryEditOnce()
-        {//
-            /*var Offer = new OfferDTO { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>()  };
-            offerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Offer { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>() });
-
-            //act
-            offerService.EditOffer(Offer);
-
-            //assert
-            offerRepository.Verify(x => x.Update(It.IsAny<Offer>()), Times.Once);*/
-        }
-
+      
         [Test]
         public void DeleteOffer_DeleteRepositoryShouldCallsOnce()
         {

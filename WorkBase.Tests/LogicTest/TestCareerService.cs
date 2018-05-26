@@ -48,7 +48,24 @@ namespace WorkBase.Tests.LogicTest
             //assert
             careerRepository.Verify(x => x.Create(It.IsAny<Career>()));
         }
+        [Test]
+        public void CreateCareer_TryToCreateNullValue_ShouldThrowException()
+        {
+            Exception ex = null;
+            try
+            {
+               carService.CreateCareer(null);
+            }
+            catch (Exception e)
+            {
 
+                ex = e;
+            }
+
+            NUnit.Framework.Assert.IsNull(ex);
+            // act & assert
+           
+        }
         [Test]
         public void GetCareerById_TryToGetValue_ShouldReturnSomeValue()
         {
