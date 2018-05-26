@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AutoMapper;
 using LogicLayer.DTO;
 using LogicLayer.Interfaces;
@@ -51,32 +50,20 @@ namespace WorkBase.Tests.LogicTest
         [Test]
         public void CreateCareer_TryToCreateNullValue_ShouldThrowException()
         {
-            Exception ex = null;
-            try
-            {
-               carService.CreateCareer(null);
-            }
-            catch (Exception e)
-            {
 
-                ex = e;
-            }
-
-            NUnit.Framework.Assert.IsNull(ex);
-           
-           
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => carService.CreateCareer(null));
         }
         [Test]
-        public void GetCareerById_TryToGetNullValue_ShouldThrowException()
+        public void GetCareerById_GetNullValue_ShouldThrowException()
         {
             //arrange
             careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
 
             // act & assert
-            NUnit.Framework.Assert.IsNull(carService.GetCareerById(It.IsAny<int>()));
+            NUnit.Framework.Assert.IsNotNull(carService.GetCareerById(It.IsAny<int>()));
         }
         [Test]
-        public void GetCareerById_TryToGetValue_ShouldReturnSomeValue()
+        public void GetCareerById_GetValue_ShouldReturnSomeValue()
         {
             var Career = new Career { Id= It.IsAny<int>()};
 
@@ -86,7 +73,7 @@ namespace WorkBase.Tests.LogicTest
             NUnit.Framework.Assert.IsNotNull(carService.GetCareerById(It.IsAny<int>()));
         }
         [Test]
-        public void EditCareer_EditCareer_ShoudRepositoryEditOnce()
+        public void EditCareer_ShoudRepositoryEditOnce()
         {
             var Career = new CareerDTO { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() };
             careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() });
@@ -97,10 +84,26 @@ namespace WorkBase.Tests.LogicTest
             //assert
             careerRepository.Verify(x => x.Update(It.IsAny<Career>()), Times.Once);
         }
-       
+        [Test]
+        public void EditCareer_PutInEditNullElement_ShouldThrowException()
+        {
+            // act & assert
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => carService.EditCareer(null));
+        }
 
         [Test]
-        public void DeleteCareer_DeleteRepositoryShouldCallsOnce()
+        public void EditCareer_NullElement_ShouldThrowException()
+        {
+            //arrange
+            var Career = new CareerDTO { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() };
+            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
+
+            //act & assert
+            Assert.Throws<ArgumentNullException>(() => carService.EditCareer(Career));
+        }
+
+        [Test]
+        public void RemoveCareer_RemoveRepository_ShouldCallsOnce()
         {
             careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() });
 
@@ -113,22 +116,16 @@ namespace WorkBase.Tests.LogicTest
         [Test]
         public void DeleteCareer_DeleteNullValue()
         {
-            Exception ex = null;
-            try
-            {
-                careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
-             
-            }
-            catch (Exception e)
-            {
-                ex = e;
-            }
-            NUnit.Framework.Assert.IsNull(ex);
-           
-           
+            //arrange
+            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
+
+            //act & assert
+            Assert.Throws<ArgumentNullException>(() => carService.RemoveCareer(It.IsAny<int>()));
+
+
         }
         [Test]
-        public void GetAllCareers_TryToGetSomeList_ShouldRepositoryCallOnce_ShouldReturnNotNullList()
+        public void GetAllCareers_GetSomeList_ShouldRepositoryCallOnce_ShouldReturnNotNullList()
         {
             careerRepository.Setup(x => x.GetAll()).Returns(new List<Career>() { });
 
