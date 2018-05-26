@@ -63,8 +63,17 @@ namespace WorkBase.Tests.LogicTest
             }
 
             NUnit.Framework.Assert.IsNull(ex);
-            // act & assert
            
+           
+        }
+        [Test]
+        public void GetCareerById_TryToGetNullValue_ShouldThrowException()
+        {
+            //arrange
+            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
+
+            // act & assert
+            NUnit.Framework.Assert.IsNull(carService.GetCareerById(It.IsAny<int>()));
         }
         [Test]
         public void GetCareerById_TryToGetValue_ShouldReturnSomeValue()
@@ -88,6 +97,7 @@ namespace WorkBase.Tests.LogicTest
             //assert
             careerRepository.Verify(x => x.Update(It.IsAny<Career>()), Times.Once);
         }
+       
 
         [Test]
         public void DeleteCareer_DeleteRepositoryShouldCallsOnce()
@@ -100,7 +110,23 @@ namespace WorkBase.Tests.LogicTest
             //assert
             careerRepository.Verify(x => x.Delete(It.IsAny<int>()));
         }
-
+        [Test]
+        public void DeleteCareer_DeleteNullValue()
+        {
+            Exception ex = null;
+            try
+            {
+                careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
+             
+            }
+            catch (Exception e)
+            {
+                ex = e;
+            }
+            NUnit.Framework.Assert.IsNull(ex);
+           
+           
+        }
         [Test]
         public void GetAllCareers_TryToGetSomeList_ShouldRepositoryCallOnce_ShouldReturnNotNullList()
         {
@@ -113,4 +139,8 @@ namespace WorkBase.Tests.LogicTest
     }
 }
 
+     
 
+       
+
+       
