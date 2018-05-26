@@ -21,6 +21,9 @@ namespace WorkBase.App_Start
                 .ForMember(x => x.ResumesExperiences, opt => opt.Ignore())
                 .ForMember(x => x.User, opt => opt.Ignore())
                 .ForMember(x => x.Rubric, opt => opt.Ignore());
+
+            cfg.CreateMap<ExperienceViewModel, ResumesExperienceDTO>()
+                .ForMember(x => x.Resume, opt => opt.Ignore());
         }
     }
 }
