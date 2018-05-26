@@ -78,6 +78,7 @@ namespace WorkBase.Controllers
         {
             CareerDTO careerDTO = Mapper.Map<CareerViewModel, CareerDTO>(careerView);
             careerDTO.User = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
+            careerDTO.UserId = careerDTO.User.Id;
 
             careerService.CreateCareer(careerDTO);
 
