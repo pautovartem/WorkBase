@@ -69,7 +69,16 @@ namespace LogicLayer.Services
 
         public IEnumerable<UserDTO> GetUsers()
         {
-            return Mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(Database.Users.GetAll());
+            return Database.Users.GetAll().Select(x => new UserDTO
+            {
+                Id = x.Id,
+                Surname = x.Surname,
+                Name = x.Name,
+                Email = x.ApplicationUser.Email,
+                UserName = x.ApplicationUser.UserName,
+                Careers = Mapper.Map<IEnumerable<Career>, List<CareerDTO>>(x.Careers),
+                Resumes = Mapper.Map<IEnumerable<Resume>, List<ResumeDTO>>(x.Resumes)
+            });
         }
 
         public void Dispose()

@@ -22,6 +22,12 @@ namespace LogicLayer.Services
 
         public void CreateCareer(CareerDTO careerDTO)
         {
+            if (careerDTO == null)
+                throw new ArgumentNullException(nameof(careerDTO));
+
+            if (careerDTO.Id != 0 && Database.Careers.Get(careerDTO.Id) != null)
+                throw new ArgumentOutOfRangeException("Found duplicate id career");
+
             Database.Careers.Create(Mapper.Map<CareerDTO, Career>(careerDTO));
             Database.Save();
         }
@@ -33,7 +39,17 @@ namespace LogicLayer.Services
 
         public void EditCareer(CareerDTO careerDTO)
         {
+            if (careerDTO == null)
+                throw new ArgumentNullException(nameof(careerDTO));
+
+            if(Database.Rubrics.Get(careerDTO.RubricId) == null)
+                throw new ArgumentOutOfRangeException("Invalid argument rubricId");
+
             Career career = Database.Careers.Get(careerDTO.Id);
+
+            if (career == null)
+                throw new ArgumentOutOfRangeException("Not found career");
+
             career.Title = careerDTO.Title;
             career.Company = careerDTO.Company;
             career.City = careerDTO.City;
@@ -42,7 +58,8 @@ namespace LogicLayer.Services
             career.Site = careerDTO.Site;
             career.RubricId = careerDTO.RubricId;
             career.Desctiption = careerDTO.Desctiption;
-            career.UserId = careerDTO.UserId;
+            
+            //career.UserId = careerDTO.UserId;
 
             Database.Careers.Update(career);
             Database.Save();
@@ -50,6 +67,12 @@ namespace LogicLayer.Services
 
         public void RemoveCareer(CareerDTO careerDTO)
         {
+            if (careerDTO == null)
+                throw new ArgumentNullException(nameof(careerDTO));
+
+            if(Database.Careers.Get(careerDTO.Id) == null)
+                throw new ArgumentOutOfRangeException("Not found career");
+
             Database.Careers.Delete(careerDTO.Id);
             Database.Save();
         }
@@ -66,21 +89,21 @@ namespace LogicLayer.Services
 
         public void RemoveCareer(int id)
         {
+            if (Database.Careers.Get(id) == null)
+                throw new ArgumentOutOfRangeException("Not found career");
+
             Database.Careers.Delete(id);
             Database.Save();
         }
 
         public IEnumerable<OfferDTO> GetOffers(int careerId)
         {
-            if (careerId == 0)
-                throw new ArgumentNullException(nameof(careerId));
-
             Career career = Database.Careers.Get(careerId);
 
-            if (career == null)
-                throw new Exception("Not find career");
+            if(career == null)
+                throw new ArgumentOutOfRangeException("Not found career");
 
-            return Mapper.Map<IEnumerable<Offer>, List<OfferDTO>>(Database.Careers.Get(careerId).Offers);
+            return Mapper.Map<IEnumerable<Offer>, List<OfferDTO>>(career.Offers);
         }
     }
 }

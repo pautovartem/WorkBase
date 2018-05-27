@@ -15,8 +15,14 @@ namespace WorkBase.Models
         public string Skills { get; set; }
     }
 
-    public class ResumeViewModel : ResumeMinimumViewModel
+    public class ResumeViewModel
     {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Surname { get; set; }
+        public string Name { get; set; }
+        public string MiddleName { get; set; }
+        public string Skills { get; set; }
         public DateTime? Birthday { get; set; }
         public int Gender { get; set; }
         public string City { get; set; }

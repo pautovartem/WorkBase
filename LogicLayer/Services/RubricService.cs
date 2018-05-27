@@ -19,12 +19,17 @@ namespace LogicLayer.Services
             if (unitOfWork == null)
                 throw new ArgumentNullException(nameof(unitOfWork));
 
-
             Database = unitOfWork;
         }
 
         public void CreateRubric(RubricDTO rubricDTO)
         {
+            if (rubricDTO == null)
+                throw new ArgumentNullException(nameof(rubricDTO));
+
+            if (rubricDTO.Id != 0 && Database.Rubrics.Get(rubricDTO.Id) != null)
+                throw new ArgumentOutOfRangeException("Found duplicate id rubric");
+
             Database.Rubrics.Create(Mapper.Map<RubricDTO, Rubric>(rubricDTO));
             Database.Save();
         }
@@ -36,7 +41,13 @@ namespace LogicLayer.Services
 
         public void EditRubric(RubricDTO rubricDTO)
         {
+            if (rubricDTO == null)
+                throw new ArgumentNullException(nameof(rubricDTO));
+
             Rubric rubric = Database.Rubrics.Get(rubricDTO.Id);
+
+            if (rubricDTO == null)
+                throw new ArgumentOutOfRangeException("Not found rubric");
 
             rubric.Name = rubricDTO.Name;
 
@@ -46,6 +57,12 @@ namespace LogicLayer.Services
 
         public void RemoveRubric(RubricDTO rubricDTO)
         {
+            if (rubricDTO == null)
+                throw new ArgumentNullException(nameof(rubricDTO));
+
+            if (Database.Rubrics.Get(rubricDTO.Id) == null)
+                throw new ArgumentOutOfRangeException("Not found rubric");
+
             Database.Rubrics.Delete(rubricDTO.Id);
             Database.Save();
         }
@@ -62,6 +79,9 @@ namespace LogicLayer.Services
 
         public void RemoveRubric(int id)
         {
+            if (Database.Resumes.Get(id) == null)
+                throw new ArgumentOutOfRangeException("Not found rubric");
+
             Database.Rubrics.Delete(id);
             Database.Save();
         }

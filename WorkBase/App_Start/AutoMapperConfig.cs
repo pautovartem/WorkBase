@@ -24,6 +24,15 @@ namespace WorkBase.App_Start
 
             cfg.CreateMap<ExperienceViewModel, ResumesExperienceDTO>()
                 .ForMember(x => x.Resume, opt => opt.Ignore());
+
+            cfg.CreateMap<OfferViewModel, OfferDTO>()
+                .ForMember(x => x.Resume, opt => opt.Ignore())
+                .ForMember(x => x.Career, opt => opt.Ignore());
+
+            cfg.CreateMap<CareerViewModel, CareerDTO>()
+                .ForMember(x => x.Offers, opt => opt.Ignore())
+                .ForMember(x => x.User, opt => opt.Ignore())
+                .ForMember(x => x.Rubric, opt => opt.Ignore());
         }
     }
 }
