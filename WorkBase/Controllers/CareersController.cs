@@ -77,8 +77,8 @@ namespace WorkBase.Controllers
         public IHttpActionResult Add(CareerViewModel careerView)
         {
             CareerDTO careerDTO = Mapper.Map<CareerViewModel, CareerDTO>(careerView);
-            careerDTO.User = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
-            careerDTO.UserId = careerDTO.User.Id;
+            careerDTO.UserId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
+            //careerDTO.UserId = careerDTO.User.Id;
 
             careerService.CreateCareer(careerDTO);
 
