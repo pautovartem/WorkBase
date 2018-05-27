@@ -104,5 +104,25 @@ namespace LogicLayer.Services
             var appUser = await DatabaseUsers.UserManager.FindByIdAsync(id);
             return Mapper.Map<ApplicationUser, UserDTO>(appUser);
         }
+
+        public IEnumerable<CareerDTO> GetUserCareers(string id)
+        {
+            var user = Database.Users.Get(id);
+
+            if (user == null)
+                throw new ArgumentOutOfRangeException("Not found user");
+
+            return Mapper.Map<IEnumerable<Career>, List<CareerDTO>>(user.Careers);
+        }
+
+        public IEnumerable<ResumeDTO> GetUserResumes(string id)
+        {
+            var user = Database.Users.Get(id);
+
+            if (user == null)
+                throw new ArgumentOutOfRangeException("Not found user");
+
+            return Mapper.Map<IEnumerable<Resume>, List<ResumeDTO>>(user.Resumes);
+        }
     }
 }

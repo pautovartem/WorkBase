@@ -16,5 +16,8 @@ namespace LogicLayer.Interfaces
 
         Task<Tuple<ClaimsIdentity, ClaimsIdentity>> FindAsync(string username, string password);
         Task<UserDTO> FindByIdAsync(string id);
+
+        IEnumerable<CareerDTO> GetUserCareers(string id);
+        IEnumerable<ResumeDTO> GetUserResumes(string id);
     }
 }
