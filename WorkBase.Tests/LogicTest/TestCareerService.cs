@@ -73,6 +73,16 @@ namespace WorkBase.Tests.LogicTest
             NUnit.Framework.Assert.IsNotNull(carService.GetCareerById(It.IsAny<int>()));
         }
         [Test]
+        public void GetOffers_TryToGetValue_ShouldReturnSomeValue()
+        {
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => carService.GetOffers(0));
+        }
+        [Test]
+        public void GetOffers_GetValue_ShouldReturnSomeValue()
+        {
+           
+        }
+        [Test]
         public void EditCareer_ShoudRepository_EditOnce()
         {
             var Career = new CareerDTO { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() };

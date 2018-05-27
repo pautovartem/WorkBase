@@ -86,7 +86,7 @@ namespace WorkBase.Tests.LogicTest
         public void EditOffer_NullElement_ShouldThrowException()
         {
             //arrange
-            var Offer = new OfferDTO { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>() };
+            var Offer = new OfferDTO { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>(), CareerId = It.IsAny<int>(), Viewed = It.IsAny<bool>() };
 
             //act & assert
             NUnit.Framework.Assert.Throws<ArgumentNullException>(() => offerService.EditOffer(Offer));

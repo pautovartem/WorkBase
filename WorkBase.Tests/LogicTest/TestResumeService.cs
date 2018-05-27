@@ -42,6 +42,23 @@ namespace WorkBase.Tests.LogicTest
             //assert
             resumeRepository.Verify(x => x.Create(It.IsAny<Resume>()));
         }
+
+        [Test]
+        public void AddExperience_TryToAddExperience()
+        {
+            NUnit.Framework.Assert.Throws < ArgumentNullException>(() => resumeService.AddExperience(null));
+        }
+
+        [Test]
+        public void GetExperiences_TryToGetValue_ShouldReturnSomeGovno()
+        {
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.GetExperiences(0));
+        }
+        [Test]
+        public void GetOffers_TryToGetValue_ShouldReturnSomeValue()
+        {
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.GetOffers(0));
+        }
         [Test]
         public void GetResumeById_TryToGetValue_ShouldReturnSomeValue()
         {
@@ -84,6 +101,11 @@ namespace WorkBase.Tests.LogicTest
 
             //assert
             resumeRepository.Verify(x => x.Delete(It.IsAny<int>()));
+        }
+        [Test]
+        public void RemoveExperience_DeleteRepositoryShouldCallsOnce()
+        {
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.RemoveExperience(0,0));
         }
         [Test]
         public void GetResumeById_GetNullValue_ShouldThrowException()
