@@ -71,6 +71,28 @@ namespace WorkBase.Controllers
             return Ok(Mapper.Map<IEnumerable<OfferDTO>, List<OfferViewModel>>(careerService.GetOffers(id)));
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("api/careers/user")]
+        public IHttpActionResult GetCurrentUserCareers()
+        {
+            var userId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
+            var careers = Mapper.Map<IEnumerable<CareerDTO>, List<CareerViewModel>>(userService.GetUserCareers(userId));
+
+            return Ok(careers);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("api/careers/user/minimum")]
+        public IHttpActionResult GetCurrentUserCareersMinimum()
+        {
+            var userId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
+            var careers = Mapper.Map<IEnumerable<CareerDTO>, List<CareerMinimumViewModel>>(userService.GetUserCareers(userId));
+
+            return Ok(careers);
+        }
+
         [HttpPost]
         [Authorize]
         [Route("api/careers/add")]
