@@ -81,6 +81,28 @@ namespace WorkBase.Controllers
             return Ok(Mapper.Map<IEnumerable<OfferDTO>, List<OfferViewModel>>(resumeService.GetOffers(id)));
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("api/resumes/user")]
+        public IHttpActionResult GetCurrentUserResumes()
+        {
+            var userId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
+            var resumes = Mapper.Map<IEnumerable<ResumeDTO>, List<ResumeViewModel>>(userService.GetUserResumes(userId));
+
+            return Ok(resumes);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("api/resumes/user/minimum")]
+        public IHttpActionResult GetCurrentUserResumesMinimum()
+        {
+            var userId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
+            var resumes = Mapper.Map<IEnumerable<ResumeDTO>, List<ResumeMinimumViewModel>>(userService.GetUserResumes(userId));
+
+            return Ok(resumes);
+        }
+
         [HttpPost]
         [Authorize]
         [Route("api/resumes/add")]
