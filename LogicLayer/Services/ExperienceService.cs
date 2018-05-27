@@ -22,6 +22,12 @@ namespace LogicLayer.Services
 
         public void CreateExperience(ResumesExperienceDTO experienceDTO)
         {
+            if (experienceDTO == null)
+                throw new ArgumentNullException(nameof(experienceDTO));
+
+            if (experienceDTO.Id != 0 && Database.ResumesExperiences.Get(experienceDTO.Id) != null)
+                throw new ArgumentOutOfRangeException("Found duplicate id experience");
+
             Database.ResumesExperiences.Create(Mapper.Map<ResumesExperienceDTO, ResumesExperience>(experienceDTO));
             Database.Save();
         }
@@ -33,13 +39,25 @@ namespace LogicLayer.Services
 
         public void EditExperience(ResumesExperienceDTO experienceDTO)
         {
+            if (experienceDTO == null)
+                throw new ArgumentNullException(nameof(experienceDTO));
+
+            Resume resume = Database.Resumes.Get(experienceDTO.ResumeId);
+
+            if (resume == null)
+                throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
+
             ResumesExperience experience = Database.ResumesExperiences.Get(experienceDTO.Id);
+
+            if (experience == null)
+                throw new ArgumentOutOfRangeException("Not found experience");
+
             experience.ResumeId = experienceDTO.ResumeId;
             experience.Company = experienceDTO.Company;
             experience.Position = experienceDTO.Position;
             experience.StartDate = experienceDTO.StartDate;
             experience.FinishDate = experienceDTO.FinishDate;
-            experience.Resume = Database.Resumes.Get(experience.ResumeId);
+            experience.Resume = resume;
 
             Database.ResumesExperiences.Update(experience);
             Database.Save();
@@ -47,6 +65,12 @@ namespace LogicLayer.Services
 
         public void RemoveExperience(ResumesExperienceDTO experienceDTO)
         {
+            if (experienceDTO == null)
+                throw new ArgumentNullException(nameof(experienceDTO));
+
+            if (Database.ResumesExperiences.Get(experienceDTO.Id) == null)
+                throw new ArgumentOutOfRangeException("Not found experience");
+
             Database.ResumesExperiences.Delete(experienceDTO.Id);
             Database.Save();
         }
@@ -63,6 +87,9 @@ namespace LogicLayer.Services
 
         public void RemoveExperience(int id)
         {
+            if (Database.ResumesExperiences.Get(id) == null)
+                throw new ArgumentOutOfRangeException("Not found experience");
+
             Database.ResumesExperiences.Delete(id);
             Database.Save();
         }

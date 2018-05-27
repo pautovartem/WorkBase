@@ -22,6 +22,12 @@ namespace LogicLayer.Services
 
         public void CreateOffer(OfferDTO offerDTO)
         {
+            if (offerDTO == null)
+                throw new ArgumentNullException(nameof(offerDTO));
+
+            if (offerDTO.Id != 0 && Database.Offers.Get(offerDTO.Id) != null)
+                throw new ArgumentOutOfRangeException("Found duplicate id offer");
+
             Database.Offers.Create(Mapper.Map<OfferDTO, Offer>(offerDTO));
             Database.Save();
         }
@@ -33,14 +39,30 @@ namespace LogicLayer.Services
 
         public void EditOffer(OfferDTO offerDTO)
         {
+            if (offerDTO == null)
+                throw new ArgumentNullException(nameof(offerDTO));
+
+            Resume resume = Database.Resumes.Get(offerDTO.ResumeId);
+
+            if (resume == null)
+                throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
+
+            Career career = Database.Careers.Get(offerDTO.CareerId);
+
+            if (career == null)
+                throw new ArgumentOutOfRangeException("Invalid argument CareerId");
+
             Offer offer = Database.Offers.Get(offerDTO.Id);
+
+            if (offer == null)
+                throw new ArgumentOutOfRangeException("Not found offer");
 
             offer.ResumeId = offerDTO.ResumeId;
             offer.CareerId = offerDTO.CareerId;
             offer.DateSend = offerDTO.DateSend;
             offer.Viewed = offerDTO.Viewed;
-            offer.Career = Database.Careers.Get(offer.CareerId);
-            offer.Resume = Database.Resumes.Get(offer.ResumeId);
+            offer.Career = career;
+            offer.Resume = resume;
 
             Database.Offers.Update(offer);
             Database.Save();
@@ -48,6 +70,12 @@ namespace LogicLayer.Services
 
         public void RemoveOffer(OfferDTO offerDTO)
         {
+            if (offerDTO == null)
+                throw new ArgumentNullException(nameof(offerDTO));
+
+            if (Database.Offers.Get(offerDTO.Id) == null)
+                throw new ArgumentOutOfRangeException("Not found offer");
+
             Database.Offers.Delete(offerDTO.Id);
             Database.Save();
         }
@@ -64,6 +92,9 @@ namespace LogicLayer.Services
 
         public void RemoveOffer(int id)
         {
+            if (Database.Offers.Get(id) == null)
+                throw new ArgumentOutOfRangeException("Not found offer");
+
             Database.Offers.Delete(id);
             Database.Save();
         }
