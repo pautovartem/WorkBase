@@ -23,6 +23,12 @@ namespace LogicLayer.Services
 
         public void CreateResume(ResumeDTO resumeDTO)
         {
+            if (resumeDTO == null)
+                throw new ArgumentNullException(nameof(resumeDTO));
+
+            if (resumeDTO.Id != 0 && Database.Resumes.Get(resumeDTO.Id) != null)
+                throw new ArgumentOutOfRangeException("Found duplicate id resume");
+
             Database.Resumes.Create(Mapper.Map<ResumeDTO, Resume>(resumeDTO));
             Database.Save();
         }
@@ -34,7 +40,17 @@ namespace LogicLayer.Services
 
         public void EditResume(ResumeDTO resumeDTO)
         {
+            if (resumeDTO == null)
+                throw new ArgumentNullException(nameof(resumeDTO));
+
+            if (Database.Rubrics.Get(resumeDTO.RubricId) == null)
+                throw new ArgumentOutOfRangeException("Invalid argument rubricId");
+
             Resume resume = Database.Resumes.Get(resumeDTO.Id);
+
+            if (resume == null)
+                throw new ArgumentOutOfRangeException("Not found resume");
+
             resume.Title = resumeDTO.Title;
             resume.Surname = resumeDTO.Surname;
             resume.Name = resumeDTO.Name;
@@ -50,7 +66,7 @@ namespace LogicLayer.Services
             resume.DesiredPosition = resumeDTO.DesiredPosition;
             resume.Payment = resumeDTO.Payment;
             resume.Skills = resumeDTO.Skills;
-            resume.UserId = resumeDTO.UserId;
+            //resume.UserId = resumeDTO.UserId;
 
             Database.Resumes.Update(resume);
             Database.Save();
@@ -58,6 +74,12 @@ namespace LogicLayer.Services
 
         public void RemoveResume(ResumeDTO resumeDTO)
         {
+            if (resumeDTO == null)
+                throw new ArgumentNullException(nameof(resumeDTO));
+
+            if (Database.Resumes.Get(resumeDTO.Id) == null)
+                throw new ArgumentOutOfRangeException("Not found resume");
+
             Database.Resumes.Delete(resumeDTO.Id);
             Database.Save();
         }
@@ -74,6 +96,9 @@ namespace LogicLayer.Services
 
         public void RemoveResume(int id)
         {
+            if (Database.Resumes.Get(id) == null)
+                throw new ArgumentOutOfRangeException("Not found resume");
+
             Database.Resumes.Delete(id);
             Database.Save();
         }
@@ -86,58 +111,46 @@ namespace LogicLayer.Services
             Resume resume = Database.Resumes.Get(experienceDTO.ResumeId);
 
             if (resume == null)
-                throw new Exception("Not find resume");
-
-            experienceDTO.Resume = null;
+                throw new ArgumentOutOfRangeException("Not found resume");
 
             resume.ResumesExperiences.Add(Mapper.Map<ResumesExperienceDTO, ResumesExperience>(experienceDTO));
+            Database.Resumes.Update(resume);
             Database.Save();
         }
 
         public void RemoveExperience(int resumeId, int experienceId)
         {
-            if(resumeId == 0)
-                throw new ArgumentNullException(nameof(resumeId));
-
-            if (experienceId == 0)
-                throw new ArgumentNullException(nameof(experienceId));
-
             Resume resume = Database.Resumes.Get(resumeId);
 
             if (resume == null)
-                throw new Exception("Not find resume");
+                throw new ArgumentOutOfRangeException("Not found resume");
 
             ResumesExperience experience = resume.ResumesExperiences.Where(x => x.Id == experienceId).First();
 
             if (experience == null)
-                throw new Exception("Not find experience");
+                throw new ArgumentOutOfRangeException("Not found experience");
 
             resume.ResumesExperiences.Remove(experience);
+            Database.Resumes.Update(resume);
             Database.Save();
         }
 
         public IEnumerable<ResumesExperienceDTO> GetExperiences(int resumeId)
         {
-            if (resumeId == 0)
-                throw new ArgumentNullException(nameof(resumeId));
-
             Resume resume = Database.Resumes.Get(resumeId);
 
             if (resume == null)
-                throw new Exception("Not find resume");
+                throw new ArgumentOutOfRangeException("Not found resume");
 
             return Mapper.Map<IEnumerable<ResumesExperience>, List<ResumesExperienceDTO>>(Database.Resumes.Get(resumeId).ResumesExperiences);
         }
 
         public IEnumerable<OfferDTO> GetOffers(int resumeId)
         {
-            if (resumeId == 0)
-                throw new ArgumentNullException(nameof(resumeId));
-
             Resume resume = Database.Resumes.Get(resumeId);
 
             if (resume == null)
-                throw new Exception("Not find resume");
+                throw new ArgumentOutOfRangeException("Not found resume");
 
             return Mapper.Map<IEnumerable<Offer>, List<OfferDTO>>(Database.Resumes.Get(resumeId).Offers);
         }
