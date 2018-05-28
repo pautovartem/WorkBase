@@ -46,7 +46,7 @@ namespace LogicLayer.Services
 
             Rubric rubric = Database.Rubrics.Get(rubricDTO.Id);
 
-            if (rubricDTO == null)
+            if (rubric == null)
                 throw new ArgumentOutOfRangeException("Not found rubric");
 
             rubric.Name = rubricDTO.Name;

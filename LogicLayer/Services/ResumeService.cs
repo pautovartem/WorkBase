@@ -43,13 +43,20 @@ namespace LogicLayer.Services
             if (resumeDTO == null)
                 throw new ArgumentNullException(nameof(resumeDTO));
 
-            if (Database.Rubrics.Get(resumeDTO.RubricId) == null)
-                throw new ArgumentOutOfRangeException("Invalid argument rubricId");
 
             Resume resume = Database.Resumes.Get(resumeDTO.Id);
 
             if (resume == null)
                 throw new ArgumentOutOfRangeException("Not found resume");
+
+            try
+            {
+                Database.Rubrics.Get(resumeDTO.RubricId);
+            }
+            catch (NullReferenceException)
+            {
+                throw new ArgumentOutOfRangeException("Invalid argument rubricId");
+            }
 
             resume.Title = resumeDTO.Title;
             resume.Surname = resumeDTO.Surname;

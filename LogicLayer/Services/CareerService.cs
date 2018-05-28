@@ -5,6 +5,7 @@ using Data.Interfaces;
 using AutoMapper;
 using Data.Entities;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LogicLayer.Services
 {
@@ -85,7 +86,12 @@ namespace LogicLayer.Services
 
         public CareerDTO GetCareerById(int id)
         {
-            return Mapper.Map<Career, CareerDTO>(Database.Careers.Get(id));
+            Career career = Database.Careers.Get(id);
+
+            //if (career == null)
+                //throw new ArgumentOutOfRangeException("Not found career");
+
+            return Mapper.Map<Career, CareerDTO>(career);
         }
 
         public IEnumerable<CareerDTO> GetAllCareers()

@@ -42,15 +42,20 @@ namespace LogicLayer.Services
             if (experienceDTO == null)
                 throw new ArgumentNullException(nameof(experienceDTO));
 
-            Resume resume = Database.Resumes.Get(experienceDTO.ResumeId);
-
-            if (resume == null)
-                throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
-
             ResumesExperience experience = Database.ResumesExperiences.Get(experienceDTO.Id);
 
             if (experience == null)
                 throw new ArgumentOutOfRangeException("Not found experience");
+
+            Resume resume;
+            try
+            {
+                resume = Database.Resumes.Get(experienceDTO.ResumeId);
+            }
+            catch (NullReferenceException)
+            {
+                throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
+            }
 
             experience.ResumeId = experienceDTO.ResumeId;
             experience.Company = experienceDTO.Company;
