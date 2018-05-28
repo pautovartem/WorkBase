@@ -42,10 +42,15 @@ namespace LogicLayer.Services
             if (offerDTO == null)
                 throw new ArgumentNullException(nameof(offerDTO));
 
-            Resume resume = Database.Resumes.Get(offerDTO.ResumeId);
-
-            if (resume == null)
+            Resume resume;
+            try
+            {
+                resume = Database.Resumes.Get(offerDTO.ResumeId);
+            }
+            catch(NullReferenceException)
+            {
                 throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
+            }
 
             Career career = Database.Careers.Get(offerDTO.CareerId);
 

@@ -42,6 +42,11 @@ namespace LogicLayer.Services
             if (careerDTO == null)
                 throw new ArgumentNullException(nameof(careerDTO));
 
+            Career career = Database.Careers.Get(careerDTO.Id);
+
+            if (career == null)
+                throw new ArgumentOutOfRangeException("Not found career");
+
             try
             {
                 Database.Rubrics.Get(careerDTO.RubricId);
@@ -50,11 +55,6 @@ namespace LogicLayer.Services
             {
                 throw new ArgumentOutOfRangeException("Invalid argument rubricId");
             }
-
-            Career career = Database.Careers.Get(careerDTO.Id);
-
-            if (career == null)
-                throw new ArgumentOutOfRangeException("Not found career");
 
             career.Title = careerDTO.Title;
             career.Company = careerDTO.Company;
