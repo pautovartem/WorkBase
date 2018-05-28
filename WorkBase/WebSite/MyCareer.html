@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,121 +11,109 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="js/includeMainMenu.js"></script>
-  </head>
-  <body>
-   <div id="menu"></div>
-   <div id="resSerch">
-    <div class="container">
-        <div class="row centered">
-           <br><br>
-            <form class="form-search">
-              <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" id="myInput" placeholder="Enter the keywords" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button">
-                        <i class="fas fa-search"></i>  
-                        </button>
-                    </span>
+</head>
+<body>
+    <div id="menu"></div>
+
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/api/careers/user/minimum',
+
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("tokenInfo"));
+                },
+
+                success: function (data) {
+                    // console.log(data);
+
+                    for (var i in data) {
+                        var career = data[i];
+
+                        // Обмеження довжини поля
+                        var maxLengthField = 150;
+                        var desctiptionText = career.Desctiption;
+                        if (desctiptionText.length > maxLengthField)
+                            desctiptionText = desctiptionText.substr(0, desctiptionText.indexOf(' ', maxLengthField)) + '...';
+
+                        var resultHtml = '<div class="col-lg-4 ">';
+                        resultHtml += '<div class="card" style="height: 200px;">';
+                        resultHtml += '<a href="CareerEdit.html?id=' + career.Id + '">' + career.Title + '<\/a>';
+                        resultHtml += '<button class="btn btn-lg btn-link btn-block" type="submit" id="submitLogin" onClick=\'location.href ="CareerOffer.html?id=' + career.Id + '\'>Offers</button>';
+                        resultHtml += '<div class="card-body">';
+                        resultHtml += '<p class="card-text">' + desctiptionText + '<\/p>';
+                        resultHtml += '<\/div><\/div><\/div>';
+
+                        $('#w').append(resultHtml);
+                    }
+                },
+
+                fail: function (data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+
+    <div id="resSerch">
+        <div class="container">
+            <div class="row centered">
+                <!--<br><br>-->
+                <!--<form class="form-search">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control input-lg" id="myInput" placeholder="Enter the keywords" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-lg" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>-->
+                <br>
+                <div id="myDIV">
+                    <div class="container w ">
+                        <div class="row centered">
+                            <div id="w">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </form>
-            <br>
-            <div id="myDIV">
-<div class="container w " >
-      <div class="row centered">
-        <div class="col-lg-4 ">
-          <div class="card h-100">
-            <a href="#">Career</a>
-            <br>
-            <button class="btn btn-lg btn-link btn-block" type="submit" id="submitLogin" onClick='location.href="CareerOffer.html"'>Offers</button>
-            <div class="card-body">
-              <p class="card-text">111Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                <br><br>
             </div>
-            
-          </div>
-        </div>
-        <div class="col-lg-4 ">
-          <div class="card h-100">
-            <a href="CareerEdit.html">Career</a>
-            <div class="card-body">
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
-            </div>
-            
-          </div>
-        </div>
-        <div class="col-lg-4 ">
-          <div class="card h-100">
-            <a href="#">Career</a>
-            <div class="card-body">
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 ">
-          <div class="card h-100">
-            <a href="#">Career</a>
-            <div class="card-body">
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-            </div>
-            
-          </div>
-        </div>
-        <div class="col-lg-4 ">
-          <div class="card h-100">
-            <a href="#">Career</a>
-            <div class="card-body">
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
-            </div>
-            
-          </div>
-        </div>
-        <div class="col-lg-4 ">
-          <div class="card h-100">
-            <a href="#">Career</a>
-            <div class="card-body">
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-      </div>
-            <br><br>
         </div>
     </div>
-  </div>    
     <br>
     <script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myDIV *").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script>
-<div id="kurs">
-      <div class="container">
-        <div class="row centered">
-          <div col-lg-8 col-ld-offset-2>
-            <h4>Work Base </h4>
-            <p> Coursework on discipline "Architecture and designing of software"</p>  
-          </div> 
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myDIV *").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <div id="kurs">
+        <div class="container">
+            <div class="row centered">
+                <div col-lg-8 col-ld-offset-2>
+                    <h4>Work Base </h4>
+                    <p> Coursework on discipline "Architecture and designing of software"</p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <div id="f">
-    <div class="container">
-        <a href="#"><i class="fab fa-github"></i></i></a>
-      </div>
+        <div class="container">
+            <a href="#"><i class="fab fa-github"></i></i></a>
+        </div>
     </div>
-  </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
-  </body>
+</body>
 </html>
-         
