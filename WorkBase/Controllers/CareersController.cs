@@ -42,12 +42,16 @@ namespace WorkBase.Controllers
         [Route("api/careers/{id:int}")]
         public IHttpActionResult GetCareer(int id)
         {
-            CareerViewModel careerView = Mapper.Map<CareerDTO, CareerViewModel>(careerService.GetCareerById(id));
+            try
+            {
+                CareerViewModel careerView = Mapper.Map<CareerDTO, CareerViewModel>(careerService.GetCareerById(id));
 
-            if (careerView == null)
-                return NotFound();
-
-            return Ok(careerView);
+                return Ok(careerView);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return Content(System.Net.HttpStatusCode.NoContent, ex.ParamName);
+            }
         }
 
         [HttpGet]
@@ -55,12 +59,16 @@ namespace WorkBase.Controllers
         [Route("api/careers/{id:int}/minimum")]
         public IHttpActionResult GetCareerMinimum(int id)
         {
-            CareerMinimumViewModel careerMinimumView = Mapper.Map<CareerDTO, CareerMinimumViewModel>(careerService.GetCareerById(id));
+            try
+            {
+                CareerMinimumViewModel careerMinimumView = Mapper.Map<CareerDTO, CareerMinimumViewModel>(careerService.GetCareerById(id));
 
-            if (careerMinimumView == null)
-                return NotFound();
-
-            return Ok(careerMinimumView);
+                return Ok(careerMinimumView);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return Content(System.Net.HttpStatusCode.NoContent, ex.ParamName);
+            }
         }
 
         [HttpGet]
@@ -68,7 +76,14 @@ namespace WorkBase.Controllers
         [Route("api/careers/{id:int}/offers")]
         public IHttpActionResult GetOffers(int id)
         {
-            return Ok(Mapper.Map<IEnumerable<OfferDTO>, List<OfferDetailsViewModel>>(careerService.GetOffers(id)));
+            try
+            {
+                return Ok(Mapper.Map<IEnumerable<OfferDTO>, List<OfferDetailsViewModel>>(careerService.GetOffers(id)));
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return Content(System.Net.HttpStatusCode.NoContent, ex.ParamName);
+            }
         }
 
         [HttpGet]
@@ -77,9 +92,17 @@ namespace WorkBase.Controllers
         public IHttpActionResult GetCurrentUserCareers()
         {
             var userId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
-            var careers = Mapper.Map<IEnumerable<CareerDTO>, List<CareerViewModel>>(userService.GetUserCareers(userId));
 
-            return Ok(careers);
+            try
+            {
+                var careers = Mapper.Map<IEnumerable<CareerDTO>, List<CareerViewModel>>(userService.GetUserCareers(userId));
+
+                return Ok(careers);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
 
         [HttpGet]
@@ -88,9 +111,17 @@ namespace WorkBase.Controllers
         public IHttpActionResult GetCurrentUserCareersMinimum()
         {
             var userId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
-            var careers = Mapper.Map<IEnumerable<CareerDTO>, List<CareerMinimumViewModel>>(userService.GetUserCareers(userId));
 
-            return Ok(careers);
+            try
+            {
+                var careers = Mapper.Map<IEnumerable<CareerDTO>, List<CareerMinimumViewModel>>(userService.GetUserCareers(userId));
+
+                return Ok(careers);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
 
         [HttpPost]
@@ -100,9 +131,19 @@ namespace WorkBase.Controllers
         {
             CareerDTO careerDTO = Mapper.Map<CareerViewModel, CareerDTO>(careerView);
             careerDTO.UserId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
-            //careerDTO.UserId = careerDTO.User.Id;
 
-            careerService.CreateCareer(careerDTO);
+            try
+            {
+                careerService.CreateCareer(careerDTO);
+            }
+            catch(ArgumentNullException)
+            {
+                return BadRequest();
+            }
+            catch(ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
 
             return Ok();
         }
@@ -112,9 +153,28 @@ namespace WorkBase.Controllers
         [Route("api/careers/edit")]
         public IHttpActionResult Edit(CareerViewModel careerView)
         {
-            careerService.EditCareer(Mapper.Map<CareerViewModel, CareerDTO>(careerView));
+            var userId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
 
-            return Ok();
+            try
+            {
+                var careerDto = careerService.GetCareerById(careerView.Id);
+
+                if (careerDto.UserId != userId)
+                    return BadRequest("No access!");
+
+                careerService.EditCareer(Mapper.Map<CareerViewModel, CareerDTO>(careerView));
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Not correct input data");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
+
+
+            return Ok("Career is edited");
         }
 
         [HttpPost]
@@ -122,9 +182,24 @@ namespace WorkBase.Controllers
         [Route("api/careers/delete/{id:int}")]
         public IHttpActionResult Delete(int id)
         {
-            careerService.RemoveCareer(id);
+            var userId = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault().Id;
 
-            return Ok();
+            try
+            {
+                var careerDto = careerService.GetCareerById(id);
+
+                if (careerDto.UserId != userId)
+                    return BadRequest("No access!");
+
+                careerService.RemoveCareer(id);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
+
+
+            return Ok("Career is deleted");
         }
     }
 }
