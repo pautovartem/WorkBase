@@ -153,6 +153,7 @@
     <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
