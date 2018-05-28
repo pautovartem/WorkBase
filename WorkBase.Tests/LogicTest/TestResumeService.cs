@@ -81,14 +81,12 @@ namespace WorkBase.Tests.LogicTest
         [Test]
         public void EditResume_EditResume_ShoudRepositoryEditOnce()
         {//
-            var Resume = new ResumeDTO { Id = It.IsAny<int>(), Name = It.IsAny<string>()  };
-            resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Resume { Id = It.IsAny<int>(),Name = It.IsAny<string>() });
+         //arrange
+            var resume = new ResumeDTO { Id = It.IsAny<int>(), City= It.IsAny<string>() };
+            resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Resume { Id = It.IsAny<int>(), City = It.IsAny<string>() });
 
-            //act
-            resumeService.EditResume(Resume);
-
-            //assert
-            resumeRepository.Verify(x => x.Update(It.IsAny<Resume>()), Times.Once);
+            //act & assert
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => resumeService.EditResume(resume));
         }
 
         [Test]

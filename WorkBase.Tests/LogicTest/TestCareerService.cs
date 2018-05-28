@@ -83,17 +83,16 @@ namespace WorkBase.Tests.LogicTest
            
         }
         [Test]
-        public void EditCareer_ShoudRepository_EditOnce()
-        {
+        public void EditCareer_EditCareer_ShoudRepositoryEditOnce()
+        { //arrange
             var Career = new CareerDTO { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() };
-            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() });
+            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactPhone= It.IsAny<string>() });
 
-            //act
-            carService.EditCareer(Career);
-
-            //assert
-            careerRepository.Verify(x => x.Update(It.IsAny<Career>()), Times.Once);
+            //act & assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => carService.EditCareer(Career));
+           
         }
+
         [Test]
         public void EditCareer_PutInEditNullElement_ShouldThrowException()
         {
