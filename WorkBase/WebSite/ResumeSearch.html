@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -20,11 +20,11 @@
         $(function() {
             $.ajax({
                 type: 'GET',
-                url: 'json/resumes-minimum.json',
+                url: '/api/resumes/minimum',
 
-                // beforeSend: function (xhr) {
-                //     xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("tokenInfo"));
-                // },
+                 beforeSend: function (xhr) {
+                     xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("tokenInfo"));
+                 },
 
                 success: function(data) {
                     // console.log(data);

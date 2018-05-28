@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -27,7 +27,7 @@
           $(function () {
             $.ajax({
                 type: 'GET',
-                url: 'json/resume-2.json',//The file on the server that contains the sample data that returns the query
+                url: '/api/resumes/',//The file on the server that contains the sample data that returns the query
                 data: {
                     id: get_resumeId
                 },
