@@ -42,8 +42,14 @@ namespace LogicLayer.Services
             if (careerDTO == null)
                 throw new ArgumentNullException(nameof(careerDTO));
 
-            if(Database.Rubrics.Get(careerDTO.RubricId) == null)
+            try
+            {
+                Database.Rubrics.Get(careerDTO.RubricId);
+            }
+            catch(NullReferenceException)
+            {
                 throw new ArgumentOutOfRangeException("Invalid argument rubricId");
+            }
 
             Career career = Database.Careers.Get(careerDTO.Id);
 
