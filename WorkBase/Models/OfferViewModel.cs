@@ -13,4 +13,15 @@ namespace WorkBase.Models
         public DateTime DateSend { get; set; }
         public bool Viewed { get; set; }
     }
+
+    public class OfferDetailsViewModel
+    {
+        public int Id { get; set; }
+        public int CareerId { get; set; }
+        public string CareerTitle { get; set; }
+        public int ResumeId { get; set; }
+        public string ResumeTitle { get; set; }
+        public DateTime DateSend { get; set; }
+        public bool Viewed { get; set; }
+    }
 }

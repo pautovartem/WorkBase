@@ -78,7 +78,7 @@ namespace WorkBase.Controllers
         [Route("api/resumes/{id:int}/offers")]
         public IHttpActionResult GetOffers(int id)
         {
-            return Ok(Mapper.Map<IEnumerable<OfferDTO>, List<OfferViewModel>>(resumeService.GetOffers(id)));
+            return Ok(Mapper.Map<IEnumerable<OfferDTO>, List<OfferDetailsViewModel>>(resumeService.GetOffers(id)));
         }
 
         [HttpGet]

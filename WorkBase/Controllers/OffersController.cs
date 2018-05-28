@@ -29,10 +29,31 @@ namespace WorkBase.Controllers
 
         [HttpGet]
         [Authorize]
+        [Route("api/offers/details")]
+        public IHttpActionResult GetOffersDetails()
+        {
+            return Ok(Mapper.Map<IEnumerable<OfferDTO>, List<OfferDetailsViewModel>>(offerService.GetAllOffers()));
+        }
+
+        [HttpGet]
+        [Authorize]
         [Route("api/offers/{id:int}")]
         public IHttpActionResult GetOffer(int id)
         {
             OfferViewModel offerView = Mapper.Map<OfferDTO, OfferViewModel>(offerService.GetOfferById(id));
+
+            if (offerView == null)
+                return NotFound();
+
+            return Ok(offerView);
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("api/offers/{id:int}/details")]
+        public IHttpActionResult GetOfferDetails(int id)
+        {
+            OfferDetailsViewModel offerView = Mapper.Map<OfferDTO, OfferDetailsViewModel>(offerService.GetOfferById(id));
 
             if (offerView == null)
                 return NotFound();
