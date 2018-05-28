@@ -1,0 +1,19 @@
+{
+    "Birthday": "1990-01-10T00:00:00",
+    "Gender": 0,
+    "City": "Kiev",
+    "Phone": "256-587-1546",
+    "Email": "KarenMDeberry@armyspy.com",
+    "Skype": "KarenMDeberry",
+    "RubricId": 1,
+    "Portfolio": "https://github.com/xiaoshi316",
+    "DesiredPosition": "Junior QA Engineer",
+    "Payment": "400$      ",
+    "UserId": "b9312e87-bebb-483b-a7b8-b9a33d8f920a",
+    "Id": 2,
+    "Title": "Junior QA Engineer",
+    "Surname": "Алексеев",
+    "Name": "Алексей",
+    "MiddleName": "Алеевич",
+    "Skills": "Programming languages: Java, C++, Visual Basic.<br>Development environment: IntelliJ IDEA, UIPath, AutomationAnywhere<br><br>FrameWork: Selenium<br><br>VCS : Git"
+}

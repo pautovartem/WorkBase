@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Base</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/fontawesome.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/includeMainMenu.js"></script>
+</head>
+
+<body>
+    <div id="menu"></div>
+    <script type="text/javascript">
+        $(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'json/resumes-minimum.json',
+
+                // beforeSend: function (xhr) {
+                //     xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("tokenInfo"));
+                // },
+
+                success: function(data) {
+                    // console.log(data);
+
+                    for (var i in data) {
+                        var resume = data[i];
+
+                        // Обмеження довжини поля
+                        var maxLengthField = 150;
+                        var skillsText = resume.Skills;
+                        if (skillsText.length > maxLengthField)
+                            skillsText = skillsText.substr(0, skillsText.indexOf(' ', maxLengthField)) + '...';
+
+                        var resultHtml = '<div class="col-lg-4 ">';
+                        resultHtml += '<div class="card" style="height: 200px;">';
+                        resultHtml += '<a href="Resume.html?id=' + resume.Id + '">' + resume.Title + '<\/a>';
+                        resultHtml += '<div class="card-body">';
+                        resultHtml += '<p class="card-text">' + skillsText + '<\/p>';
+                        resultHtml += '<\/div><\/div><\/div>';
+
+                        $('#w').append(resultHtml);
+                    }
+                },
+
+                fail: function(data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+    <div id="resSerch">
+        <div class="container">
+            <div class="row centered">
+                <br>
+                <br>
+                <form class="form-search">
+                    <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control input-lg" placeholder="Enter the keywords" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-lg" type="button">
+                                   <i class="fas fa-search"></i>  
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                <br>
+
+                <div class="container w">
+                    <div class="row centered">
+                        <div id="w">
+                            <!-- <div class="col-lg-4">
+                                <div class="card" style="height: 200px;">
+                                    <a href="Resume.html">Resume</a>
+                                    <div class="card-body">
+                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 ">
+                                <div class="card" style="height: 200px;">
+                                    <a href="#">Resume</a>
+                                    <div class="card-body">
+                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 ">
+                                <div class="card" style="height: 200px">
+                                    <a href="#">Resume</a>
+                                    <div class="card-body">
+                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 ">
+                                <div class="card" style="height: 200px">
+                                    <a href="#">Resume</a>
+                                    <div class="card-body">
+                                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id="kurs">
+        <div class="container">
+            <div class="row centered">
+                <div col-lg-8 col-ld-offset-2>
+                    <h4>Work Base </h4>
+                    <p> Coursework on discipline "Architecture and designing of software"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="f">
+        <div class="container">
+            <a href="#"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <script type="text/javascript">
+        //$(function() {
+
+        //     var textFields = document.getElementsByClassName('textoverflow');
+
+        //     for (var index = 0; index < textFields.length; index++) {
+        //         if (textFields[index].textContent.length > 150) {
+        //             var textInField = textFields[index].textContent;
+        //             // console.log(textInField);
+        //             textInField = textInField.substr(0, textInField.indexOf(' ', 150)) + '...';
+        //             // console.log(textInField);
+        //             textFields[index].textContent = textInField;
+        //         }
+        //     }
+        // });
+    </script>
+</body>
+
+</html>

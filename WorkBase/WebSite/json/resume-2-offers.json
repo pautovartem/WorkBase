@@ -1,0 +1,16 @@
+[
+    {
+        "Id": 2,
+        "CareerId": 1,
+        "ResumeId": 2,
+        "DateSend": "2018-05-15T00:00:00",
+        "Viewed": false
+    },
+    {
+        "Id": 3,
+        "CareerId": 2,
+        "ResumeId": 2,
+        "DateSend": "2018-05-10T00:00:00",
+        "Viewed": false
+    }
+]

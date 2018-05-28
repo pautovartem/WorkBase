@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Base</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/fontawesome.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/includeMainMenu.js"></script>
+  </head>
+  <body>
+   <div id="menu"></div>
+    <script type="text/javascript">
+        var urlParams = new URLSearchParams(window.location.search);//we get parameters from the address bar.id in this case
+         if(urlParams.has('id') === false)//Checks if there is an ID in the URL, if not, it goes to the main page of the site
+            window.location.replace("index.html");
+
+        var get_resumeId = urlParams.get('id');//Takes the value of ID in a variable, for the present use
+          $(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'json/career-1.json',//The file on the server that contains the sample data that returns the query
+                data: {
+                    id: get_resumeId
+                },
+
+                 success: function (data) {
+                    // console.log(data);
+
+                    $('#CareerName').text(data.Title);
+                    $('#Company').text(data.Company);
+                    $('#ContactName').text(data.ContactName);
+                    $('#ContactPhone').text(data.ContactPhone);
+                    $('#City').text(data.City);
+                    $('#CompanySite').text(data.Site);
+                    $('#Rubric').text(data.Rubric);
+                    $('#Description').text(data.Description);
+                },
+
+                fail: function (data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+        $(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'json/resume-2-offers.json',
+                 success: function(data) {
+
+                    for (var i in data) {
+                        var resume = data[i];
+
+                        var resultHtml = '  <div class="checkbox">';
+                        resultHtml += '<label><input type="checkbox" class="list-group-item list-group-item-action " value="">';
+                        resultHtml += '<h4 class="list-group-item-heading">' + resume.Id + '">' + resume.Title + '<\/a>';
+                        resultHtml += '<div class="card-body">';
+                        resultHtml += '<p class="card-text">' + skillsText + '<\/p>';
+                        resultHtml += '<\/div><\/div><\/div>';
+
+                        $('#w').append(resultHtml);
+                    }
+                },
+
+                fail: function(data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+
+
+          $(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'json/resumes-minimum.json',
+                 success: function(data) {
+
+                    
+
+                    for (var i in data) {
+                        var offer = data[i];
+                        var maxLengthField = 60;
+                        var skills = offer.Skills;
+                        if (skills.length > maxLengthField)
+                            skills = skills.substr(0, skills.indexOf(' ', maxLengthField)) + '...';
+                        var resultHtml = '  <div class="checkbox">';
+                        resultHtml += '<label><input type="checkbox" class="list-group-item list-group-item-action " value="">';
+                        resultHtml += '<h4 class="list-group-item-heading">' + offer.Id + '">' + offer.Title + '<\/a>';
+                        resultHtml += '<p class="list-group-item-text">' + skills +'<\/p> <\/label><\/div>';
+                        
+                        $('#offer').append(resultHtml);
+                    }
+                },
+
+                fail: function(data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+    <div id="res">
+      <div class="container">
+        <div class="row centered">
+        <br><br>
+          <h4 id="CareerName">QA Engineer</h4>
+          <hr>
+          <p id="Company">Codeminders</p>
+          <p id="City">Kiev</p>
+          <p id="ContactName">Codeminders</p>
+          <p id="ContactPhone">207-698-2959</p>
+          <a href="http://www.codeminders.com" id="CompanySite">www.codeminders.com </a> 
+          <p id="Rubric">IT</p>
+          <p id="Description">Based in the US since 2004,Codeminders develops software products for high-tech companies located predominantly in the Silicon Valley of California. While we specialize in a broad range of applications, our primary focus is on modern technologies such as social networks, mobile applications, video conference systems, cloud computing, etc. We have a constantly growing team of top-level specialists with proven ability to professionally design and deliver a diverse spectrum of projects. Codemindersis not a typical outsourcing company. Our clients select us primarily because we master the most challenging and diverse projects delivering them successfully and on schedule.</p>
+          <hr>
+          <br>
+     <button type="button" class="btn btn-default btn-lg" id="myBtn" data-toggle="modal" data-target="#modalChoise">Offer</button>
+    <button type="button" onClick='location.href= "CareerSearch.html"' class="btn btn-default btn-lg">Cancel</button>
+    <br>
+    <br>
+        </div>
+      </div>
+    </div> 
+    <div id="kurs">
+      <div class="container">
+        <div class="row centered">
+          <div col-lg-8 col-ld-offset-2>
+            <h4>Work Base </h4>
+            <p> Coursework on discipline "Architecture and designing of software"</p>  
+          </div> 
+        </div>
+      </div>
+    </div>
+    <div id="f">
+    <div class="container">
+        <a href="#"><i class="fab fa-github"></i></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalChoise" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4>My Cresume</h4>
+                </div>
+                <div class="modal-body">
+                     <div class="modal-body">
+                    <div class="list-group">
+                    <div id="offer"> 
+                    
+                    </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-lg btn-primary" type="submit" data-dismiss="modal" id="submitModalChoise">OK</button>
+                    <button class="btn btn-lg btn-secondary" type="submit" data-dismiss="modal" id="cancelModal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+  </body>
+</html>
+         
+    

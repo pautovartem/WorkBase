@@ -1,0 +1,18 @@
+[
+    {
+        "Id": 1,
+        "ResumeId": 2,
+        "Company": "Playtech",
+        "Position": "Java/javascript developer",
+        "StartDate": "2013-10-01T00:00:00",
+        "FinishDate": null
+    },
+    {
+        "Id": 2,
+        "ResumeId": 2,
+        "Company": "IT company",
+        "Position": "C# developer ",
+        "StartDate": "2011-03-01T00:00:00",
+        "FinishDate": "2013-10-01T00:00:00"
+    }
+]

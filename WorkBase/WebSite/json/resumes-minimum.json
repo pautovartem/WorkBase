@@ -1,0 +1,26 @@
+[
+    {
+        "Id": 2,
+        "Title": "Junior QA Engineer",
+        "Surname": "ДА подавись ты своим полем",
+        "Name": "Алексей",
+        "MiddleName": "И этим тоже",
+        "Skills": "Programming languages: Java, C++, Visual Basic.\nDevelopment environment: IntelliJ IDEA, UIPath, AutomationAnywhere\n\nFrameWork: Selenium\n\nVCS : Git"
+    },
+    {
+        "Id": 3,
+        "Title": "Junior Software Engineer, Support Engineer",
+        "Surname": "RuslanS",
+        "Name": "Ruslan",
+        "MiddleName": "RuslanMN",
+        "Skills": "За время работы на ЗМК \"Запорожсталь\" приобрел солидный опыт написания и оптимизации SQL-запросов СУБД Oracle, также есть много разработок клиент-серверного ПО на Delphi под СУБД Interbase (Fierbird/Yaffi - полная разработка БД с нуля с написанием хранимых процедур, функций, триггеров и т.п.), большой опыт использования c модифицированным мною кодом FastReport, есть опыт создания своих Delphi-компонент для IDE Delphi, также большой опыт в написании VB-скриптов в MS-Excel и MS-Word  с использованием ADO/ODBC (СУБД Oracle/IB). Опыт работы с приложением Toad. Также был админом SQL-серверов Yaffil/Firebird, других специализированных серверов предприятия."
+    },
+    {
+        "Id": 4,
+        "Title": "Программист С++, JS, PHP, Delphi, SQL",
+        "Surname": "Фамилия чела",
+        "Name": "Вячеслав",
+        "MiddleName": "Анатольевич",
+        "Skills": "Programming languages: Java, C++, Visual Basic.\nDevelopment environment: IntelliJ IDEA, UIPath, AutomationAnywhere\n\nFrameWork: Selenium\n\nVCS : Git"
+    }
+]

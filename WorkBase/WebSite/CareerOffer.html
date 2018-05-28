@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Base</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/fontawesome.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <!-- <script type="text/javascript" src="js/jquery-3.3.1.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/includeMainMenu.js"></script>
+</head>
+
+<body>
+    <div id="menu"></div>
+    <script type="text/javascript">
+        $(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'json/resume-2-offers.json',
+                success: function(data) {
+
+                    for (var i in data) {
+                        var offer = data[i];
+
+                        var resultHtml = ' <tr>';
+                        resultHtml += '<th scope="row">'+i+'</th>';
+                        resultHtml += '<td><a href="Resume.html?id=' + offer.ResumeId + '">' +'<\/a><\/td>';
+                        resultHtml += '<td><p>' + offer.DateSend + '<\/p><\/td>';
+                        resultHtml += '<\/tr>';
+
+                        $('#w').append(resultHtml);
+                    }
+                },
+
+                fail: function(data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+        <div class="container">
+        <div class="row centered"><br>
+        <h1>Career Offers</h1>
+        <table class="table  table-responsive table-striped table-bordered">
+  <tbody id="w">
+   
+  </tbody>
+</table>
+        </div>
+        <button type="button" onClick='location.href= "MyCareer.html"' class="btn btn-default btn-lg">Cancel</button>
+        </div>
+    <div id="kurs">
+        <div class="container">
+            <div class="row centered">
+                <div col-lg-8 col-ld-offset-2>
+                    <h4>Work Base </h4>
+                    <p> Coursework on discipline "Architecture and designing of software"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="f">
+        <div class="container">
+            <a href="#"><i class="fab fa-github"></i></i></a>
+        </div>
+    </div>
+    
+   
+</body>
+
+</html>
