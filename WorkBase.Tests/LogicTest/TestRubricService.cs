@@ -90,7 +90,7 @@ namespace WorkBase.Tests.LogicTest
             rubricRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Rubric>(null);
 
             // act & assert
-            NUnit.Framework.Assert.IsNotNull(rubricService.GetRubricById(It.IsAny<int>()));
+            NUnit.Framework.Assert.IsNull(rubricService.GetRubricById(It.IsAny<int>()));
         }
 
 
@@ -107,7 +107,7 @@ namespace WorkBase.Tests.LogicTest
             var Rubric = new RubricDTO { Id = It.IsAny<int>() };
 
             //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => rubricService.EditRubric(Rubric));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => rubricService.EditRubric(Rubric));
         }
 
 

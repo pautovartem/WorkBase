@@ -63,7 +63,7 @@ namespace WorkBase.Tests.LogicTest
             offerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Offer>(null);
 
             // act & assert
-            NUnit.Framework.Assert.IsNotNull(offerService.GetOfferById(It.IsAny<int>()));
+            NUnit.Framework.Assert.IsNull(offerService.GetOfferById(It.IsAny<int>()));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace WorkBase.Tests.LogicTest
             var Offer = new OfferDTO { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>(), CareerId = It.IsAny<int>(), Viewed = It.IsAny<bool>() };
 
             //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => offerService.EditOffer(Offer));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => offerService.EditOffer(Offer));
         }
 
 

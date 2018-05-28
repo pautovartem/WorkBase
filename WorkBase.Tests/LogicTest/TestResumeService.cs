@@ -114,7 +114,7 @@ namespace WorkBase.Tests.LogicTest
             resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Resume>(null);
 
             // act & assert
-            NUnit.Framework.Assert.IsNotNull(resumeService.GetResumeById(It.IsAny<int>()));
+            NUnit.Framework.Assert.IsNull(resumeService.GetResumeById(It.IsAny<int>()));
         }
 
 
@@ -131,7 +131,7 @@ namespace WorkBase.Tests.LogicTest
             var Resume = new ResumeDTO { Id = It.IsAny<int>() };
 
             //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.EditResume(Resume));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => resumeService.EditResume(Resume));
         }
 
 

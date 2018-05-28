@@ -67,7 +67,7 @@ namespace WorkBase.Tests.LogicTest
             expRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Resume>(null);
 
             // act & assert
-            NUnit.Framework.Assert.IsNotNull(expService.GetExperienceById(It.IsAny<int>()));
+            NUnit.Framework.Assert.IsNull(expService.GetExperienceById(It.IsAny<int>()));
         }
 
 
@@ -84,7 +84,7 @@ namespace WorkBase.Tests.LogicTest
             var experience = new ResumesExperienceDTO { Id = It.IsAny<int>() };
 
             //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => expService.EditExperience(experience));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => expService.EditExperience(experience));
         }
 
 

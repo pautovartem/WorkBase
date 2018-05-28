@@ -60,7 +60,7 @@ namespace WorkBase.Tests.LogicTest
             careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
 
             // act & assert
-            NUnit.Framework.Assert.IsNotNull(carService.GetCareerById(It.IsAny<int>()));
+            NUnit.Framework.Assert.IsNull(carService.GetCareerById(It.IsAny<int>()));
         }
         [Test]
         public void GetCareerById_GetValue_ShouldReturnSomeValue()
