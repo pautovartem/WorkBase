@@ -14,6 +14,27 @@
   </head>
   <body>
    <div id="menu"></div>
+   <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'json/rubrics.json',
+                success: function (data) {
+
+                    for(var i in data) {
+                        var rubric = data[i];
+
+                        $('#EditRubric').append('<option value="' + rubric.Id + '">' + rubric.Name + '<\/option>');
+                    }
+                },
+
+                fail: function (data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+    </script>
 <div id="res">
       <div class="container">
         <div class="row centered">

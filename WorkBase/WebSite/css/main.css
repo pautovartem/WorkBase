@@ -172,7 +172,7 @@ color: white;
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 1100;
     top: 10%;
   	left: 26%;
     width: 50%; /* Full width */
@@ -218,9 +218,9 @@ color: white;
   padding: 10px;
   font-size: 16px;
 }
-.form-signin .form-control:focus {
+/*.form-signin .form-control:focus {
   z-index: 2;
-}
+}*/
 .form-signin input[type="tex"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
@@ -328,4 +328,11 @@ color: white;
 	position: relative;
     
 }
+.list-group-item-text{
+	font-family: "Raleway";
+	font-size: 16px;
+}
 
+.table tr{
+	padding: 2px;
+}

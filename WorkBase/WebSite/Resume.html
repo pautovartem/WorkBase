@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,53 +10,170 @@
     <link href="css/fontawesome.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
-    <script type="text/javascript" src="js/includeMainMenu.js"></script>
-  </head>
-  <body>
-   <div id="menu"></div>
-    <div id="res">
-      <div class="container">
-        <div class="row centered">
-        <br><br>
-          <h4 id="Title">Junior QA Engineer</h4>
-          <hr>
-          <p id="Surname">Алексеев</p>
-          <p id="Name">Алексей</p>
-          <p id="MiddleName">Алеевич</p>
-          <p id="Birtday">10.01.1990</p>
-          <p id="City">Kiev</p>
-          <p id="Phone">256-587-1546</p>
-          <p id="Email">KarenMDeberry@armyspy.com</p>
-          <p id="Skype">KarenMDeberry</p>
-          <p id="Rubric">Rubric</p>
-          <p id="DesiredPosition">Junior QA Engineer</p>
-          <p id="Payment">400$</p>
-          <p id="Skils">Programming languages: Java, C++, Visual Basic.<br>
-            Development environment: IntelliJ IDEA, UIPath, AutomationAnywhere <br>
-            FrameWork: Selenium <br>
-            VCS : Git</p>
-          <hr>
-        </div>
-      </div>
-    </div> 
-    <div id="kurs">
-      <div class="container">
-        <div class="row centered">
-          <div col-lg-8 col-ld-offset-2>
-            <h4>Work Base </h4>
-            <p> Coursework on discipline "Architecture and designing of software"</p>  
-          </div> 
-        </div>
-      </div>
-    </div>
-    <div id="f">
-    <div class="container">
-        <a href="#"><i class="fab fa-github"></i></i></a>
-      </div>
-    </div>
-  </div>
+    <!-- <script type="text/javascript" src="js/jquery-3.3.1.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
-  </body>
+    <script type="text/javascript" src="js/includeMainMenu.js"></script>
+</head>
+
+<body>
+    <div id="menu"></div>
+    <script type="text/javascript">
+        var urlParams = new URLSearchParams(window.location.search);//we get parameters from the address bar.id in this case
+         if(urlParams.has('id') === false)//Checks if there is an ID in the URL, if not, it goes to the main page of the site
+            window.location.replace("index.html");
+
+        var get_resumeId = urlParams.get('id');//Takes the value of ID in a variable, for the present use
+          $(function () {
+            $.ajax({
+                type: 'GET',
+                url: 'json/resume-2.json',//The file on the server that contains the sample data that returns the query
+                data: {
+                    id: get_resumeId
+                },
+
+                 success: function (data) {
+                    // console.log(data);
+
+                    $('#Surname').text(data.Surname);
+                    $('#Name').text(data.Name);
+                    $('#MiddleName').text(data.MiddleName);
+                    $('#Birtday').text(data.Birtday);
+                    $('#City').text(data.City);
+                    $('#Phone').text(data.Phone);
+                    $('#Email').text(data.Email);
+                    $('#Skype').text(data.Skype);
+
+                    getRubric(data.RubricId);
+
+                    $('#DesiredPosition').text(data.DesiredPosition);
+                    $('#Payment').text(data.Payment);
+                    document.getElementById("Skils").innerHTML = data.Skills;
+
+                },
+
+                fail: function (data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+           function getRubric(rubricId) {
+            $.ajax({
+                type: 'GET',
+                url: 'json/rubrics-1.json',
+
+                success: function (data) {
+                    // console.log(data);
+
+                    $('#Rubric').text(data.Name);
+                },
+
+                fail: function (data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        }
+
+
+        $(function() {
+            $.ajax({
+                type: 'GET',
+                url: 'json/careers-minimum.json',
+                 success: function(data) {
+
+                    
+
+                    for (var i in data) {
+                        var offer = data[i];
+                        var maxLengthField = 60;
+                        var desctiption = offer.Desctiption;
+                        if (desctiption.length > maxLengthField)
+                            desctiption = desctiption.substr(0, desctiption.indexOf(' ', maxLengthField)) + '...';
+                        var resultHtml = '  <div class="checkbox">';
+                        resultHtml += '<label><input type="checkbox" class="list-group-item list-group-item-action " value="">';
+                        resultHtml += '<h4 class="list-group-item-heading">' + offer.Id + '">' + offer.Title + '<\/a>';
+                        resultHtml += '<p class="list-group-item-text">' + desctiption +'<\/p> <\/label><\/div>';
+                        
+                        $('#offer').append(resultHtml);
+                    }
+                },
+
+                fail: function(data) {
+                    alert('Ошибка получения данных');
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+    <div id="res">
+        <div class="container">
+            <div class="row centered">
+                <br>
+                <br>
+                <h4 id="Title"></h4>
+                <hr>
+                <p id="Surname"></p>
+                <p id="Name"></p>
+                <p id="MiddleName"></p>
+                <p id="Birtday"></p>
+                <p id="City"></p>
+                <p id="Phone"></p>
+                <p id="Email"></p>
+                <p id="Skype"></p>
+                <p id="Rubric"></p>
+                <p id="DesiredPosition"></p>
+                <p id="Payment"></p>
+                <p id="Skils"></p>
+                <hr>
+                <br>
+                <button type="button" class="btn btn-default btn-lg" id="myBtn" data-toggle="modal" data-target="#modalChoise">Offer</button>
+                <button type="button" onClick='location.href= "ResumeSearch.html"' class="btn btn-default btn-lg">Cancel</button>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div id="kurs">
+        <div class="container">
+            <div class="row centered">
+                <div col-lg-8 col-ld-offset-2>
+                    <h4>Work Base </h4>
+                    <p> Coursework on discipline "Architecture and designing of software"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="f">
+        <div class="container">
+            <a href="#"><i class="fab fa-github"></i></i></a>
+        </div>
+    </div>
+    
+    <div id="modalChoise" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h3>My resume</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group">
+                    <div id="offer"> 
+                    
+                    </div>
+                <div class="modal-footer">
+                    <button class="btn btn-lg btn-primary" type="submit" data-dismiss="modal" id="submitModalChoise">OK</button>
+                    <button class="btn btn-lg btn-secondary" type="submit" data-dismiss="modal" id="cancelModal">Cancel</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+
 </html>
