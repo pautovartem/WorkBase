@@ -29,15 +29,8 @@ namespace LogicLayer.Services
             if (careerDTO.Id != 0 && Database.Careers.Get(careerDTO.Id) != null)
                 throw new ArgumentOutOfRangeException("Found duplicate id career");
 
-            //try
-            //{
             if (Database.Rubrics.Get(careerDTO.RubricId) == null)
                 throw new ArgumentOutOfRangeException("Invalid argument rubricId");
-            //}
-            //catch (NullReferenceException)
-            //{
-            //    throw new ArgumentOutOfRangeException("Invalid argument rubricId");
-            //}
 
             Database.Careers.Create(Mapper.Map<CareerDTO, Career>(careerDTO));
             Database.Save();
@@ -58,15 +51,8 @@ namespace LogicLayer.Services
             if (career == null)
                 throw new ArgumentOutOfRangeException("Not found career");
 
-            //try
-            //{
-                if (Database.Rubrics.Get(careerDTO.RubricId) == null)
-                    throw new ArgumentOutOfRangeException("Invalid argument rubricId");
-            //}
-            //catch (NullReferenceException)
-            //{
-            //    throw new ArgumentOutOfRangeException("Invalid argument rubricId");
-            //}
+            if (Database.Rubrics.Get(careerDTO.RubricId) == null)
+                throw new ArgumentOutOfRangeException("Invalid argument rubricId");
 
             career.Title = careerDTO.Title;
             career.Company = careerDTO.Company;
@@ -99,8 +85,8 @@ namespace LogicLayer.Services
         {
             Career career = Database.Careers.Get(id);
 
-            if (career == null)
-                throw new ArgumentOutOfRangeException("Not found career");
+            //if (career == null)
+            //    throw new ArgumentOutOfRangeException("Not found career");
 
             return Mapper.Map<Career, CareerDTO>(career);
         }

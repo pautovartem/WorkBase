@@ -28,6 +28,12 @@ namespace LogicLayer.Services
             if (offerDTO.Id != 0 && Database.Offers.Get(offerDTO.Id) != null)
                 throw new ArgumentOutOfRangeException("Found duplicate id offer");
 
+            if (Database.Resumes.Get(offerDTO.ResumeId) == null)
+                throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
+
+            if (Database.Careers.Get(offerDTO.CareerId) == null)
+                throw new ArgumentOutOfRangeException("Invalid argument CareerId");
+
             Database.Offers.Create(Mapper.Map<OfferDTO, Offer>(offerDTO));
             Database.Save();
         }
@@ -42,15 +48,10 @@ namespace LogicLayer.Services
             if (offerDTO == null)
                 throw new ArgumentNullException(nameof(offerDTO));
 
-            Resume resume;
-            try
-            {
-                resume = Database.Resumes.Get(offerDTO.ResumeId);
-            }
-            catch(NullReferenceException)
-            {
+            Resume resume = Database.Resumes.Get(offerDTO.ResumeId);
+            
+            if(resume == null)
                 throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
-            }
 
             Career career = Database.Careers.Get(offerDTO.CareerId);
 

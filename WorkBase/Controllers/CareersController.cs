@@ -42,16 +42,19 @@ namespace WorkBase.Controllers
         [Route("api/careers/{id:int}")]
         public IHttpActionResult GetCareer(int id)
         {
-            try
-            {
-                CareerViewModel careerView = Mapper.Map<CareerDTO, CareerViewModel>(careerService.GetCareerById(id));
+            //try
+            //{
+            CareerViewModel careerView = Mapper.Map<CareerDTO, CareerViewModel>(careerService.GetCareerById(id));
 
+            if (careerView == null)
+                return Content(System.Net.HttpStatusCode.NoContent, "Not found career");
+            else
                 return Ok(careerView);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                return Content(System.Net.HttpStatusCode.NoContent, ex.ParamName);
-            }
+            //}
+            //catch (ArgumentOutOfRangeException ex)
+            //{
+            //    return Content(System.Net.HttpStatusCode.NoContent, ex.ParamName);
+            //}
         }
 
         [HttpGet]
@@ -59,16 +62,19 @@ namespace WorkBase.Controllers
         [Route("api/careers/{id:int}/minimum")]
         public IHttpActionResult GetCareerMinimum(int id)
         {
-            try
-            {
+            //try
+            //{
                 CareerMinimumViewModel careerMinimumView = Mapper.Map<CareerDTO, CareerMinimumViewModel>(careerService.GetCareerById(id));
 
-                return Ok(careerMinimumView);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                return Content(System.Net.HttpStatusCode.NoContent, ex.ParamName);
-            }
+                if (careerMinimumView == null)
+                    return Content(System.Net.HttpStatusCode.NoContent, "Not found career");
+                else
+                    return Ok(careerMinimumView);
+            //}
+            //catch (ArgumentOutOfRangeException ex)
+            //{
+            //    return Content(System.Net.HttpStatusCode.NoContent, ex.ParamName);
+            //}
         }
 
         [HttpGet]
@@ -136,11 +142,11 @@ namespace WorkBase.Controllers
             {
                 careerService.CreateCareer(careerDTO);
             }
-            catch(ArgumentNullException)
+            catch (ArgumentNullException)
             {
                 return BadRequest();
             }
-            catch(ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
                 return BadRequest(ex.ParamName);
             }

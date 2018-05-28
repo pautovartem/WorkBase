@@ -28,6 +28,9 @@ namespace LogicLayer.Services
             if (experienceDTO.Id != 0 && Database.ResumesExperiences.Get(experienceDTO.Id) != null)
                 throw new ArgumentOutOfRangeException("Found duplicate id experience");
 
+            if (Database.Resumes.Get(experienceDTO.ResumeId) == null)
+                throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
+
             Database.ResumesExperiences.Create(Mapper.Map<ResumesExperienceDTO, ResumesExperience>(experienceDTO));
             Database.Save();
         }
@@ -47,15 +50,10 @@ namespace LogicLayer.Services
             if (experience == null)
                 throw new ArgumentOutOfRangeException("Not found experience");
 
-            Resume resume;
-            try
-            {
-                resume = Database.Resumes.Get(experienceDTO.ResumeId);
-            }
-            catch (NullReferenceException)
-            {
+            Resume resume = Database.Resumes.Get(experienceDTO.ResumeId);
+
+            if(resume == null)
                 throw new ArgumentOutOfRangeException("Invalid argument ResumeId");
-            }
 
             experience.ResumeId = experienceDTO.ResumeId;
             experience.Company = experienceDTO.Company;
