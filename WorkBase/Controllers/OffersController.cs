@@ -43,9 +43,9 @@ namespace WorkBase.Controllers
             OfferViewModel offerView = Mapper.Map<OfferDTO, OfferViewModel>(offerService.GetOfferById(id));
 
             if (offerView == null)
-                return NotFound();
-
-            return Ok(offerView);
+                return Content(System.Net.HttpStatusCode.NoContent, "Not found offer");
+            else
+                return Ok(offerView);
         }
 
         [HttpGet]
@@ -56,9 +56,9 @@ namespace WorkBase.Controllers
             OfferDetailsViewModel offerView = Mapper.Map<OfferDTO, OfferDetailsViewModel>(offerService.GetOfferById(id));
 
             if (offerView == null)
-                return NotFound();
-
-            return Ok(offerView);
+                return Content(System.Net.HttpStatusCode.NoContent, "Not found offer");
+            else
+                return Ok(offerView);
         }
 
         [HttpPost]
@@ -66,9 +66,20 @@ namespace WorkBase.Controllers
         [Route("api/offers/add")]
         public IHttpActionResult Add(OfferViewModel offerView)
         {
-            offerService.CreateOffer(Mapper.Map<OfferViewModel, OfferDTO>(offerView));
+            try
+            {
+                offerService.CreateOffer(Mapper.Map<OfferViewModel, OfferDTO>(offerView));
 
-            return Ok();
+                return Ok("Offer is created");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Not correct input data");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
 
         [HttpPut]
@@ -76,9 +87,20 @@ namespace WorkBase.Controllers
         [Route("api/offers/edit")]
         public IHttpActionResult Edit(OfferViewModel offerView)
         {
-            offerService.EditOffer(Mapper.Map<OfferViewModel, OfferDTO>(offerView));
+            try
+            {
+                offerService.EditOffer(Mapper.Map<OfferViewModel, OfferDTO>(offerView));
 
-            return Ok();
+                return Ok("Offer is edited");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Not correct input data");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
 
         [HttpDelete]
@@ -86,9 +108,16 @@ namespace WorkBase.Controllers
         [Route("api/offers/delete/{id:int}")]
         public IHttpActionResult Delete(int id)
         {
-            offerService.RemoveOffer(id);
+            try
+            {
+                offerService.RemoveOffer(id);
 
-            return Ok();
+                return Ok("Offer is deleted");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
     }
 }

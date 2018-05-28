@@ -35,9 +35,9 @@ namespace WorkBase.Controllers
             RubricViewModel rubricView = Mapper.Map<RubricDTO, RubricViewModel>(rubricService.GetRubricById(id));
 
             if (rubricView == null)
-                return NotFound();
-
-            return Ok(rubricView);
+                return Content(System.Net.HttpStatusCode.NoContent, "Not found rubric");
+            else
+                return Ok(rubricView);
         }
         
         [HttpPost]
@@ -45,10 +45,20 @@ namespace WorkBase.Controllers
         [Route("api/rubrics/add")]
         public IHttpActionResult AddRubric(RubricViewModel rubricView)
         {
-            //var user = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
-            rubricService.CreateRubric(Mapper.Map<RubricViewModel, RubricDTO>(rubricView));
+            try
+            {
+                rubricService.CreateRubric(Mapper.Map<RubricViewModel, RubricDTO>(rubricView));
 
-            return Ok();
+                return Ok("Rubric is created");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Not correct input data");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
 
         [HttpPost]
@@ -56,9 +66,20 @@ namespace WorkBase.Controllers
         [Route("api/rubrics/edit")]
         public IHttpActionResult EditRubric(RubricViewModel rubricView)
         {
-            rubricService.EditRubric(Mapper.Map<RubricViewModel, RubricDTO>(rubricView));
+            try
+            {
+                rubricService.EditRubric(Mapper.Map<RubricViewModel, RubricDTO>(rubricView));
 
-            return Ok();
+                return Ok("Rubric is edited");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Not correct input data");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
 
         [HttpPost]
@@ -66,9 +87,16 @@ namespace WorkBase.Controllers
         [Route("api/rubrics/delete/{id:int}")]
         public IHttpActionResult DeleteRubric(int id)
         {
-            rubricService.RemoveRubric(id);
+            try
+            {
+                rubricService.RemoveRubric(id);
 
-            return Ok();
+                return Ok("Rubric is deleted");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
     }
 }

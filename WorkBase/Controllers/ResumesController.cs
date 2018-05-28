@@ -47,9 +47,9 @@ namespace WorkBase.Controllers
             ResumeViewModel resumeView = Mapper.Map<ResumeDTO, ResumeViewModel>(resumeService.GetResumeById(id));
 
             if (resumeView == null)
-                return NotFound();
-
-            return Ok(resumeView);
+                return Content(System.Net.HttpStatusCode.NoContent, "Not found resume");
+            else
+                return Ok(resumeView);
         }
 
         [HttpGet]
@@ -60,9 +60,9 @@ namespace WorkBase.Controllers
             ResumeMinimumViewModel resumeView = Mapper.Map<ResumeDTO, ResumeMinimumViewModel>(resumeService.GetResumeById(id));
 
             if (resumeView == null)
-                return NotFound();
-
-            return Ok(resumeView);
+                return Content(System.Net.HttpStatusCode.NoContent, "Not found resume");
+            else
+                return Ok(resumeView);
         }
 
         [HttpGet]
@@ -111,9 +111,20 @@ namespace WorkBase.Controllers
             ResumeDTO resumeDTO = Mapper.Map<ResumeViewModel, ResumeDTO>(resumeView);
             resumeDTO.User = userService.GetUsers().Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
 
-            resumeService.CreateResume(resumeDTO);
+            try
+            {
+                resumeService.CreateResume(resumeDTO);
 
-            return Ok();
+                return Ok("Resume is created");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Not correct input data");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
 
         [HttpPost]
@@ -121,9 +132,20 @@ namespace WorkBase.Controllers
         [Route("api/resumes/edit")]
         public IHttpActionResult Edit(ResumeViewModel resumeView)
         {
-            resumeService.EditResume(Mapper.Map<ResumeViewModel, ResumeDTO>(resumeView));
+            try
+            {
+                resumeService.EditResume(Mapper.Map<ResumeViewModel, ResumeDTO>(resumeView));
 
-            return Ok();
+                return Ok("Resume is edited");
+            }
+            catch (ArgumentNullException)
+            {
+                return BadRequest("Not correct input data");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
 
         [HttpPost]
@@ -131,9 +153,16 @@ namespace WorkBase.Controllers
         [Route("api/resumes/delete/{id:int}")]
         public IHttpActionResult Delete(int id)
         {
-            resumeService.RemoveResume(id);
+            try
+            {
+                resumeService.RemoveResume(id);
 
-            return Ok();
+                return Ok("Resume is deleted");
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.ParamName);
+            }
         }
     }
 }
