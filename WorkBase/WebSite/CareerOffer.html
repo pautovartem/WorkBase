@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,19 +19,36 @@
 <body>
     <div id="menu"></div>
     <script type="text/javascript">
-        $(function() {
+        $(function () {
+            var urlParams = new URLSearchParams(window.location.search);//we get parameters from the address bar.id in this case
+            if (urlParams.has('id') === false)//Checks if there is an ID in the URL, if not, it goes to the main page of the site
+                window.location.replace("index.html");
+
+            var get_careerId = urlParams.get('id');//Takes the value of ID in a variable, for the present use
+
+            if (Number.isNaN(parseInt(get_careerId)) === true)
+                window.location.replace("index.html");
+
+
             $.ajax({
                 type: 'GET',
-                url: 'json/resume-2-offers.json',
+                url: '/api/careers/' + get_careerId + '/offers',
+
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("tokenInfo"));
+                },
+
                 success: function(data) {
 
                     for (var i in data) {
                         var offer = data[i];
 
+                        var date = new Date(offer.DateSend);
+
                         var resultHtml = ' <tr>';
                         resultHtml += '<th scope="row">'+i+'</th>';
-                        resultHtml += '<td><a href="Resume.html?id=' + offer.ResumeId + '">' +'<\/a><\/td>';
-                        resultHtml += '<td><p>' + offer.DateSend + '<\/p><\/td>';
+                        resultHtml += '<td><a href="Resume.html?id=' + offer.ResumeId + '">' +'<\/a>' + offer.ResumeTitle + '<\/td>';
+                        resultHtml += '<td><p>' + date.toLocaleDateString() + '<\/p><\/td>';
                         resultHtml += '<\/tr>';
 
                         $('#w').append(resultHtml);

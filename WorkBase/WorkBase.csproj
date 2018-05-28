@@ -304,6 +304,7 @@
     <Content Include="WebSite\authorization.html" />
     <Content Include="WebSite\Career.html" />
     <Content Include="WebSite\CareerEdit.html" />
+    <Content Include="WebSite\CareerOffer.html" />
     <Content Include="WebSite\CareerSearch.html" />
     <Content Include="WebSite\css\autorisation.css" />
     <Content Include="WebSite\css\bootstrap-grid.css" />
@@ -368,6 +369,7 @@
     <Content Include="WebSite\result.html" />
     <Content Include="WebSite\Resume.html" />
     <Content Include="WebSite\ResumeEdit.html" />
+    <Content Include="WebSite\ResumeOffer.html" />
     <Content Include="WebSite\ResumeSearch.html" />
     <Content Include="WebSite\sing_in.html" />
   </ItemGroup>
