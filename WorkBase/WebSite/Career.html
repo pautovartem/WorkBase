@@ -19,15 +19,15 @@
         if (urlParams.has('id') === false)//Checks if there is an ID in the URL, if not, it goes to the main page of the site
             window.location.replace("index.html");
 
-        var get_resumeId = urlParams.get('id');//Takes the value of ID in a variable, for the present use
+        var get_careerId = urlParams.get('id');//Takes the value of ID in a variable, for the present use
 
-        if (Number.isNaN(parseInt(get_resumeId)) === true)
+        if (Number.isNaN(parseInt(get_careerId)) === true)
             window.location.replace("index.html");
 
         $(function () {
             $.ajax({
                 type: 'GET',
-                url: '/api/careers/' + get_resumeId,//The file on the server that contains the sample data that returns the
+                url: '/api/careers/' + get_careerId,//The file on the server that contains the sample data that returns the
 
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("tokenInfo"));
@@ -148,7 +148,7 @@
         </div>
     </div>
 
-    <div id="modalChoise" class="modal fade">
+    <div id="modalChoise" class="modal fade" style="overflow: hidden">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

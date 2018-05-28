@@ -20,19 +20,24 @@
     <div id="menu"></div>
     <script type="text/javascript">
         var urlParams = new URLSearchParams(window.location.search);//we get parameters from the address bar.id in this case
-         if(urlParams.has('id') === false)//Checks if there is an ID in the URL, if not, it goes to the main page of the site
+        if (urlParams.has('id') === false)//Checks if there is an ID in the URL, if not, it goes to the main page of the site
             window.location.replace("index.html");
 
-        var get_resumeId = urlParams.get('id');//Takes the value of ID in a variable, for the present use
-          $(function () {
+        var get_resumeId = urlParams.get('id');//Takes the value of ID in a variable, for the present 
+
+        if (Number.isNaN(parseInt(get_resumeId)) === true)
+            window.location.replace("index.html");
+
+        $(function () {
             $.ajax({
                 type: 'GET',
-                url: '/api/resumes/',//The file on the server that contains the sample data that returns the query
-                data: {
-                    id: get_resumeId
+                url: '/api/resumes/' + get_resumeId,//The file on the server that contains the sample data that returns the query
+
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("tokenInfo"));
                 },
 
-                 success: function (data) {
+                success: function (data) {
                     // console.log(data);
 
                     $('#Surname').text(data.Surname);
@@ -58,7 +63,7 @@
                 }
             });
         });
-           function getRubric(rubricId) {
+        function getRubric(rubricId) {
             $.ajax({
                 type: 'GET',
                 url: 'json/rubrics-1.json',
@@ -77,13 +82,13 @@
         }
 
 
-        $(function() {
+        $(function () {
             $.ajax({
                 type: 'GET',
                 url: 'json/careers-minimum.json',
-                 success: function(data) {
+                success: function (data) {
 
-                    
+
 
                     for (var i in data) {
                         var offer = data[i];
@@ -94,13 +99,13 @@
                         var resultHtml = '  <div class="checkbox">';
                         resultHtml += '<label><input type="checkbox" class="list-group-item list-group-item-action " value="">';
                         resultHtml += '<h4 class="list-group-item-heading">' + offer.Id + '">' + offer.Title + '<\/a>';
-                        resultHtml += '<p class="list-group-item-text">' + desctiption +'<\/p> <\/label><\/div>';
-                        
+                        resultHtml += '<p class="list-group-item-text">' + desctiption + '<\/p> <\/label><\/div>';
+
                         $('#offer').append(resultHtml);
                     }
                 },
 
-                fail: function(data) {
+                fail: function (data) {
                     alert('Ошибка получения данных');
                     console.log(data);
                 }
@@ -150,28 +155,29 @@
             <a href="#"><i class="fab fa-github"></i></i></a>
         </div>
     </div>
-    
+
     <div id="modalChoise" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-            
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                     <h3>My resume</h3>
                 </div>
                 <div class="modal-body">
                     <div class="list-group">
-                    <div id="offer"> 
-                    
+                        <div id="offer">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-lg btn-primary" type="submit" data-dismiss="modal" id="submitModalChoise">OK</button>
+                            <button class="btn btn-lg btn-secondary" type="submit" data-dismiss="modal" id="cancelModal">Cancel</button>
+                        </div>
                     </div>
-                <div class="modal-footer">
-                    <button class="btn btn-lg btn-primary" type="submit" data-dismiss="modal" id="submitModalChoise">OK</button>
-                    <button class="btn btn-lg btn-secondary" type="submit" data-dismiss="modal" id="cancelModal">Cancel</button>
                 </div>
             </div>
-            
         </div>
     </div>
 </body>
