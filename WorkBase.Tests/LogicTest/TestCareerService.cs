@@ -75,7 +75,7 @@ namespace WorkBase.Tests.LogicTest
         [Test]
         public void GetOffers_TryToGetValue_ShouldReturnSomeValue()
         {
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => carService.GetOffers(0));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => carService.GetOffers(0));
         }
         [Test]
         public void GetOffers_GetValue_ShouldReturnSomeValue()
@@ -109,7 +109,7 @@ namespace WorkBase.Tests.LogicTest
             careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
 
             //act & assert
-            Assert.Throws<ArgumentNullException>(() => carService.EditCareer(Career));
+            Assert.Throws<ArgumentOutOfRangeException>(() => carService.EditCareer(Career));
         }
 
         [Test]
@@ -136,13 +136,13 @@ namespace WorkBase.Tests.LogicTest
             careerRepository.Verify(x => x.Delete(It.IsAny<int>()));
         }
         [Test]
-        public void DeleteCareer_DeleteNullValue()
+        public void DeleteCareer_DeleteFalseId_ShoudThrowExeption()
         {
             //arrange
             careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Career>(null);
 
             //act & assert
-            Assert.Throws<ArgumentNullException>(() => carService.RemoveCareer(It.IsAny<int>()));
+            Assert.Throws<ArgumentOutOfRangeException>(() => carService.RemoveCareer(It.IsAny<int>()));
         }
         [Test]
         public void GetAllCareers_GetSomeList_ShouldRepositoryCallOnce_ShouldReturnNotNullList()

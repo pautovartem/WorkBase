@@ -100,7 +100,7 @@ namespace WorkBase.Tests.LogicTest
             offerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Offer>(null);
 
             //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => offerService.RemoveOffer(It.IsAny<int>()));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => offerService.RemoveOffer(It.IsAny<int>()));
 
 
         }

@@ -31,7 +31,7 @@ namespace WorkBase.Tests.LogicTest
             expService = new ExperienceService(uow.Object);
         }
         [Test]
-        public void CreateExperiencesExperience_TryToCreateExperiencesExperience_ShouldRepositoryCreateOnce()
+        public void CreateResumesesExperience_TryToCreateResumesesExperience_ShouldRepositoryCreateOnce()
         {
             var ResumesExperience = new ResumesExperienceDTO { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>() };
 
@@ -95,7 +95,7 @@ namespace WorkBase.Tests.LogicTest
             expRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Resume>(null);
 
             //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => expService.RemoveExperience(It.IsAny<int>()));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => expService.RemoveExperience(It.IsAny<int>()));
 
 
         }

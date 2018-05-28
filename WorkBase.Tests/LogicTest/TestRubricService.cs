@@ -118,7 +118,7 @@ namespace WorkBase.Tests.LogicTest
             rubricRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Rubric>(null);
 
             //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => rubricService.RemoveRubric(It.IsAny<int>()));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => rubricService.RemoveRubric(It.IsAny<int>()));
 
 
         }

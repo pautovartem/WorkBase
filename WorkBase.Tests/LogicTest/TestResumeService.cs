@@ -50,14 +50,14 @@ namespace WorkBase.Tests.LogicTest
         }
 
         [Test]
-        public void GetExperiences_TryToGetValue_ShouldReturnSomeGovno()
+        public void GetExperiences_TryToGetValue_ShouldReturnExeption()
         {
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.GetExperiences(0));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => resumeService.GetExperiences(0));
         }
         [Test]
         public void GetOffers_TryToGetValue_ShouldReturnSomeValue()
         {
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.GetOffers(0));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => resumeService.GetOffers(0));
         }
         [Test]
         public void GetResumeById_TryToGetValue_ShouldReturnSomeValue()
@@ -105,7 +105,7 @@ namespace WorkBase.Tests.LogicTest
         [Test]
         public void RemoveExperience_DeleteRepositoryShouldCallsOnce()
         {
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.RemoveExperience(0,0));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => resumeService.RemoveExperience(0,0));
         }
         [Test]
         public void GetResumeById_GetNullValue_ShouldThrowException()
@@ -142,7 +142,7 @@ namespace WorkBase.Tests.LogicTest
             resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns<Resume>(null);
 
             //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentNullException>(() => resumeService.RemoveResume(It.IsAny<int>()));
+            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => resumeService.RemoveResume(It.IsAny<int>()));
 
 
         }
