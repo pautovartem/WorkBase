@@ -79,7 +79,7 @@ namespace LogicLayer.Services
 
         public void RemoveRubric(int id)
         {
-            if (Database.Resumes.Get(id) == null)
+            if (Database.Rubrics.Get(id) == null)
                 throw new ArgumentOutOfRangeException("Not found rubric");
 
             Database.Rubrics.Delete(id);
