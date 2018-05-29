@@ -22,7 +22,7 @@ namespace WorkBase.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [Route("api/careers/")]
         public IHttpActionResult GetCareers()
         {
@@ -93,7 +93,7 @@ namespace WorkBase.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "employer")]
         [Route("api/careers/user")]
         public IHttpActionResult GetCurrentUserCareers()
         {
@@ -112,7 +112,7 @@ namespace WorkBase.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "employer")]
         [Route("api/careers/user/minimum")]
         public IHttpActionResult GetCurrentUserCareersMinimum()
         {
@@ -131,7 +131,7 @@ namespace WorkBase.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "employer")]
         [Route("api/careers/add")]
         public IHttpActionResult Add(CareerViewModel careerView)
         {
@@ -154,8 +154,8 @@ namespace WorkBase.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpPut]
+        [Authorize(Roles = "employer")]
         [Route("api/careers/edit")]
         public IHttpActionResult Edit(CareerViewModel careerView)
         {
@@ -183,8 +183,8 @@ namespace WorkBase.Controllers
             return Ok("Career is edited");
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpDelete]
+        [Authorize(Roles = "employer")]
         [Route("api/careers/delete/{id:int}")]
         public IHttpActionResult Delete(int id)
         {

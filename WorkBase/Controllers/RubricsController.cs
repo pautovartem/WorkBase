@@ -41,7 +41,7 @@ namespace WorkBase.Controllers
         }
         
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [Route("api/rubrics/add")]
         public IHttpActionResult AddRubric(RubricViewModel rubricView)
         {
@@ -61,8 +61,8 @@ namespace WorkBase.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpPut]
+        [Authorize(Roles = "admin")]
         [Route("api/rubrics/edit")]
         public IHttpActionResult EditRubric(RubricViewModel rubricView)
         {
@@ -82,8 +82,8 @@ namespace WorkBase.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpDelete]
+        [Authorize(Roles = "admin")]
         [Route("api/rubrics/delete/{id:int}")]
         public IHttpActionResult DeleteRubric(int id)
         {

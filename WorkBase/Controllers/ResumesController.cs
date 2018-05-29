@@ -104,7 +104,7 @@ namespace WorkBase.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "worker")]
         [Route("api/resumes/add")]
         public IHttpActionResult Add(ResumeViewModel resumeView)
         {
@@ -127,8 +127,8 @@ namespace WorkBase.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpPut]
+        [Authorize(Roles = "worker")]
         [Route("api/resumes/edit")]
         public IHttpActionResult Edit(ResumeViewModel resumeView)
         {
@@ -148,8 +148,8 @@ namespace WorkBase.Controllers
             }
         }
 
-        [HttpPost]
-        [Authorize]
+        [HttpDelete]
+        [Authorize(Roles = "worker")]
         [Route("api/resumes/delete/{id:int}")]
         public IHttpActionResult Delete(int id)
         {

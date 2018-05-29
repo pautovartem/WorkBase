@@ -12,3 +12,4 @@ WorkBase.Tests/bin
 WorkBase.Tests/obj
 *.user
 .axoCover
+/WorkBase/App_Data

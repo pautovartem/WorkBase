@@ -62,7 +62,7 @@ namespace WorkBase.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "employer, worker")]
         [Route("api/offers/add")]
         public IHttpActionResult Add(OfferViewModel offerView)
         {
@@ -83,7 +83,7 @@ namespace WorkBase.Controllers
         }
 
         [HttpPut]
-        [Authorize]
+        [Authorize(Roles = "employer, worker")]
         [Route("api/offers/edit")]
         public IHttpActionResult Edit(OfferViewModel offerView)
         {
@@ -104,7 +104,7 @@ namespace WorkBase.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
+        [Authorize(Roles = "employer, worker")]
         [Route("api/offers/delete/{id:int}")]
         public IHttpActionResult Delete(int id)
         {
