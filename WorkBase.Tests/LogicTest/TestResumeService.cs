@@ -35,7 +35,7 @@ namespace WorkBase.Tests.LogicTest
         public void CreateResume_TryToCreateResume_ShouldRepositoryCreateOnce()
         {
             var Resume = new ResumeDTO { Id = It.IsAny<int>() };
-
+            uow.Setup(x => x.Rubrics.Get(It.IsAny<int>())).Returns(new Rubric() { });
             // act
             resumeService.CreateResume(Resume);
 
@@ -84,9 +84,14 @@ namespace WorkBase.Tests.LogicTest
          //arrange
             var resume = new ResumeDTO { Id = It.IsAny<int>(), City= It.IsAny<string>() };
             resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Resume { Id = It.IsAny<int>(), City = It.IsAny<string>() });
+            resumeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Resume  ());
 
-            //act & assert
-            NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => resumeService.EditResume(resume));
+            uow.Setup(x => x.Rubrics.Get(It.IsAny<int>())).Returns(new Rubric());
+            // act
+            resumeService.EditResume(resume);
+
+            //assert
+            resumeRepository.Verify(x => x.Update(It.IsAny<Resume>()));
         }
 
         [Test]

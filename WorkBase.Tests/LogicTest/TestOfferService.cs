@@ -33,9 +33,11 @@ namespace WorkBase.Tests.LogicTest
         public void CreateOffer_TryToCreateOffer_ShouldRepositoryCreateOnce()
         {
             var Offer = new OfferDTO { Id = It.IsAny<int>() };
-
+             uow.Setup(x => x.Careers.Get(It.IsAny<int>())).Returns(new Career() { });
+            uow.Setup(x => x.Resumes.Get(It.IsAny<int>())).Returns(new Resume() { });
             // act
             offerService.CreateOffer(Offer);
+           
 
             //assert
             offerRepository.Verify(x => x.Create(It.IsAny<Offer>()));
@@ -87,6 +89,8 @@ namespace WorkBase.Tests.LogicTest
         {
             //arrange
             var Offer = new OfferDTO { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>(), CareerId = It.IsAny<int>(), Viewed = It.IsAny<bool>() };
+            uow.Setup(x => x.Resumes.Get(It.IsAny<int>())).Returns(new Resume() { });
+            uow.Setup(x => x.Careers.Get(It.IsAny<int>())).Returns(new Career() { });
 
             //act & assert
             NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => offerService.EditOffer(Offer));

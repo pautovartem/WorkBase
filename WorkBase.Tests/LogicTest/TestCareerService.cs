@@ -40,6 +40,7 @@ namespace WorkBase.Tests.LogicTest
         public void CreateCareer_TryToCreateCareer_ShouldRepositoryCreateOnce()
         {
             var Career = new CareerDTO { Id = It.IsAny<int>() };
+            uow.Setup(x => x.Rubrics.Get(It.IsAny<int>())).Returns(new Rubric() { });
 
             // act
             carService.CreateCareer(Career);
@@ -73,24 +74,28 @@ namespace WorkBase.Tests.LogicTest
             NUnit.Framework.Assert.IsNotNull(carService.GetCareerById(It.IsAny<int>()));
         }
         [Test]
-        public void GetOffers_TryToGetValue_ShouldReturnSomeValue()
+        public void GetOffers_TryToGetValue_ShouldThrow()
         {
             NUnit.Framework.Assert.Throws<ArgumentOutOfRangeException>(() => carService.GetOffers(0));
         }
-        [Test]
-        public void GetOffers_GetValue_ShouldReturnSomeValue()
-        {
-           
-        }
+ 
+      
         [Test]
         public void EditCareer_EditCareer_ShoudRepositoryEditOnce()
         { //arrange
             var Career = new CareerDTO { Id = It.IsAny<int>(), ContactName = It.IsAny<string>(), ContactPhone = It.IsAny<string>() };
-            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactPhone= It.IsAny<string>() });
 
-            //act & assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => carService.EditCareer(Career));
-           
+            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career { Id = It.IsAny<int>(), ContactPhone = It.IsAny<string>() });
+            careerRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(new Career () );
+            uow.Setup(x => x.Rubrics.Get(It.IsAny<int>())).Returns(new Rubric() );
+          
+
+            // act
+            carService.EditCareer(Career);
+
+            //assert
+            careerRepository.Verify(x => x.Update(It.IsAny<Career>()));
+
         }
 
         [Test]
