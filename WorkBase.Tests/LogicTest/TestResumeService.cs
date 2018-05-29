@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AutoMapper;
 using LogicLayer.DTO;
 using LogicLayer.Interfaces;
@@ -14,7 +13,7 @@ using System.Collections.Generic;
 
 namespace WorkBase.Tests.LogicTest
 {
-    [TestClass]
+    [TestFixture]
     public class TestResumeService
     {
         private IResumeService resumeService;
