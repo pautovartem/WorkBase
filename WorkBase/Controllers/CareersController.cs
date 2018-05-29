@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using WorkBase.Filters;
 using WorkBase.Models;
 
 namespace WorkBase.Controllers
@@ -166,7 +167,7 @@ namespace WorkBase.Controllers
                 var careerDto = careerService.GetCareerById(careerView.Id);
 
                 if (careerDto.UserId != userId)
-                    return BadRequest("No access!");
+                    return Unauthorized();
 
                 careerService.EditCareer(Mapper.Map<CareerViewModel, CareerDTO>(careerView));
             }
