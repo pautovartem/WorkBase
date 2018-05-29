@@ -34,7 +34,7 @@ namespace WorkBase.Tests.LogicTest
         public void CreateResumesesExperience_TryToCreateResumesesExperience_ShouldRepositoryCreateOnce()
         {
             var ResumesExperience = new ResumesExperienceDTO { Id = It.IsAny<int>(), ResumeId = It.IsAny<int>() };
-
+            uow.Setup(x => x.Resumes.Get(It.IsAny<int>())).Returns(new Resume() { });
             // act
             expService.CreateExperience(ResumesExperience);
 
